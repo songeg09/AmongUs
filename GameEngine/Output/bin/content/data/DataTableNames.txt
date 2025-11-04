@@ -1,4 +1,0 @@
-CircleSkill.txt
-RectSkill.txt
-CircleZone.txt
-RectZone.txt

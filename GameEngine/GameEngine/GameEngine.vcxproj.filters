@@ -113,9 +113,6 @@
     <Filter Include="Engine\09. Skill\RectSkill">
       <UniqueIdentifier>{7b76c51c-c172-4a1e-85e7-60a06980ad9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\09. Skill\RectSkill\SwordBeam">
-      <UniqueIdentifier>{81fcd77c-8ae1-4e03-9895-0e6753b1ff52}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -236,9 +233,6 @@
     <ClInclude Include="SwordBeamObject.h">
       <Filter>Engine\04. Object\SkillObject\RectZone\SwordBeamObject</Filter>
     </ClInclude>
-    <ClInclude Include="SwordBeam.h">
-      <Filter>Engine\09. Skill\RectSkill\SwordBeam</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -350,9 +344,6 @@
     </ClCompile>
     <ClCompile Include="SwordBeamObject.cpp">
       <Filter>Engine\04. Object\SkillObject\RectZone\SwordBeamObject</Filter>
-    </ClCompile>
-    <ClCompile Include="SwordBeam.cpp">
-      <Filter>Engine\09. Skill\RectSkill\SwordBeam</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -25,16 +25,16 @@ void GameScene::Init()
 
 	Player* pPlayer = new Player;
 	Vector2 vec2WindowSize = Scene::GetWindowSize();
-	pPlayer->Init(ConstValue::vec2PlayerStartPosition);
-	Scene::AddObject(pPlayer, OBJECT_GROUP::PLAYABLE);
-	for (int i = 0; i < 1; ++i)
-	{
-		Monster* monster = new Monster;
-		float x = rand() % static_cast<int>(vec2WindowSize.m_fx);
-		float y = rand() % static_cast<int>(vec2WindowSize.m_fy);
-		monster->Init(Vector2{ x,y });
-		Scene::AddObject(monster, OBJECT_GROUP::MONSTER);
-	}
+	//pPlayer->Init(ConstValue::vec2PlayerStartPosition);
+	//Scene::AddObject(pPlayer, OBJECT_GROUP::PLAYABLE);
+	//for (int i = 0; i < 1; ++i)
+	//{
+	//	Monster* monster = new Monster;
+	//	float x = rand() % static_cast<int>(vec2WindowSize.m_fx);
+	//	float y = rand() % static_cast<int>(vec2WindowSize.m_fy);
+	//	monster->Init(Vector2{ x,y });
+	//	Scene::AddObject(monster, OBJECT_GROUP::MONSTER);
+	//}
 
 	CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYABLE);
 	CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::MONSTER);

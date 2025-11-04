@@ -48,9 +48,9 @@ void Player::Init(Vector2 _vec2Position)
 	// 애니메이션 설정
 	Actor::SetPosition(_vec2Position);
 	Actor::ResizeAnimation(ANIMATION::END);
-	Actor::InitAnimation(ANIMATION::IDLE, TEXTURE_TYPE::PLAYER_IDLE_START, TEXTURE_TYPE::PLAYER_IDLE_END);
-	Actor::InitAnimation(ANIMATION::RUN, TEXTURE_TYPE::PLAYER_RUN_START, TEXTURE_TYPE::PLAYER_RUN_END);
-	Actor::InitAnimation(ANIMATION::ATTACK, TEXTURE_TYPE::PLAYER_ATTACK_START, TEXTURE_TYPE::PLAYER_ATTACK_END, 0.5f, ANIMATION_TYPE::ONCE);
+	//Actor::InitAnimation(ANIMATION::IDLE, TEXTURE_TYPE::PLAYER_IDLE_START, TEXTURE_TYPE::PLAYER_IDLE_END);
+	//Actor::InitAnimation(ANIMATION::RUN, TEXTURE_TYPE::PLAYER_RUN_START, TEXTURE_TYPE::PLAYER_RUN_END);
+	//Actor::InitAnimation(ANIMATION::ATTACK, TEXTURE_TYPE::PLAYER_ATTACK_START, TEXTURE_TYPE::PLAYER_ATTACK_END, 0.5f, ANIMATION_TYPE::ONCE);
 	Actor::SetAnimationEvent(ANIMATION::ATTACK, 1,
 		[this]() {
 			m_pAttackCollider->SetEnable(true);
@@ -72,11 +72,7 @@ void Player::Init(Vector2 _vec2Position)
 	// 속도 설정
 	Actor::SetMoveSpeed(200.0f);
 
-	Skill* Skill = new CircleDamageSkill(1, this, 'Q');
-	m_Skills.push_back(Skill);
 
-	Skill = new SwordBeam(0, this, 'W');
-	m_Skills.push_back(Skill);
 }
 
 void Player::Update()

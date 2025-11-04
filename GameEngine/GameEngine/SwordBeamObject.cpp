@@ -29,7 +29,7 @@ void SwordBeamObject::Init(int _iIndex, DIRECTION _eDirection, Vector2 _vec2Init
 				}
 			}
 		);
-		m_Animation.Init(TEXTURE_TYPE::EFFECT, 0, 0,7,64, ANIMATION_TYPE::LOOP, 0.3f, ANCHOR::CENTER);
+		//m_Animation.Init(TEXTURE_TYPE::EFFECT, 0, 0,7,64, ANIMATION_TYPE::LOOP, 0.3f, ANCHOR::CENTER);
 	}
 	else
 	{

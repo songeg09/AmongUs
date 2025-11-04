@@ -166,7 +166,6 @@
     <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillObject.h" />
     <ClInclude Include="struct.h" />
-    <ClInclude Include="SwordBeam.h" />
     <ClInclude Include="SwordBeamObject.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
@@ -203,7 +202,6 @@
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillData.cpp" />
     <ClCompile Include="SkillObject.cpp" />
-    <ClCompile Include="SwordBeam.cpp" />
     <ClCompile Include="SwordBeamObject.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimerManager.cpp" />

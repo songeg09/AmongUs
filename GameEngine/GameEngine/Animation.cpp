@@ -52,20 +52,20 @@ void Animation::Init(int _iStartTextureIndex, int _iEndTextureIndex, ANIMATION_T
 	m_fAccTime = 0.0f;
 }
 
-void Animation::Init(TEXTURE_TYPE _TextureType, int _iStartTextureIndexI, int _iStartTextureIndexJ, int _AnimationLength, int _Size, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor)
-{
-	m_vecList.clear();
-	m_vecList.resize(_AnimationLength);
-	for (int j = 0; j < _AnimationLength; ++j)
-	{
-		m_vecList[j] = AnimNode{ ResourceManager::GetInstance()->LoadSubTexture(_TextureType, _iStartTextureIndexI, _iStartTextureIndexJ + j, _Size), nullptr };
-	}
-	m_eType = _eType;
-	m_fSpeed = _fSpeed / static_cast<float>(_AnimationLength);
-	m_eAnchor = _eAnchor;
-	m_iCurIndex = 0;
-	m_fAccTime = 0.0f;
-}
+//void Animation::Init(TEXTURE_TYPE _TextureType, int _iStartTextureIndexI, int _iStartTextureIndexJ, int _AnimationLength, int _Size, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor)
+//{
+//	m_vecList.clear();
+//	m_vecList.resize(_AnimationLength);
+//	for (int j = 0; j < _AnimationLength; ++j)
+//	{
+//		m_vecList[j] = AnimNode{ ResourceManager::GetInstance()->LoadSubTexture(_TextureType, _iStartTextureIndexI, _iStartTextureIndexJ + j, _Size), nullptr };
+//	}
+//	m_eType = _eType;
+//	m_fSpeed = _fSpeed / static_cast<float>(_AnimationLength);
+//	m_eAnchor = _eAnchor;
+//	m_iCurIndex = 0;
+//	m_fAccTime = 0.0f;
+//}
 
 void Animation::Update()
 {
