@@ -1,10 +1,10 @@
 #pragma once
 #include "ResourceManager.h"
-class Texture;
+class TextureAtlas;
 
 struct AnimNode
 {
-	Texture* m_pTexture;
+	TextureAtlas* m_pTextureAtlas;
 	std::function<void()> m_callBack;
 };
 
@@ -35,9 +35,7 @@ public:
 	Animation();
 	~Animation();
 	void Reset();
-	void Init(DIRECTION _eDirection, int _iStartTextureIndex, int _iEndTextureIndex, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor);
-	void Init(int _iStartTextureIndex, int _iEndTextureIndex, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor);
-	//void Init(TEXTURE_TYPE _TextureType, int _iStartTextureIndexI, int _iStartTextureIndexJ, int _AnimationLength, int _Size, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor);
+	void Init(TEXTURE_TYPE _TextureType, Vector2 _vec2Position, Vector2 _vec2Size, int _iMargin, int _iLength, bool _bFlip, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor);
 	void Update();
 	void Render(HDC _memDC, Vector2 _vec2Position);
 	void SetEvent(int _iTextureIndex, std::function<void()> _pCallBack);

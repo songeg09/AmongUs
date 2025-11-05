@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Animation.h"
 #include "Texture.h"
+#include "TextureAtlas.h"
 #include "TimerManager.h"
 
 Animation::Animation()
@@ -22,50 +23,23 @@ void Animation::Reset()
 	m_fAccTime = 0.0f;
 }
 
-void Animation::Init(DIRECTION _eDirection, int _iStartTextureIndex, int _iEndTextureIndex, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor)
+void Animation::Init(TEXTURE_TYPE _TextureType, Vector2 _vec2Position, Vector2 _vec2Size, int _iMargin, int _iLength, bool _bFlip, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor)
 {
 	m_vecList.clear();
-	m_vecList.resize(_iEndTextureIndex - _iStartTextureIndex);
-	for (int j = 0; j < m_vecList.size(); ++j)
+	m_vecList.resize(_iLength);
+	for (int j = 0; j < _iLength; ++j)
 	{
-		m_vecList[j] = AnimNode{ ResourceManager::GetInstance()->LoadTexture(static_cast<TEXTURE_TYPE>(j + _iStartTextureIndex),_eDirection),nullptr };
+		Vector2 Position = _vec2Position;
+		Position.m_fx += j;
+		m_vecList[j] = AnimNode{ ResourceManager::GetInstance()->LoadTextureAtlas(_TextureType, Position, _vec2Size, _iMargin, _bFlip), nullptr };
 	}
 	m_eType = _eType;
-	m_fSpeed = _fSpeed / static_cast<float>(m_vecList.size());
+	m_fSpeed = _fSpeed / static_cast<float>(_iLength);
 	m_eAnchor = _eAnchor;
 	m_iCurIndex = 0;
 	m_fAccTime = 0.0f;
 }
 
-void Animation::Init(int _iStartTextureIndex, int _iEndTextureIndex, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor)
-{
-	m_vecList.clear();
-	m_vecList.resize(_iEndTextureIndex - _iStartTextureIndex);
-	for (int j = 0; j < m_vecList.size(); ++j)
-	{
-		m_vecList[j] = AnimNode{ ResourceManager::GetInstance()->LoadTexture(static_cast<TEXTURE_TYPE>(j + _iStartTextureIndex)),nullptr };
-	}
-	m_eType = _eType;
-	m_fSpeed = _fSpeed / static_cast<float>(m_vecList.size());
-	m_eAnchor = _eAnchor;
-	m_iCurIndex = 0;
-	m_fAccTime = 0.0f;
-}
-
-//void Animation::Init(TEXTURE_TYPE _TextureType, int _iStartTextureIndexI, int _iStartTextureIndexJ, int _AnimationLength, int _Size, ANIMATION_TYPE _eType, float _fSpeed, ANCHOR _eAnchor)
-//{
-//	m_vecList.clear();
-//	m_vecList.resize(_AnimationLength);
-//	for (int j = 0; j < _AnimationLength; ++j)
-//	{
-//		m_vecList[j] = AnimNode{ ResourceManager::GetInstance()->LoadSubTexture(_TextureType, _iStartTextureIndexI, _iStartTextureIndexJ + j, _Size), nullptr };
-//	}
-//	m_eType = _eType;
-//	m_fSpeed = _fSpeed / static_cast<float>(_AnimationLength);
-//	m_eAnchor = _eAnchor;
-//	m_iCurIndex = 0;
-//	m_fAccTime = 0.0f;
-//}
 
 void Animation::Update()
 {
@@ -85,8 +59,8 @@ void Animation::Update()
 
 void Animation::Render(HDC _memDC, Vector2 _vec2Position)
 {
-	int iWidth = m_vecList[m_iCurIndex].m_pTexture->GetWidth();
-	int iHeight = m_vecList[m_iCurIndex].m_pTexture->GetHeight();
+	int iWidth = m_vecList[m_iCurIndex].m_pTextureAtlas->GetWidth();
+	int iHeight = m_vecList[m_iCurIndex].m_pTextureAtlas->GetHeight();
 	switch (m_eAnchor)
 	{
 	case ANCHOR::CENTER:
@@ -103,8 +77,29 @@ void Animation::Render(HDC _memDC, Vector2 _vec2Position)
 	}
 	if (m_vecList.size() == 0)
 		return;
-	TransparentBlt(_memDC, _vec2Position.m_fx - iWidth / 2, _vec2Position.m_fy - iHeight / 2, iWidth * 2, iHeight * 2,
-		m_vecList[m_iCurIndex].m_pTexture->GetDC(), 0, 0, iWidth, iHeight, RGB(255, 255, 255));
+
+	if (m_vecList[m_iCurIndex].m_pTextureAtlas->GetFlip() == false)
+	{
+		TransparentBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
+			m_vecList[m_iCurIndex].m_pTextureAtlas->GetDC(),
+			m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fx,
+			m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fy,
+			iWidth, iHeight, RGB(255, 255, 255));
+	}
+	else
+	{
+		StretchBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
+			m_vecList[m_iCurIndex].m_pTextureAtlas->GetDC(), 
+			m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fx + iWidth - 1,
+			m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fy,
+			-iWidth, iHeight, SRCCOPY);
+
+		TransparentBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
+			_memDC,
+			_vec2Position.m_fx,
+			_vec2Position.m_fy,
+			iWidth, iHeight, RGB(255, 255, 255));
+	}	
 }
 
 void Animation::SetEvent(int _iTextureIndex, std::function<void()> _pCallBack)

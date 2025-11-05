@@ -116,6 +116,9 @@
     <Filter Include="Engine\05. Resource\TextureAtlas">
       <UniqueIdentifier>{9a44f3a3-6210-480a-9fdd-22fe743f159c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05. Resource\Data\AnimationData">
+      <UniqueIdentifier>{b1df608b-f173-4ddd-91f0-ca2710c21f07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -239,6 +242,9 @@
     <ClInclude Include="TextureAtlas.h">
       <Filter>Engine\05. Resource\TextureAtlas</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationData.h">
+      <Filter>Engine\05. Resource\Data\AnimationData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -353,6 +359,9 @@
     </ClCompile>
     <ClCompile Include="TextureAtlas.cpp">
       <Filter>Engine\05. Resource\TextureAtlas</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationData.cpp">
+      <Filter>Engine\05. Resource\Data\AnimationData</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

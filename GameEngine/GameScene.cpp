@@ -5,6 +5,7 @@
 #include "Monster.h"
 #include "InputManager.h"
 #include "CollisionManager.h"
+#include "TextureAtlas.h"
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
@@ -25,8 +26,8 @@ void GameScene::Init()
 
 	Player* pPlayer = new Player;
 	Vector2 vec2WindowSize = Scene::GetWindowSize();
-	//pPlayer->Init(ConstValue::vec2PlayerStartPosition);
-	//Scene::AddObject(pPlayer, OBJECT_GROUP::PLAYABLE);
+	pPlayer->Init(ConstValue::vec2PlayerStartPosition);
+	Scene::AddObject(pPlayer, OBJECT_GROUP::PLAYABLE);
 	//for (int i = 0; i < 1; ++i)
 	//{
 	//	Monster* monster = new Monster;
@@ -36,9 +37,9 @@ void GameScene::Init()
 	//	Scene::AddObject(monster, OBJECT_GROUP::MONSTER);
 	//}
 
-	CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYABLE);
-	CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::MONSTER);
-	CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYER_SKILL);
+	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYABLE);
+	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::MONSTER);
+	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYER_SKILL);
 }
 
 void GameScene::Update()
@@ -50,5 +51,6 @@ void GameScene::Render(HDC _memDC)
 {
 	BitBlt(_memDC, 0, 0, m_pBackGround->GetWidth(), m_pBackGround->GetHeight(),
 		m_pBackGround->GetDC(), 0, 0, SRCCOPY);
+
 	Scene::Render(_memDC);
 }

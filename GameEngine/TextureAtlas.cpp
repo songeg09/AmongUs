@@ -1,13 +1,16 @@
 #include "pch.h"
+#include "GameResource.h"
 #include "ResourceManager.h"
 #include "Texture.h"
 #include "TextureAtlas.h"
 
-void TextureAtlas::Load(TEXTURE_TYPE _eTextureType, Vector2 _Position, Vector2 _Size, int _Margin)
+void TextureAtlas::Load(TEXTURE_TYPE _eTextureType, Vector2 _Position, Vector2 _Size, int _Margin, bool _Flip)
 {
 	m_pTexture = ResourceManager::GetInstance()->LoadTexture(_eTextureType);
 	m_vec2Position = _Position;
 	m_vec2Size = _Size;
+	m_iMargin = _Margin;
+	m_bFlip = _Flip;
 }
 
 Vector2 TextureAtlas::GetAtlasPosition()

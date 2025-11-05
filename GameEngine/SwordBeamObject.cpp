@@ -64,17 +64,19 @@ void SwordBeamObject::Update()
 
 Vector2 SwordBeamObject::GetDirectionVector(DIRECTION _direction)
 {
-	switch (_direction)
-	{
-	case DIRECTION::DOWN:
-		return Vector2(0, 1);
-	case DIRECTION::UP:
-		return Vector2(0, -1);
-	case DIRECTION::LEFT:
-		return Vector2(-1, 0);
-	case DIRECTION::RIGHT:
-		return Vector2(1, 0);
-	default:
-		return Vector2(0, 0);
-	}
+	//switch (_direction)
+	//{
+	//case DIRECTION::DOWN:
+	//	return Vector2(0, 1);
+	//case DIRECTION::UP:
+	//	return Vector2(0, -1);
+	//case DIRECTION::LEFT:
+	//	return Vector2(-1, 0);
+	//case DIRECTION::RIGHT:
+	//	return Vector2(1, 0);
+	//default:
+	//	return Vector2(0, 0);
+	//}
+
+	return Vector2(0, 0);
 }

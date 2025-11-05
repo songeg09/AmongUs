@@ -18,35 +18,35 @@ void CircleZone::Init(int _iIndex, Object* _pTarget)
 {
 	SkillObject::Init(_pTarget);
 
-	CircleZoneData* data = static_cast<CircleZoneData*>(ResourceManager::GetInstance()->GetData(L"CircleZone.txt", _iIndex));
+	//CircleZoneData* data = static_cast<CircleZoneData*>(ResourceManager::GetInstance()->GetData(L"CircleZone.txt", _iIndex));
 
-	if (m_pCollider == nullptr)
-	{
-		m_pCollider = static_cast<CircleCollider*>(CreateCircleCollider(true, data->GetRadius()));
-		m_pCollider->SetBeginCollisionCallBack(
-			[this](Collider* _pOther)
-			{
-				Actor* actor = dynamic_cast<Actor*>(_pOther->GetTarget());
-				if (actor != nullptr)
-					m_TargetList.push_back(actor);
-			}
-		);
-		m_pCollider->SetEndCollisionCallBack(
-			[this](Collider* _pOther)
-			{
-				Actor* actor = dynamic_cast<Actor*>(_pOther->GetTarget());
-				if (actor != nullptr)
-					m_TargetList.remove(actor);
-			}
-		);
-		m_Animation.Init(data->GetAnimationStart(), data->GetAnimationEnd(), ANIMATION_TYPE::LOOP, 0.3f, ANCHOR::CENTER);
-	}
-	else
-	{
-		m_pCollider->SetEnable(true);
-		m_pCollider->SetSize(data->GetRadius());
-		m_Animation.Reset();
-	}
+	//if (m_pCollider == nullptr)
+	//{
+	//	m_pCollider = static_cast<CircleCollider*>(CreateCircleCollider(true, data->GetRadius()));
+	//	m_pCollider->SetBeginCollisionCallBack(
+	//		[this](Collider* _pOther)
+	//		{
+	//			Actor* actor = dynamic_cast<Actor*>(_pOther->GetTarget());
+	//			if (actor != nullptr)
+	//				m_TargetList.push_back(actor);
+	//		}
+	//	);
+	//	m_pCollider->SetEndCollisionCallBack(
+	//		[this](Collider* _pOther)
+	//		{
+	//			Actor* actor = dynamic_cast<Actor*>(_pOther->GetTarget());
+	//			if (actor != nullptr)
+	//				m_TargetList.remove(actor);
+	//		}
+	//	);
+	//	m_Animation.Init(data->GetAnimationStart(), data->GetAnimationEnd(), ANIMATION_TYPE::LOOP, 0.3f, ANCHOR::CENTER);
+	//}
+	//else
+	//{
+	//	m_pCollider->SetEnable(true);
+	//	m_pCollider->SetSize(data->GetRadius());
+	//	m_Animation.Reset();
+	//}
 	SetEnable(true);
 }
 

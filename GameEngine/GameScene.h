@@ -2,11 +2,14 @@
 #include "Scene.h"
 #include "ResourceManager.h"
 
+class TextureAtlas;
 class GameScene : public Scene
 {
 private:
 	Texture* m_pBackGround;
 	Vector2 m_vec2BackGroundPosition;
+
+	TextureAtlas* Test;
 public:
 	GameScene(std::wstring _strName);
 	~GameScene();

@@ -15,7 +15,7 @@ public:
 	{
 		IDLE,
 		RUN,
-		ATTACK,
+		//ATTACK,
 		END,
 	};
 

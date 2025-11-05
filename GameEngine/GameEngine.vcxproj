@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationData.h" />
     <ClInclude Include="CircleDamageSkill.h" />
     <ClInclude Include="CircleSkillData.h" />
     <ClInclude Include="CircleZone.h" />
@@ -176,6 +177,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationData.cpp" />
     <ClCompile Include="CircleDamageSkill.cpp" />
     <ClCompile Include="CircleSkillData.cpp" />
     <ClCompile Include="CircleZone.cpp" />

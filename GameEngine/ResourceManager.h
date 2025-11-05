@@ -4,22 +4,27 @@
 enum TEXTURE_TYPE
 {
 	BACKGROUND,
+	CHARACTER
 };
 
 class Texture;
+class TextureAtlas;
 class Data;
 class ResourceManager
 {
 	SINGLETON(ResourceManager)
 private:
 	std::map<std::wstring, Texture*> m_MapTexture;
+	std::map<std::wstring, TextureAtlas*> m_MapTextureAtlas;
 	std::map<std::wstring, std::vector<Data*>> m_MapData;
-	std::wstring GetTextureFileName(TEXTURE_TYPE _eTextureType, DIRECTION _eDirection = DIRECTION::END);
-	std::wstring GetDirectionString(DIRECTION _eDirection);
+	std::wstring GetTextureFileName(TEXTURE_TYPE _eTextureType);
 public:
 	void Init();
-	Texture* LoadTexture(TEXTURE_TYPE _eTextureType, DIRECTION _eDirection = DIRECTION::END);
+	Texture* LoadTexture(TEXTURE_TYPE _eTextureType);
 	Texture* FindTexture(const std::wstring& _strKey);
+
+	TextureAtlas* LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vector2 _vec2Position, Vector2 _vec2Size, int _margin, bool _Flip);
+	TextureAtlas* FindTextureAtlas(const std::wstring& _strKey);
 
 	Data* GetData(std::wstring _strkey, int _iIndex);
 

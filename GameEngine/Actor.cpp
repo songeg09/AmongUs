@@ -6,7 +6,7 @@ Actor::Actor()
 {
 	m_bMovable = true;
 	m_iCurAnimation = -1;
-	m_eDirection = DIRECTION::DOWN;
+	m_eDirection = DIRECTION::RIGHT;
 	m_fMoveSpeed = 100.0f;
 }
 
@@ -28,34 +28,27 @@ void Actor::Move(Vector2 _vec2Force)
 		SetDirection(DIRECTION::LEFT);
 	else if (_vec2Force.m_fx > 0.0f)
 		SetDirection(DIRECTION::RIGHT);
-	else if (_vec2Force.m_fy < 0.0f)
-		SetDirection(DIRECTION::UP);
-	else if (_vec2Force.m_fy > 0.0f)
-		SetDirection(DIRECTION::DOWN);
 }
 
 void Actor::ResizeAnimation(int _iSize)
 {
-	for (int i = DIRECTION::START; i != DIRECTION::END; ++i)
+	for(int i=0; i<2; ++i)
 		m_AnimationList[i].resize(_iSize);
 }
 
-void Actor::InitAnimation(int _iIndex, int _iStartTextureIndex, int _iEndTextureIndex,
-	float _fPlaySpeed, ANIMATION_TYPE _eAnimationType, ANCHOR _eAnchor)
+void Actor::InitAnimation(int _iIndex, AnimationData _data)
 {
-	std::vector<AnimNode> vecAnimationList;
-	for (int i = DIRECTION::START; i != DIRECTION::END; ++i)
-	{
-		assert(_iIndex < m_AnimationList[i].size());
-		m_AnimationList[i][_iIndex].Init(static_cast<DIRECTION>(i), _iStartTextureIndex, _iEndTextureIndex, _eAnimationType, _fPlaySpeed, _eAnchor);
-	}
+	m_AnimationList[DIRECTION::RIGHT][_iIndex].Init(_data.GetTextureType(), _data.GetPosition(), _data.GetSize(), 
+		_data.GetMargin(), _data.GetLength(), false, _data.GetAnimationType(), _data.GetDuration(), _data.GetAnchor());
+
+	m_AnimationList[DIRECTION::LEFT][_iIndex].Init(_data.GetTextureType(), _data.GetPosition(), _data.GetSize(),
+		_data.GetMargin(), _data.GetLength(), true, _data.GetAnimationType(), _data.GetDuration(), _data.GetAnchor());
 }
 
 void Actor::SetAnimationEvent(int _iIndex, int _iTextureIndex, std::function<void()> _pCallBack)
 {
-	for (int i = DIRECTION::START; i != DIRECTION::END; ++i)
+	for (int i = 0; i < 2; ++i)
 	{
-		assert(_iIndex < m_AnimationList[i].size());
 		m_AnimationList[i][_iIndex].SetEvent(_iTextureIndex, _pCallBack);
 	}
 }

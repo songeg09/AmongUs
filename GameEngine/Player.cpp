@@ -33,7 +33,7 @@ void Player::Init(Vector2 _vec2Position)
 	InputManager::GetInstance()->RegistKey(VK_SPACE);
 
 	CreateCircleCollider(true, 40.f);\
-	m_pAttackCollider = CreateRectCollider(false, Vector2{ 40.f, 40.f }, Vector2(0.0f, 20.f));
+	m_pAttackCollider = CreateRectCollider(false, Vector2{ 40.f, 40.f }, Vector2(0.0f, 0.0f));
 	m_pAttackCollider->SetBeginCollisionCallBack(
 		std::bind([this](Collider* _pOther)
 			{
@@ -45,28 +45,33 @@ void Player::Init(Vector2 _vec2Position)
 				TargetMonster->AddForce(ForceDirection * 300.0f);
 			}, std::placeholders::_1));
 
+	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
+	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.7f, ANCHOR::CENTER);
+
 	// 애니메이션 설정
 	Actor::SetPosition(_vec2Position);
 	Actor::ResizeAnimation(ANIMATION::END);
+	Actor::InitAnimation(ANIMATION::IDLE, Idle);
+	Actor::InitAnimation(ANIMATION::RUN, Run);
 	//Actor::InitAnimation(ANIMATION::IDLE, TEXTURE_TYPE::PLAYER_IDLE_START, TEXTURE_TYPE::PLAYER_IDLE_END);
 	//Actor::InitAnimation(ANIMATION::RUN, TEXTURE_TYPE::PLAYER_RUN_START, TEXTURE_TYPE::PLAYER_RUN_END);
 	//Actor::InitAnimation(ANIMATION::ATTACK, TEXTURE_TYPE::PLAYER_ATTACK_START, TEXTURE_TYPE::PLAYER_ATTACK_END, 0.5f, ANIMATION_TYPE::ONCE);
-	Actor::SetAnimationEvent(ANIMATION::ATTACK, 1,
-		[this]() {
-			m_pAttackCollider->SetEnable(true);
-		}
-	);
-	Actor::SetAnimationEvent(ANIMATION::ATTACK, 2,
-		[this]() {
-			m_pAttackCollider->SetEnable(false);
-		}
-	);
-	Actor::SetAnimationEvent(ANIMATION::ATTACK, 3,
-		[this]() {
-			m_bInput = true;
-			Actor::SetAnimation(ANIMATION::IDLE);
-		}
-	);
+	//Actor::SetAnimationEvent(ANIMATION::ATTACK, 1,
+	//	[this]() {
+	//		m_pAttackCollider->SetEnable(true);
+	//	}
+	//);
+	//Actor::SetAnimationEvent(ANIMATION::ATTACK, 2,
+	//	[this]() {
+	//		m_pAttackCollider->SetEnable(false);
+	//	}
+	//);
+	//Actor::SetAnimationEvent(ANIMATION::ATTACK, 3,
+	//	[this]() {
+	//		m_bInput = true;
+	//		Actor::SetAnimation(ANIMATION::IDLE);
+	//	}
+	//);
 	Actor::SetAnimation(ANIMATION::IDLE);
 	
 	// 속도 설정
@@ -98,13 +103,13 @@ void Player::Input()
 	if (m_bInput == false)
 		return;
 
-	if (InputManager::GetInstance()->GetKeyState(VK_SPACE) == KEY_STATE::DOWN)
-	{
-		m_bInput = false;
-		Actor::SetAnimation(ANIMATION::ATTACK);
-	}
-	else
-	{
+	//if (InputManager::GetInstance()->GetKeyState(VK_SPACE) == KEY_STATE::DOWN)
+	//{
+	//	m_bInput = false;
+	//	Actor::SetAnimation(ANIMATION::ATTACK);
+	//}
+	//else
+	//{
 		Vector2 vec2MoveForce;
 		if (InputManager::GetInstance()->GetKeyState(VK_LEFT) == KEY_STATE::PRESS)
 			vec2MoveForce.m_fx += -1.0f;
@@ -122,5 +127,5 @@ void Player::Input()
 		}
 		else
 			Actor::SetAnimation(ANIMATION::IDLE);
-	}
+	//}
 }

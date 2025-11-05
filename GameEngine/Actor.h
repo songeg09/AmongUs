@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "Animation.h"
+#include "AnimationData.h"
 enum class ACTOR_TYPE
 {
 	PLAYER,
@@ -10,7 +11,7 @@ enum class ACTOR_TYPE
 class Actor : public Object
 {
 private:
-	std::vector<Animation>	m_AnimationList[DIRECTION::END];
+	std::vector<Animation>	m_AnimationList[2];
 	int						m_iCurAnimation;
 	DIRECTION				m_eDirection;
 	bool					m_bMovable;
@@ -42,8 +43,7 @@ public:
 protected:
 	
 	void SetAnimationEvent(int _iIndex, int _iTextureIndex, std::function<void()> _pCallBack);
-	void InitAnimation(int _iIndex, int _iStartTextureIndex, int _iEndTextureIndex,
-		float _fPlaySpeed = 1.0f, ANIMATION_TYPE _eAnimationType = ANIMATION_TYPE::LOOP, ANCHOR _eAnchor = ANCHOR::CENTER);
+	void InitAnimation(int _iIndex, AnimationData _data);
 
 	inline void SetDirection(DIRECTION _eDirection) { m_eDirection = _eDirection; }
 	inline void SetMoveSpeed(float _fMoveSpeed) { m_fMoveSpeed = _fMoveSpeed; }
