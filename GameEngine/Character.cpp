@@ -69,29 +69,21 @@ void Character::Input()
 	if (m_bInput == false)
 		return;
 
-	//if (InputManager::GetInstance()->GetKeyState(VK_SPACE) == KEY_STATE::DOWN)
-	//{
-	//	m_bInput = false;
-	//	Actor::SetAnimation(ANIMATION::ATTACK);
-	//}
-	//else
-	//{
-		Vector2 vec2MoveForce;
-		if (InputManager::GetInstance()->GetKeyState(VK_LEFT) == KEY_STATE::PRESS)
-			vec2MoveForce.m_fx += -1.0f;
-		if (InputManager::GetInstance()->GetKeyState(VK_RIGHT) == KEY_STATE::PRESS)
-			vec2MoveForce.m_fx += 1.0f;
-		if (InputManager::GetInstance()->GetKeyState(VK_UP) == KEY_STATE::PRESS)
-			vec2MoveForce.m_fy += -1.0f;
-		if (InputManager::GetInstance()->GetKeyState(VK_DOWN) == KEY_STATE::PRESS)
-			vec2MoveForce.m_fy += 1.0f;
+	Vector2 vec2MoveForce;
+	if (InputManager::GetInstance()->GetKeyState(VK_LEFT) == KEY_STATE::PRESS)
+		vec2MoveForce.m_fx += -1.0f;
+	if (InputManager::GetInstance()->GetKeyState(VK_RIGHT) == KEY_STATE::PRESS)
+		vec2MoveForce.m_fx += 1.0f;
+	if (InputManager::GetInstance()->GetKeyState(VK_UP) == KEY_STATE::PRESS)
+		vec2MoveForce.m_fy += -1.0f;
+	if (InputManager::GetInstance()->GetKeyState(VK_DOWN) == KEY_STATE::PRESS)
+		vec2MoveForce.m_fy += 1.0f;
 
-		if (vec2MoveForce.isValid() == true)
-		{
-			Actor::Move(vec2MoveForce);
-			Actor::SetAnimation(ANIMATION::RUN);
-		}
-		else
-			Actor::SetAnimation(ANIMATION::IDLE);
-	//}
+	if (vec2MoveForce.isValid() == true)
+	{
+		Actor::Move(vec2MoveForce);
+		Actor::SetAnimation(ANIMATION::RUN);
+	}
+	else
+		Actor::SetAnimation(ANIMATION::IDLE);
 }
