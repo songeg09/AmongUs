@@ -54,7 +54,7 @@ void ResourceManager::Init()
 	}
 }
 
-Texture* ResourceManager::LoadTexture(TEXTURE_TYPE _eTextureType)
+Texture* ResourceManager::LoadTexture(TEXTURE_TYPE _eTextureType, bool _bFlipOption)
 {
 	std::wstring strFileName = GetTextureFileName(_eTextureType);
 	assert(strFileName.length() != 0);
@@ -72,7 +72,22 @@ Texture* ResourceManager::LoadTexture(TEXTURE_TYPE _eTextureType)
 		pTexture->SetRelativePath(strFileName);
 		m_MapTexture.insert(std::make_pair(strKey, pTexture));
 	}
-	return pTexture;
+
+	if(_bFlipOption == false)
+		return pTexture;
+
+	strKey = strKey + L"_flipped";
+	Texture* pTextureFlipped = FindTexture(strKey);
+	if (pTextureFlipped == nullptr)
+	{
+		pTextureFlipped = new Texture;
+		pTextureFlipped->LoadFlipped(pTexture);
+		pTexture->SetKey(strKey);
+		pTexture->SetRelativePath(strFileName);
+		m_MapTexture.insert(std::make_pair(strKey, pTextureFlipped));
+	}
+
+	return pTextureFlipped;
 }
 
 Texture* ResourceManager::FindTexture(const std::wstring& _strKey)

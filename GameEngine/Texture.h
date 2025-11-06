@@ -8,6 +8,8 @@ private:
 	BITMAP m_BitMapInfomation;
 public:
 	void Load(std::wstring _strFilePath);
+	void LoadFlipped(Texture* _srcTexture);
+
 	HDC GetDC() { return m_hDC; }
 	int GetWidth() { return m_BitMapInfomation.bmWidth; }
 	int GetHeight() { return m_BitMapInfomation.bmHeight; }

@@ -78,28 +78,11 @@ void Animation::Render(HDC _memDC, Vector2 _vec2Position)
 	if (m_vecList.size() == 0)
 		return;
 
-	if (m_vecList[m_iCurIndex].m_pTextureAtlas->GetFlip() == false)
-	{
-		TransparentBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
-			m_vecList[m_iCurIndex].m_pTextureAtlas->GetDC(),
-			m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fx,
-			m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fy,
-			iWidth, iHeight, RGB(255, 255, 255));
-	}
-	else
-	{
-		StretchBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
-			m_vecList[m_iCurIndex].m_pTextureAtlas->GetDC(), 
-			m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fx + iWidth - 1,
-			m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fy,
-			-iWidth, iHeight, SRCCOPY);
-
-		TransparentBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
-			_memDC,
-			_vec2Position.m_fx,
-			_vec2Position.m_fy,
-			iWidth, iHeight, RGB(255, 255, 255));
-	}	
+	TransparentBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
+		m_vecList[m_iCurIndex].m_pTextureAtlas->GetDC(),
+		m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fx,
+		m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fy,
+		iWidth, iHeight, RGB(255, 255, 255));
 }
 
 void Animation::SetEvent(int _iTextureIndex, std::function<void()> _pCallBack)

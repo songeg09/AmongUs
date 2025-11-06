@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Player.h"
+#include "Character.h"
 #include "Texture.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -10,19 +10,19 @@
 #include "CircleDamageSkill.h"
 #include "SwordBeam.h"
 
-Player::Player()
+Character::Character()
 {
 	m_bInput = true;
-	m_pAttackCollider = nullptr;
+	m_pColliders = nullptr;
 }
 
-Player::~Player()
+Character::~Character()
 {
 	for (Skill* skill : m_Skills)
 		delete skill;
 }
 
-void Player::Init(Vector2 _vec2Position)
+void Character::Init(Vector2 _vec2Position)
 {
 	// Å° µî·Ï
 	SetActorType(ACTOR_TYPE::PLAYER);
@@ -33,8 +33,8 @@ void Player::Init(Vector2 _vec2Position)
 	InputManager::GetInstance()->RegistKey(VK_SPACE);
 
 	CreateCircleCollider(true, 40.f);\
-	m_pAttackCollider = CreateRectCollider(false, Vector2{ 40.f, 40.f }, Vector2(0.0f, 0.0f));
-	m_pAttackCollider->SetBeginCollisionCallBack(
+		m_pColliders = CreateRectCollider(false, Vector2{ 40.f, 40.f }, Vector2(0.0f, 0.0f));
+	m_pColliders->SetBeginCollisionCallBack(
 		std::bind([this](Collider* _pOther)
 			{
 				Monster* TargetMonster = dynamic_cast<Monster*>(_pOther->GetTarget());
@@ -80,22 +80,22 @@ void Player::Init(Vector2 _vec2Position)
 
 }
 
-void Player::Update()
+void Character::Update()
 {
   	Actor::Update();
 	Input();
 }
 
-void Player::Render(HDC _memDC)
+void Character::Render(HDC _memDC)
 {
 	Actor::Render(_memDC);
 }
 
-void Player::Attack(Collider* _pOther)
+void Character::Attack(Collider* _pOther)
 {
 }
 
-void Player::Input()
+void Character::Input()
 {
 	for (Skill* skill : m_Skills)
 		skill->Input();

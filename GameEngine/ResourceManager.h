@@ -20,7 +20,7 @@ private:
 	std::wstring GetTextureFileName(TEXTURE_TYPE _eTextureType);
 public:
 	void Init();
-	Texture* LoadTexture(TEXTURE_TYPE _eTextureType);
+	Texture* LoadTexture(TEXTURE_TYPE _eTextureType, bool _bFlipOption = false);
 	Texture* FindTexture(const std::wstring& _strKey);
 
 	TextureAtlas* LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vector2 _vec2Position, Vector2 _vec2Size, int _margin, bool _Flip);

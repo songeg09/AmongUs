@@ -27,3 +27,21 @@ void Texture::Load(std::wstring _strFilePath)
 	GetObject(m_hBitMap, sizeof(BITMAP), &m_BitMapInfomation);
 }
 
+void Texture::LoadFlipped(Texture* _srcTexture)
+{
+	m_hDC = CreateCompatibleDC(Core::GetInstance()->GetMainDC());
+
+	m_hBitMap = CreateCompatibleBitmap(Core::GetInstance()->GetMainDC(), _srcTexture->GetWidth(), _srcTexture->GetHeight());
+
+	HBITMAP hPrevBitMap = (HBITMAP)SelectObject(m_hDC, m_hBitMap);
+	DeleteObject(hPrevBitMap);
+
+	StretchBlt(
+		m_hDC, 0, 0, _srcTexture->GetWidth(), _srcTexture->GetHeight(),    // 목적지
+		_srcTexture->GetDC(), _srcTexture->GetWidth() - 1, 0, -_srcTexture->GetWidth(), _srcTexture->GetHeight(),    // 소스: xSrc=w-1, cxSrc=-w → 좌우반전
+		SRCCOPY
+	);
+
+	GetObject(m_hBitMap, sizeof(BITMAP), &m_BitMapInfomation);
+}
+

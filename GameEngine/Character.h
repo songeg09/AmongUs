@@ -7,7 +7,7 @@ class Player : public Actor
 {	
 private:
 	bool m_bInput;
-	Collider* m_pAttackCollider;
+	Collider* m_pColliders;
 	std::vector<Skill*> m_Skills;
 	
 public:
