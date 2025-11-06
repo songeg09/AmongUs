@@ -68,9 +68,6 @@
     <Filter Include="Engine\04. Object\Actor\Monster">
       <UniqueIdentifier>{cae2e56b-3d61-45f0-9ab8-49310a595c6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\Actor\Player">
-      <UniqueIdentifier>{b4ff8ff1-da58-460a-8501-56dbe7a5727d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\09. Skill">
       <UniqueIdentifier>{394d3efe-2b0f-408b-8ef7-41064a98dbe2}</UniqueIdentifier>
     </Filter>
@@ -118,6 +115,18 @@
     </Filter>
     <Filter Include="Engine\05. Resource\Data\AnimationData">
       <UniqueIdentifier>{b1df608b-f173-4ddd-91f0-ca2710c21f07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character">
+      <UniqueIdentifier>{b4ff8ff1-da58-460a-8501-56dbe7a5727d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character\Imposter">
+      <UniqueIdentifier>{e0adf8fb-b406-4634-833a-6ee3f0c11e45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crew">
+      <UniqueIdentifier>{503c5cec-6ed5-4193-9a63-d2e059b850f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character\Crew">
+      <UniqueIdentifier>{b6944007-3fda-40af-ba3c-2e03417276b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -170,8 +179,8 @@
     <ClInclude Include="Object.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Engine\04. Object\Actor\Player</Filter>
+    <ClInclude Include="Character.h">
+      <Filter>Engine\04. Object\Actor\Character</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Engine\06. Scene</Filter>
@@ -245,6 +254,9 @@
     <ClInclude Include="AnimationData.h">
       <Filter>Engine\05. Resource\Data\AnimationData</Filter>
     </ClInclude>
+    <ClInclude Include="Crew.h">
+      <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -288,8 +300,8 @@
     <ClCompile Include="Object.cpp">
       <Filter>Engine\04. Object</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Engine\04. Object\Actor\Player</Filter>
+    <ClCompile Include="Character.cpp">
+      <Filter>Engine\04. Object\Actor\Character</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Engine\06. Scene</Filter>
@@ -362,6 +374,9 @@
     </ClCompile>
     <ClCompile Include="AnimationData.cpp">
       <Filter>Engine\05. Resource\Data\AnimationData</Filter>
+    </ClCompile>
+    <ClCompile Include="Crew.cpp">
+      <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

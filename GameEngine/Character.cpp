@@ -13,7 +13,8 @@
 Character::Character()
 {
 	m_bInput = true;
-	m_pColliders = nullptr;
+	m_pWallCollider = nullptr;
+	m_pInteractCollider = nullptr;
 }
 
 Character::~Character()
@@ -32,18 +33,8 @@ void Character::Init(Vector2 _vec2Position)
 	InputManager::GetInstance()->RegistKey(VK_DOWN);
 	InputManager::GetInstance()->RegistKey(VK_SPACE);
 
-	CreateCircleCollider(true, 40.f);\
-		m_pColliders = CreateRectCollider(false, Vector2{ 40.f, 40.f }, Vector2(0.0f, 0.0f));
-	m_pColliders->SetBeginCollisionCallBack(
-		std::bind([this](Collider* _pOther)
-			{
-				Monster* TargetMonster = dynamic_cast<Monster*>(_pOther->GetTarget());
-				if (TargetMonster == nullptr)
-					return;
-				Vector2 ForceDirection = _pOther->GetPosition() - GetPosition();
-				ForceDirection.Normalize();
-				TargetMonster->AddForce(ForceDirection * 300.0f);
-			}, std::placeholders::_1));
+	m_pWallCollider = CreateRectCollider(true, Vector2(64, 32), Vector2(0,45));
+	m_pInteractCollider = CreateCircleCollider(true, 110.f, Vector2(0,15));
 
 	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
 	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.7f, ANCHOR::CENTER);
@@ -53,31 +44,10 @@ void Character::Init(Vector2 _vec2Position)
 	Actor::ResizeAnimation(ANIMATION::END);
 	Actor::InitAnimation(ANIMATION::IDLE, Idle);
 	Actor::InitAnimation(ANIMATION::RUN, Run);
-	//Actor::InitAnimation(ANIMATION::IDLE, TEXTURE_TYPE::PLAYER_IDLE_START, TEXTURE_TYPE::PLAYER_IDLE_END);
-	//Actor::InitAnimation(ANIMATION::RUN, TEXTURE_TYPE::PLAYER_RUN_START, TEXTURE_TYPE::PLAYER_RUN_END);
-	//Actor::InitAnimation(ANIMATION::ATTACK, TEXTURE_TYPE::PLAYER_ATTACK_START, TEXTURE_TYPE::PLAYER_ATTACK_END, 0.5f, ANIMATION_TYPE::ONCE);
-	//Actor::SetAnimationEvent(ANIMATION::ATTACK, 1,
-	//	[this]() {
-	//		m_pAttackCollider->SetEnable(true);
-	//	}
-	//);
-	//Actor::SetAnimationEvent(ANIMATION::ATTACK, 2,
-	//	[this]() {
-	//		m_pAttackCollider->SetEnable(false);
-	//	}
-	//);
-	//Actor::SetAnimationEvent(ANIMATION::ATTACK, 3,
-	//	[this]() {
-	//		m_bInput = true;
-	//		Actor::SetAnimation(ANIMATION::IDLE);
-	//	}
-	//);
 	Actor::SetAnimation(ANIMATION::IDLE);
 	
 	// 속도 설정
 	Actor::SetMoveSpeed(200.0f);
-
-
 }
 
 void Character::Update()
@@ -89,10 +59,6 @@ void Character::Update()
 void Character::Render(HDC _memDC)
 {
 	Actor::Render(_memDC);
-}
-
-void Character::Attack(Collider* _pOther)
-{
 }
 
 void Character::Input()

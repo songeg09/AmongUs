@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GameScene.h"
 #include "Texture.h"
-#include "Player.h"
+#include "Crew.h"
 #include "Monster.h"
 #include "InputManager.h"
 #include "CollisionManager.h"
@@ -24,7 +24,7 @@ void GameScene::Init()
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::BACKGROUND);
 	Scene::SetWindowSize(ConstValue::vec2GameSceneWindowSize.m_fx, ConstValue::vec2GameSceneWindowSize.m_fy);
 
-	Player* pPlayer = new Player;
+	Crew* pPlayer = new Crew;
 	Vector2 vec2WindowSize = Scene::GetWindowSize();
 	pPlayer->Init(ConstValue::vec2PlayerStartPosition);
 	Scene::AddObject(pPlayer, OBJECT_GROUP::PLAYABLE);

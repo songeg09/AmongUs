@@ -32,7 +32,3 @@ void Monster::Render(HDC _memDC)
 {
 	Actor::Render(_memDC);
 }
-
-void Monster::Attack(Collider* _pOther)
-{
-}

@@ -69,8 +69,8 @@ void Actor::Update()
 
 void Actor::Render(HDC _memDC)
 {
-	Object::Render(_memDC);
 	m_AnimationList[m_eDirection][m_iCurAnimation].Render(_memDC, Object::GetPosition());
+	Object::Render(_memDC);
 }
 
 void Actor::Init(Vector2 _vec2Position)

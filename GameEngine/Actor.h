@@ -22,7 +22,6 @@ private:
 public:
 	Actor();
 	virtual ~Actor();
-	virtual void Attack(Collider* _pOther) = 0;
 	inline void SetMovable(bool _bMovable) { m_bMovable = _bMovable; }
 	inline bool IsMovable() { return m_bMovable == true; }
 	inline void AddForce(Vector2 _vec2Force) { m_vec2Force += _vec2Force; }

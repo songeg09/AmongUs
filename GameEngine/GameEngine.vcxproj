@@ -142,6 +142,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="const.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="Crew.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
@@ -154,7 +155,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="RectSkill.h" />
     <ClInclude Include="RectSkillData.h" />
     <ClInclude Include="RectZone.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Crew.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameResource.cpp" />
@@ -194,7 +196,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PathManager.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="RectSkill.cpp" />
     <ClCompile Include="RectSkillData.cpp" />
     <ClCompile Include="RecteZone.cpp" />
