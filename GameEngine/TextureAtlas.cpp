@@ -27,7 +27,7 @@ Vector2 TextureAtlas::GetAtlasPosition()
 	}
 	else
 	{
-		AtlasPosition.m_fx = (m_pTexture->GetWidth() - 1) - ((m_vec2Position.m_fx + 1) * (m_vec2Size.m_fx)) + (m_vec2Position.m_fx * m_iMargin);
+		AtlasPosition.m_fx = m_pTexture->GetWidth() - ((m_vec2Position.m_fx + 1) * (m_vec2Size.m_fx)) + (m_vec2Position.m_fx * m_iMargin);
 		AtlasPosition.m_fy = (m_vec2Position.m_fy * m_vec2Size.m_fy) + (m_vec2Position.m_fy * m_iMargin);
 	}
 

@@ -5,20 +5,30 @@
 
 class Character abstract : public Actor 
 {	
+public:
+	enum CHARACTER_STATE
+	{
+		ALIVE,
+		DEAD,
+	};
+
+	enum ANIMATION
+	{
+		IDLE,
+		RUN,
+		GHOST,
+		END,
+	};
+
 private:
 	bool m_bInput;
+	CHARACTER_STATE m_eState;
 	Collider* m_pWallCollider;
 	Collider* m_pInteractCollider;
 	std::vector<Skill*> m_Skills;
 	
 public:
-	enum ANIMATION
-	{
-		IDLE,
-		RUN,
-		//DEAD,
-		END,
-	};
+	
 
 	Character();
 	~Character();

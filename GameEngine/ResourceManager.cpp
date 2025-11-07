@@ -104,8 +104,8 @@ TextureAtlas* ResourceManager::LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vect
 	std::wstring strFileName = GetTextureFileName(_eTextureType);
 
 	std::wstring strKey = strFileName.substr(0, strFileName.length() - 4);
-	strKey = strKey + std::to_wstring(_vec2Position.m_fx) + L"_" + std::to_wstring(_vec2Position.m_fx) + L"_"
-		+ std::to_wstring(_vec2Size.m_fx) + L"_" + std::to_wstring(_vec2Size.m_fx) + L"_"
+	strKey = strKey + std::to_wstring(_vec2Position.m_fx) + L"_" + std::to_wstring(_vec2Position.m_fy) + L"_"
+		+ std::to_wstring(_vec2Size.m_fx) + L"_" + std::to_wstring(_vec2Size.m_fy) + L"_"
 		+ std::to_wstring(_margin) + L"_" + std::to_wstring(_Flip);
 
 	TextureAtlas* pTextureAtlas = FindTextureAtlas(strKey);

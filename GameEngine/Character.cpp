@@ -12,6 +12,7 @@
 
 Character::Character()
 {
+	m_eState = CHARACTER_STATE::ALIVE;
 	m_bInput = true;
 	m_pWallCollider = nullptr;
 	m_pInteractCollider = nullptr;
@@ -38,13 +39,17 @@ void Character::Init(Vector2 _vec2Position)
 
 	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
 	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.7f, ANCHOR::CENTER);
+	AnimationData Ghost(TEXTURE_TYPE::CHARACTER, Vector2(0, 10), Vector2(128, 128), 0, 16, ANIMATION_TYPE::LOOP, 2.0f, ANCHOR::CENTER);
+
 
 	// 애니메이션 설정
 	Actor::SetPosition(_vec2Position);
 	Actor::ResizeAnimation(ANIMATION::END);
 	Actor::InitAnimation(ANIMATION::IDLE, Idle);
 	Actor::InitAnimation(ANIMATION::RUN, Run);
-	Actor::SetAnimation(ANIMATION::IDLE);
+	Actor::InitAnimation(ANIMATION::GHOST, Ghost);
+	Actor::SetAnimation(ANIMATION::GHOST);
+	m_eState = CHARACTER_STATE::DEAD;
 	
 	// 속도 설정
 	Actor::SetMoveSpeed(200.0f);
@@ -79,11 +84,14 @@ void Character::Input()
 	if (InputManager::GetInstance()->GetKeyState(VK_DOWN) == KEY_STATE::PRESS)
 		vec2MoveForce.m_fy += 1.0f;
 
+
 	if (vec2MoveForce.isValid() == true)
 	{
 		Actor::Move(vec2MoveForce);
-		Actor::SetAnimation(ANIMATION::RUN);
+		if(m_eState == CHARACTER_STATE::ALIVE)
+			Actor::SetAnimation(ANIMATION::RUN);
 	}
 	else
-		Actor::SetAnimation(ANIMATION::IDLE);
+		if (m_eState == CHARACTER_STATE::ALIVE)
+			Actor::SetAnimation(ANIMATION::IDLE);
 }
