@@ -18,57 +18,58 @@ Scene::~Scene()
 
 void Scene::Release()
 {
-	for (int i = 0; i < static_cast<int>(OBJECT_GROUP::END); i++)
+
+	for (Object* object : m_arrObjects)
 	{
-		for (Object* object : m_arrObjects[i])
-		{
-			delete object;
-		}
-		m_arrObjects[i].clear();
+		delete object;
 	}
+	m_arrObjects.clear();
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
 }
 
-void Scene::SetWindowSize(int _iWidth, int _iHeight)
+void Scene::SetSceneSize(int _iWidth, int _iHeight)
 {
-	Vector2 vec2ScreenStartPosition = { GetSystemMetrics(SM_CXSCREEN) / 2.0f,GetSystemMetrics(SM_CYSCREEN) / 2.0f };
-	m_vec2WindowCenterPosition = { _iWidth / 2.0f ,_iHeight / 2.0f };
-	m_vec2WindowStartPosition = { vec2ScreenStartPosition.m_fx - (_iWidth / 2.0f),
-											  vec2ScreenStartPosition.m_fy - (_iHeight / 2.0f) };
-	m_vec2WindowSize = { static_cast<float>(_iWidth),static_cast<float>(_iHeight) };
-
-	SetWindowPos(Core::GetInstance()->GethWnd(), nullptr, m_vec2WindowStartPosition.m_fx, m_vec2WindowStartPosition.m_fy,
-		_iWidth + 16, _iHeight + 39, SWP_SHOWWINDOW);
+	m_vec2SceneSize = { static_cast<float>(_iWidth),static_cast<float>(_iHeight) };
 }
 
-void Scene::AddObject(Object* _object, OBJECT_GROUP _eGroup)
+void Scene::SetViewPortSize(Vector2 _Size)
 {
-	m_arrObjects[static_cast<int>(_eGroup)].push_back(_object);
+	m_vec2ViewPortSize = _Size;
+
+	Vector2 vec2ScreenStartPosition = { GetSystemMetrics(SM_CXSCREEN) / 2.0f,GetSystemMetrics(SM_CYSCREEN) / 2.0f };
+	Vector2 m_vec2WindowStartPosition = { vec2ScreenStartPosition.m_fx - (m_vec2ViewPortSize.m_fx / 2.0f),
+											  vec2ScreenStartPosition.m_fy - (m_vec2ViewPortSize.m_fy / 2.0f) };
+
+	SetWindowPos(Core::GetInstance()->GethWnd(), nullptr, m_vec2WindowStartPosition.m_fx, m_vec2WindowStartPosition.m_fy,
+		m_vec2ViewPortSize.m_fx + 16, m_vec2ViewPortSize.m_fy + 39, SWP_SHOWWINDOW);
+
+}
+
+void Scene::AddObject(Object* _object)
+{
+	m_arrObjects.push_back(_object);
+}
+
+void Scene::AddCollider(Collider* _collider, COLLISION_TAG _eTag)
+{
+	m_arrColliders[static_cast<int>(_eTag)].push_back(_collider);
 }
 
 void Scene::Update()
 {
-	for (int i = 0; i < static_cast<int>(OBJECT_GROUP::END); i++)
-	{
-		for (int j = 0; j < m_arrObjects[i].size(); j++)
-			m_arrObjects[i][j]->Update();
-	}
+	for (int i = 0; i < m_arrObjects.size(); i++)
+		m_arrObjects[i]->Update();
 }
 
 void Scene::LateUpdate()
 {
-	for (int i = 0; i < static_cast<int>(OBJECT_GROUP::END); i++)
-	{
-		for (int j = 0; j < m_arrObjects[i].size(); j++)
-			m_arrObjects[i][j]->LateUpdate();
-	}
+
+	for (int i = 0; i < m_arrObjects.size(); i++)
+		m_arrObjects[i]->LateUpdate();
 }
 
 void Scene::Render(HDC _memDC)
 {
-	for (int i = 0; i < static_cast<int>(OBJECT_GROUP::END); i++)
-	{
-		for (Object* object : m_arrObjects[i])
-			object->Render(_memDC);
-	}
+	for (Object* object : m_arrObjects)
+		object->Render(_memDC);
 }

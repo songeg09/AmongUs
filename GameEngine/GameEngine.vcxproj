@@ -151,7 +151,6 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GDIManager.h" />
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="Monster.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="pch.h" />
@@ -168,7 +167,6 @@
     <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillObject.h" />
     <ClInclude Include="struct.h" />
-    <ClInclude Include="SwordBeamObject.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureAtlas.h" />
@@ -193,7 +191,6 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GDIManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -207,7 +204,6 @@
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillData.cpp" />
     <ClCompile Include="SkillObject.cpp" />
-    <ClCompile Include="SwordBeamObject.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
     <ClCompile Include="TimerManager.cpp" />

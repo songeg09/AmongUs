@@ -22,7 +22,7 @@ void CircleDamageSkill::Create()
 		if (m_pSkillObject == nullptr)
 		{
 			m_pSkillObject = new CircleZone;
-			SceneManager::GetInstance()->GetCurScene()->AddObject(m_pSkillObject, Skill::GetObjectGroup());
+			//SceneManager::GetInstance()->GetCurScene()->AddObject(m_pSkillObject, Skill::GetObjectGroup());
 		}
 
 		if (data->GetUseTarget() == true)

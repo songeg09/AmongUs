@@ -18,8 +18,8 @@ public:
 	virtual void Render(HDC _memDC);
 	virtual void Init(Vector2 _vec2Position);
 
-	Collider* CreateRectCollider(bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
-	Collider* CreateCircleCollider(bool _eEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	Collider* CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	Collider* CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
 	void ColliderRender(HDC _memDC);
 	inline bool UseCollider() { return m_pColliderList.size() != 0; }
 

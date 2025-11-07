@@ -65,9 +65,6 @@
     <Filter Include="Engine\04. Object\Actor">
       <UniqueIdentifier>{f3aa19f6-9394-4124-8700-12c84926a94b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\Actor\Monster">
-      <UniqueIdentifier>{cae2e56b-3d61-45f0-9ab8-49310a595c6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\09. Skill">
       <UniqueIdentifier>{394d3efe-2b0f-408b-8ef7-41064a98dbe2}</UniqueIdentifier>
     </Filter>
@@ -103,9 +100,6 @@
     </Filter>
     <Filter Include="Engine\04. Object\SkillObject\RectZone">
       <UniqueIdentifier>{b05c2344-f808-42fc-8620-92cf9682959c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\SkillObject\RectZone\SwordBeamObject">
-      <UniqueIdentifier>{a41f500a-3a1a-4886-817d-f5028aae3059}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\09. Skill\RectSkill">
       <UniqueIdentifier>{7b76c51c-c172-4a1e-85e7-60a06980ad9c}</UniqueIdentifier>
@@ -197,9 +191,6 @@
     <ClInclude Include="GDIManager.h">
       <Filter>Engine\03. Manager\GDIManager</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Engine\04. Object\Actor\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Engine\03. Manager\CollisionManager</Filter>
     </ClInclude>
@@ -244,9 +235,6 @@
     </ClInclude>
     <ClInclude Include="SkillData.h">
       <Filter>Engine\05. Resource\Data\SkillData</Filter>
-    </ClInclude>
-    <ClInclude Include="SwordBeamObject.h">
-      <Filter>Engine\04. Object\SkillObject\RectZone\SwordBeamObject</Filter>
     </ClInclude>
     <ClInclude Include="TextureAtlas.h">
       <Filter>Engine\05. Resource\TextureAtlas</Filter>
@@ -318,9 +306,6 @@
     <ClCompile Include="GDIManager.cpp">
       <Filter>Engine\03. Manager\GDIManager</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Engine\04. Object\Actor\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Engine\03. Manager\CollisionManager</Filter>
     </ClCompile>
@@ -365,9 +350,6 @@
     </ClCompile>
     <ClCompile Include="SkillData.cpp">
       <Filter>Engine\05. Resource\Data\SkillData</Filter>
-    </ClCompile>
-    <ClCompile Include="SwordBeamObject.cpp">
-      <Filter>Engine\04. Object\SkillObject\RectZone\SwordBeamObject</Filter>
     </ClCompile>
     <ClCompile Include="TextureAtlas.cpp">
       <Filter>Engine\05. Resource\TextureAtlas</Filter>

@@ -22,7 +22,7 @@ void RectSkill::Create()
 		if (m_pSkillObject == nullptr)
 		{
 			m_pSkillObject = new RectZone;
-			SceneManager::GetInstance()->GetCurScene()->AddObject(m_pSkillObject, Skill::GetObjectGroup());
+			//SceneManager::GetInstance()->GetCurScene()->AddObject(m_pSkillObject, Skill::GetObjectGroup());
 		}
 
 		if (data->GetUseTarget() == true)

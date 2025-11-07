@@ -1,14 +1,16 @@
 #pragma once
 
 class Object;
+class Collider;
 class Scene
 {
 protected:
-	Vector2					m_vec2WindowStartPosition;
-	Vector2					m_vec2WindowCenterPosition;
-	Vector2					m_vec2WindowSize;
-	std::vector<Object*>	m_arrObjects[static_cast<int>(OBJECT_GROUP::END)];
-	std::wstring				m_strName;
+	Vector2 m_vec2SceneSize;
+	Vector2 m_vec2ViewPortSize;
+
+	std::vector<Object*>	m_arrObjects;
+	std::vector<Collider*>  m_arrColliders[static_cast<int>(COLLISION_TAG::END)];
+	std::wstring			m_strName;
 public:
 	Scene(std::wstring _strName);
 	virtual ~Scene();
@@ -18,10 +20,15 @@ public:
 	virtual void Init() = 0;
 	virtual void Release();
 
-	inline const std::vector<Object*>& GetObjectGroup(OBJECT_GROUP _eObjectGrup) { return m_arrObjects[static_cast<int>(_eObjectGrup)]; }
-	void SetWindowSize(int _iWidth, int _iHeight);
-	void AddObject(Object* _object, OBJECT_GROUP _eGroup);
-	inline Vector2 GetWindowSize() { return m_vec2WindowSize; }
+	const std::vector<Collider*>& GetCollisionTagGroup(COLLISION_TAG _eCollsionTag) {return m_arrColliders[static_cast<int>(_eCollsionTag)]; }
+	void SetSceneSize(int _iWidth, int _iHeight);
+	void AddObject(Object* _object);
+	void AddCollider(Collider* _collider, COLLISION_TAG _eTag);
+	inline Vector2 GetSceneSize() { return m_vec2SceneSize; }
 	inline void SetName(const std::wstring _strName) { m_strName = _strName; }
+
+	Vector2 GetViewPortSize() { return m_vec2ViewPortSize; }
+	void SetViewPortSize(Vector2 _Size);
+	virtual Vector2 GetViewPortTopLeft() { return Vector2(0.f, 0.f); }
 };
 

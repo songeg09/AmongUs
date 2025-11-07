@@ -11,7 +11,7 @@
 		Type();						\
 		~Type();
 
-enum class OBJECT_GROUP
+enum class COLLISION_TAG
 {
 	MONSTER,
 	PLAYABLE,
