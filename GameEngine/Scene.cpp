@@ -35,6 +35,7 @@ void Scene::SetSceneSize(int _iWidth, int _iHeight)
 void Scene::SetViewPortSize(Vector2 _Size)
 {
 	m_vec2ViewPortSize = _Size;
+	m_vec2BackBufferSize = m_vec2ViewPortSize * 2;
 
 	Vector2 vec2ScreenStartPosition = { GetSystemMetrics(SM_CXSCREEN) / 2.0f,GetSystemMetrics(SM_CYSCREEN) / 2.0f };
 	Vector2 m_vec2WindowStartPosition = { vec2ScreenStartPosition.m_fx - (m_vec2ViewPortSize.m_fx / 2.0f),
@@ -43,6 +44,18 @@ void Scene::SetViewPortSize(Vector2 _Size)
 	SetWindowPos(Core::GetInstance()->GethWnd(), nullptr, m_vec2WindowStartPosition.m_fx, m_vec2WindowStartPosition.m_fy,
 		m_vec2ViewPortSize.m_fx + 16, m_vec2ViewPortSize.m_fy + 39, SWP_SHOWWINDOW);
 
+}
+
+Vector2 Scene::GetViewportTopLeftInBackBuffer()
+{
+	Vector2 CenterPos = m_vec2BackBufferSize;
+	CenterPos.m_fx /= 2;
+	CenterPos.m_fy /= 2;
+
+	CenterPos.m_fx -= (m_vec2ViewPortSize.m_fx / 2);
+	CenterPos.m_fy -= (m_vec2ViewPortSize.m_fy / 2);
+
+	return CenterPos;
 }
 
 void Scene::AddObject(Object* _object)

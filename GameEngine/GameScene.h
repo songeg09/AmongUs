@@ -16,6 +16,7 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 	virtual void Render(HDC _memDC) override;
-	virtual Vector2 GetViewPortTopLeft() override;
+	Vector2 GetViewPortTopLeftInScene() override;
+	Vector2 GetBackBufferTopLeftInScene() override;
 };
 

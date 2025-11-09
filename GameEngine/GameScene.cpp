@@ -52,19 +52,29 @@ void GameScene::Update()
 
 void GameScene::Render(HDC _memDC)
 {
-	Vector2 ViewPortTopLeft = GameScene::GetViewPortTopLeft();
-	BitBlt(_memDC, 0, 0, m_vec2ViewPortSize.m_fx, m_vec2ViewPortSize.m_fy,
-		m_pBackGround->GetDC(), ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, SRCCOPY);
+	Vector2 ViewPortTopLeft = GetViewPortTopLeftInScene();
+	BitBlt(_memDC, 0, 0, m_vec2BackBufferSize.m_fx, m_vec2BackBufferSize.m_fy,
+		m_pBackGround->GetDC(), ViewPortTopLeft.m_fx - m_vec2ViewPortSize.m_fx / 2, ViewPortTopLeft.m_fy - m_vec2ViewPortSize.m_fy / 2, SRCCOPY);
 
 	Scene::Render(_memDC);
 }
 
-Vector2 GameScene::GetViewPortTopLeft()
+Vector2 GameScene::GetViewPortTopLeftInScene()
 {
-	if (m_Player == nullptr)
-		Scene::GetViewPortTopLeft();
+	/*if (m_Player == nullptr)
+		Scene::GetViewPortTopLeft();*/
+
 	Vector2 PlayerPosition = m_Player->GetPosition();
 	PlayerPosition.m_fx = std::clamp(PlayerPosition.m_fx - m_vec2ViewPortSize.m_fx * 0.5f, 0.0f, m_vec2SceneSize.m_fx - m_vec2ViewPortSize.m_fx);
 	PlayerPosition.m_fy = std::clamp(PlayerPosition.m_fy - m_vec2ViewPortSize.m_fy * 0.5f, 0.0f, m_vec2SceneSize.m_fy - m_vec2ViewPortSize.m_fy);
 	return PlayerPosition;
+}
+
+Vector2 GameScene::GetBackBufferTopLeftInScene()
+{
+	Vector2 BackBufferTopLeftInScene = GetViewPortTopLeftInScene();
+	BackBufferTopLeftInScene.m_fx -= m_vec2ViewPortSize.m_fx / 2;
+	BackBufferTopLeftInScene.m_fy -= m_vec2ViewPortSize.m_fy / 2;
+
+	return BackBufferTopLeftInScene;
 }

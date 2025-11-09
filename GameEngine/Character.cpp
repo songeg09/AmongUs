@@ -52,7 +52,7 @@ void Character::Init(Vector2 _vec2Position)
 	//m_eState = CHARACTER_STATE::DEAD;
 	
 	// 속도 설정
-	Actor::SetMoveSpeed(200.0f);
+	Actor::SetMoveSpeed(300.0f);
 }
 
 void Character::Update()

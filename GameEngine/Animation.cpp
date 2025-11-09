@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "TextureAtlas.h"
 #include "TimerManager.h"
+#include "SceneManager.h"
 
 Animation::Animation()
 {
@@ -77,6 +78,11 @@ void Animation::Render(HDC _memDC, Vector2 _vec2Position)
 	}
 	if (m_vecList.size() == 0)
 		return;
+
+	Vector2 BackBuffertTopLeftInScene = SceneManager::GetInstance()->GetCurScene()->GetBackBufferTopLeftInScene();
+
+	_vec2Position.m_fx -= BackBuffertTopLeftInScene.m_fx;
+	_vec2Position.m_fy -= BackBuffertTopLeftInScene.m_fy;
 
 	TransparentBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
 		m_vecList[m_iCurIndex].m_pTextureAtlas->GetDC(),

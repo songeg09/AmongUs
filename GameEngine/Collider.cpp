@@ -2,6 +2,7 @@
 #include "Collider.h"
 #include "GDIManager.h"
 #include "Actor.h"
+#include "SceneManager.h"
 
 unsigned int Collider::s_uID = 0;
 
@@ -99,11 +100,12 @@ void RectCollider::Render(HDC _memDC)
 	else
 		GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::BLUE);
 
+	Vector2 BackBufferTopLeftInScene = SceneManager::GetInstance()->GetCurScene()->GetBackBufferTopLeftInScene();
 	Rectangle(_memDC,
-		GetPosition().m_fx - GetSize().m_fx / 2.0f,
-		GetPosition().m_fy - GetSize().m_fy / 2.0f,
-		GetPosition().m_fx + GetSize().m_fx / 2.0f,
-		GetPosition().m_fy + GetSize().m_fy / 2.0f
+		GetPosition().m_fx - BackBufferTopLeftInScene.m_fx - GetSize().m_fx / 2.0f,
+		GetPosition().m_fy - BackBufferTopLeftInScene.m_fy - GetSize().m_fy / 2.0f,
+		GetPosition().m_fx - BackBufferTopLeftInScene.m_fx + GetSize().m_fx / 2.0f,
+		GetPosition().m_fy - BackBufferTopLeftInScene.m_fy + GetSize().m_fy / 2.0f
 	);
 
 	GDIManager::GetInstance()->ResetBrush(_memDC);
@@ -136,11 +138,13 @@ void CircleCollider::Render(HDC _memDC)
 	{
 		GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::BLUE);
 	}
+
+	Vector2 BackBufferTopLeftInScene = SceneManager::GetInstance()->GetCurScene()->GetBackBufferTopLeftInScene();
 	Ellipse(_memDC,
-		GetPosition().m_fx - GetSize(),
-		GetPosition().m_fy - GetSize(),
-		GetPosition().m_fx + GetSize(),
-		GetPosition().m_fy + GetSize());
+		GetPosition().m_fx - BackBufferTopLeftInScene.m_fx - GetSize(),
+		GetPosition().m_fy - BackBufferTopLeftInScene.m_fy - GetSize(),
+		GetPosition().m_fx - BackBufferTopLeftInScene.m_fx + GetSize(),
+		GetPosition().m_fy - BackBufferTopLeftInScene.m_fy + GetSize());
 
 	GDIManager::GetInstance()->ResetBrush(_memDC);
 	GDIManager::GetInstance()->ResetPen(_memDC);
