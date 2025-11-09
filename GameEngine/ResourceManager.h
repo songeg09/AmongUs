@@ -4,7 +4,8 @@
 enum TEXTURE_TYPE
 {
 	BACKGROUND,
-	CHARACTER
+	DEVMAP,
+	CHARACTER,
 };
 
 class Texture;

@@ -26,6 +26,7 @@ std::wstring ResourceManager::GetTextureFileName(TEXTURE_TYPE _eTextureType)
 	switch (_eTextureType)
 	{
 	case TEXTURE_TYPE::BACKGROUND:			return L"background.bmp";
+	case TEXTURE_TYPE::DEVMAP:			return L"devmap.bmp";
 	case TEXTURE_TYPE::CHARACTER:			return L"character.bmp";
 	default: return L"";
 	}

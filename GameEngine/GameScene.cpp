@@ -23,12 +23,12 @@ void GameScene::Init()
 	InputManager::GetInstance()->RegistKey(VK_SPACE);
 
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::BACKGROUND);
-	Scene::SetSceneSize(ConstValue::vec2GameSceneSize.m_fx, ConstValue::vec2GameSceneSize.m_fy);
+	Scene::SetSceneSize(m_pBackGround->GetWidth(), m_pBackGround->GetHeight());
 	Scene::SetViewPortSize(ConstValue::vec2ViewPortSize);
 
-
 	Crew* pPlayer = new Crew;
-	pPlayer->Init(ConstValue::vec2PlayerStartPosition);
+	Vector2 PlayerStart(m_pBackGround->GetWidth() / 2, m_pBackGround->GetHeight() / 2);
+	pPlayer->Init(PlayerStart);
 	Scene::AddObject(pPlayer);
 	m_Player = pPlayer;
 	//for (int i = 0; i < 1; ++i)
@@ -52,8 +52,9 @@ void GameScene::Update()
 
 void GameScene::Render(HDC _memDC)
 {
-	BitBlt(_memDC, 0, 0, m_pBackGround->GetWidth(), m_pBackGround->GetHeight(),
-		m_pBackGround->GetDC(), 0, 0, SRCCOPY);
+	Vector2 ViewPortTopLeft = GameScene::GetViewPortTopLeft();
+	BitBlt(_memDC, 0, 0, m_vec2ViewPortSize.m_fx, m_vec2ViewPortSize.m_fy,
+		m_pBackGround->GetDC(), ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, SRCCOPY);
 
 	Scene::Render(_memDC);
 }

@@ -38,12 +38,12 @@ void Core::Render()
 		return;
 	SceneManager::GetInstance()->Render(m_hBackDC);
 
-	std::wstring FPSMessage = std::format(L"FPS : {}", TimerManager::GetInstance()->intGetFPS());
-	TextOutW(m_hBackDC, 0, 0, FPSMessage.c_str(), FPSMessage.length());
-
 	Vector2 ViewPortTopLeft = SceneManager::GetInstance()->GetCurScene()->GetViewPortTopLeft();
 	Vector2 ViewPortSize = SceneManager::GetInstance()->GetCurScene()->GetViewPortSize();
+
+	std::wstring FPSMessage = std::format(L"FPS : {}", TimerManager::GetInstance()->intGetFPS());
 	BitBlt(m_hDC, 0, 0, ViewPortSize.m_fx, ViewPortSize.m_fy, m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, SRCCOPY);
+	TextOutW(m_hDC, 0, 0, FPSMessage.c_str(), FPSMessage.length());
 }
 
 
@@ -75,8 +75,8 @@ void Core::CreateBackDC()
 		DeleteDC(m_hBackDC);
 	if (SceneManager::GetInstance()->GetCurScene() != nullptr)
 	{
-		Vector2 WindowSize = SceneManager::GetInstance()->GetCurScene()->GetSceneSize();
-		m_hBackBitMap = CreateCompatibleBitmap(m_hDC, WindowSize.m_fx, WindowSize.m_fy);
+		Vector2 ViewPortSize = SceneManager::GetInstance()->GetCurScene()->GetViewPortSize();
+		m_hBackBitMap = CreateCompatibleBitmap(m_hDC, ViewPortSize.m_fx, ViewPortSize.m_fy);
 		m_hBackDC = CreateCompatibleDC(m_hDC);
 		HBITMAP hOldBitMap = (HBITMAP)SelectObject(m_hBackDC, m_hBackBitMap);
 		DeleteObject(hOldBitMap);
