@@ -28,8 +28,6 @@ private:
 	std::vector<Skill*> m_Skills;
 	
 public:
-	
-
 	Character();
 	~Character();
 	virtual void Init(Vector2 _vec2Position);
