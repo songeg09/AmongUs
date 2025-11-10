@@ -125,6 +125,12 @@
     <Filter Include="Engine\04. Object\Wall">
       <UniqueIdentifier>{cbef6d51-2917-4f98-b5f0-a3a910ae9e3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Wall\RectWall">
+      <UniqueIdentifier>{a766ff9d-227d-49db-a372-0f9bec081e63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Wall\CircleWall">
+      <UniqueIdentifier>{bc8239ef-7c41-4251-bcf6-645b8a679878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -251,6 +257,9 @@
     <ClInclude Include="Wall.h">
       <Filter>Engine\04. Object\Wall</Filter>
     </ClInclude>
+    <ClInclude Include="RectWall.h">
+      <Filter>Engine\04. Object\Wall\RectWall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -368,6 +377,9 @@
     </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Engine\04. Object\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="RectWall.cpp">
+      <Filter>Engine\04. Object\Wall\RectWall</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

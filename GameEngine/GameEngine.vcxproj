@@ -157,6 +157,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="RectSkill.h" />
     <ClInclude Include="RectSkillData.h" />
+    <ClInclude Include="RectWall.h" />
     <ClInclude Include="RectZone.h" />
     <ClInclude Include="RectZoneData.h" />
     <ClInclude Include="Resource.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="RectSkill.cpp" />
     <ClCompile Include="RectSkillData.cpp" />
     <ClCompile Include="RecteZone.cpp" />
+    <ClCompile Include="RectWall.cpp" />
     <ClCompile Include="RectZoneData.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

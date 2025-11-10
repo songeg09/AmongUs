@@ -6,6 +6,8 @@ public:
 	~RectWall();
 
 	void Update();
+	void Render(HDC _memDC) override;
+	void Init(Vector2 _)
 
 };
 
