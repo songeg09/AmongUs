@@ -54,33 +54,6 @@ void Collider::FinalUpdate()
 {
 	Vector2 vecObjectPosition = m_pTarget->GetPosition();
 	m_vecPosition = vecObjectPosition + m_vecOffset;
-	//Actor* Owner = dynamic_cast<Actor*>(m_pTarget);
-	//if (Owner == nullptr)
-	//{
-	//	m_vecPosition = vecObjectPosition + m_vecOffset;
-	//}
-	//else
-	//{
-	//	switch (Owner->GetDirection())
-	//	{
-	//	case DIRECTION::LEFT:
-	//		m_vecPosition.m_fx = vecObjectPosition.m_fx - m_vecOffset.m_fy;
-	//		m_vecPosition.m_fy = vecObjectPosition.m_fy + m_vecOffset.m_fx;
-	//		break;
-	//	case DIRECTION::RIGHT:
-	//		m_vecPosition.m_fx = vecObjectPosition.m_fx + m_vecOffset.m_fy;
-	//		m_vecPosition.m_fy = vecObjectPosition.m_fy - m_vecOffset.m_fx;
-	//		break;
-	//	case DIRECTION::UP:
-	//		m_vecPosition.m_fx = vecObjectPosition.m_fx - m_vecOffset.m_fx;
-	//		m_vecPosition.m_fy = vecObjectPosition.m_fy - m_vecOffset.m_fy;
-	//		break;
-	//	case DIRECTION::DOWN:
-	//		m_vecPosition.m_fx = vecObjectPosition.m_fx + m_vecOffset.m_fx;
-	//		m_vecPosition.m_fy = vecObjectPosition.m_fy + m_vecOffset.m_fy;
-	//		break;
-	//	}
-	//}
 }
 
 void RectCollider::Init(bool _bEnabled, Vector2 _vecSize, Vector2 _vecOffset)

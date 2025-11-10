@@ -122,6 +122,9 @@
     <Filter Include="Engine\04. Object\Actor\Character\Crew">
       <UniqueIdentifier>{b6944007-3fda-40af-ba3c-2e03417276b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Wall">
+      <UniqueIdentifier>{cbef6d51-2917-4f98-b5f0-a3a910ae9e3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -245,6 +248,9 @@
     <ClInclude Include="Crew.h">
       <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
     </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Engine\04. Object\Wall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -359,6 +365,9 @@
     </ClCompile>
     <ClCompile Include="Crew.cpp">
       <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Engine\04. Object\Wall</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

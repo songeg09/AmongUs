@@ -34,8 +34,8 @@ void Character::Init(Vector2 _vec2Position)
 	InputManager::GetInstance()->RegistKey(VK_DOWN);
 	InputManager::GetInstance()->RegistKey(VK_SPACE);
 
-	m_pWallCollider = CreateRectCollider(COLLISION_TAG::MONSTER ,true, Vector2(64, 32), Vector2(0,45));
-	m_pInteractCollider = CreateCircleCollider(COLLISION_TAG::MONSTER, true, 110.f, Vector2(0,15));
+	m_pWallCollider = CreateRectCollider(COLLISION_TAG::CHARACTER,true, Vector2(64, 32), Vector2(0,45));
+	m_pInteractCollider = CreateCircleCollider(COLLISION_TAG::INTERACT, true, 110.f, Vector2(0,15));
 
 	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
 	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.7f, ANCHOR::CENTER);

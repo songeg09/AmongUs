@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "CollisionManager.h"
 #include "TextureAtlas.h"
+#include "Wall.h"
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
@@ -26,11 +27,18 @@ void GameScene::Init()
 	Scene::SetSceneSize(m_pBackGround->GetWidth(), m_pBackGround->GetHeight());
 	Scene::SetViewPortSize(ConstValue::vec2ViewPortSize);
 
+	// 플레이어 생성
 	Crew* pPlayer = new Crew;
 	Vector2 PlayerStart(m_pBackGround->GetWidth() / 2, m_pBackGround->GetHeight() / 2);
 	pPlayer->Init(PlayerStart);
 	Scene::AddObject(pPlayer);
 	m_Player = pPlayer;
+
+	// 벽 생성
+	Wall* wall = new Wall;
+	wall->Init();
+	Scene::AddObject(wall);
+	
 	//for (int i = 0; i < 1; ++i)
 	//{
 	//	Monster* monster = new Monster;
@@ -40,7 +48,7 @@ void GameScene::Init()
 	//	Scene::AddObject(monster, OBJECT_GROUP::MONSTER);
 	//}
 
-	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYABLE);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::CHARACTER, COLLISION_TAG::WALL);
 	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::MONSTER);
 	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYER_SKILL);
 }
