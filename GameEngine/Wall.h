@@ -13,7 +13,7 @@ public:
 	void Update() override;
 	void Render(HDC _memDC) override;
 	void Init(Vector2 _vec2Position);
-	void ResolvePenetration(Collider* _pOther) = 0;
+	virtual void ResolvePenetration(Collider* _pOther) = 0;
 
 };
 

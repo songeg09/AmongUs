@@ -110,17 +110,8 @@
     <Filter Include="Engine\05. Resource\Data\AnimationData">
       <UniqueIdentifier>{b1df608b-f173-4ddd-91f0-ca2710c21f07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\Actor\Character">
-      <UniqueIdentifier>{b4ff8ff1-da58-460a-8501-56dbe7a5727d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\Actor\Character\Imposter">
-      <UniqueIdentifier>{e0adf8fb-b406-4634-833a-6ee3f0c11e45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Crew">
       <UniqueIdentifier>{503c5cec-6ed5-4193-9a63-d2e059b850f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\Actor\Character\Crew">
-      <UniqueIdentifier>{b6944007-3fda-40af-ba3c-2e03417276b1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\04. Object\Wall">
       <UniqueIdentifier>{cbef6d51-2917-4f98-b5f0-a3a910ae9e3e}</UniqueIdentifier>
@@ -130,6 +121,30 @@
     </Filter>
     <Filter Include="Engine\04. Object\Wall\CircleWall">
       <UniqueIdentifier>{bc8239ef-7c41-4251-bcf6-645b8a679878}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character">
+      <UniqueIdentifier>{4fa3d97a-6d62-438c-807b-de5165b69a07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character\Crew">
+      <UniqueIdentifier>{6e9cf1fa-64ae-4e2f-a80c-1d7967b85ad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character\Imposter">
+      <UniqueIdentifier>{0dc7d97e-5f06-4d1f-82f0-d88f68379ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character\Player">
+      <UniqueIdentifier>{d6d73cfd-508c-48db-a746-9f61ec312c5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character\Monster">
+      <UniqueIdentifier>{2fdd91b4-107b-42dd-87fe-7b6fe493ce12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\GameObject">
+      <UniqueIdentifier>{cb1375c0-e460-4806-b7f8-36b2037c8c74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Interactable">
+      <UniqueIdentifier>{3227c5c3-1bb6-4688-99b8-5e3cc7edcbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\GameObject\Vent">
+      <UniqueIdentifier>{1f7f2bdf-7de5-4973-a1fb-54a6a9cb8ea9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -181,9 +196,6 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Engine\04. Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Engine\04. Object\Actor\Character</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Engine\06. Scene</Filter>
@@ -251,14 +263,32 @@
     <ClInclude Include="AnimationData.h">
       <Filter>Engine\05. Resource\Data\AnimationData</Filter>
     </ClInclude>
-    <ClInclude Include="Crew.h">
-      <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
-    </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Engine\04. Object\Wall</Filter>
     </ClInclude>
-    <ClInclude Include="RectWall.h">
-      <Filter>Engine\04. Object\Wall\RectWall</Filter>
+    <ClInclude Include="Character.h">
+      <Filter>Engine\04. Object\Actor\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Crew.h">
+      <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
+    </ClInclude>
+    <ClInclude Include="Imposter.h">
+      <Filter>Engine\04. Object\Actor\Character\Imposter</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Engine\04. Object\Actor\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Engine\04. Object\Actor\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\04. Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Interactable.h">
+      <Filter>Engine\04. Object\Interactable</Filter>
+    </ClInclude>
+    <ClInclude Include="Vent.h">
+      <Filter>Engine\04. Object\GameObject\Vent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,9 +332,6 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Engine\04. Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Engine\04. Object\Actor\Character</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Engine\06. Scene</Filter>
@@ -372,14 +399,29 @@
     <ClCompile Include="AnimationData.cpp">
       <Filter>Engine\05. Resource\Data\AnimationData</Filter>
     </ClCompile>
-    <ClCompile Include="Crew.cpp">
-      <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Engine\04. Object\Wall</Filter>
     </ClCompile>
-    <ClCompile Include="RectWall.cpp">
-      <Filter>Engine\04. Object\Wall\RectWall</Filter>
+    <ClCompile Include="Character.cpp">
+      <Filter>Engine\04. Object\Actor\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Crew.cpp">
+      <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="Imposter.cpp">
+      <Filter>Engine\04. Object\Actor\Character\Imposter</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Engine\04. Object\Actor\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Engine\04. Object\Actor\Character\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\04. Object\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Vent.cpp">
+      <Filter>Engine\04. Object\GameObject\Vent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

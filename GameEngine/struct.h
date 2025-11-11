@@ -83,6 +83,11 @@ struct Vector2
 	{
 		return sqrt(pow(m_fx, 2) + pow(m_fy, 2));
 	}
+	static float Distance(Vector2 _first, Vector2 _second)
+	{
+		Vector2 NewVector = _second - _first;
+		return NewVector.Length();
+	}
 	void Normalize()
 	{
 		float length = Length();

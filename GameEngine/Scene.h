@@ -35,6 +35,5 @@ public:
 	virtual Vector2 GetViewPortTopLeftInScene() { return Vector2(0, 0); }
 	virtual Vector2 GetBackBufferTopLeftInScene() { return Vector2(-m_vec2ViewPortSize.m_fx / 2, -m_vec2ViewPortSize.m_fy / 2); }
 
-	void 
 };
 

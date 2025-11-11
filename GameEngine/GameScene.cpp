@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "GameScene.h"
 #include "Texture.h"
-#include "Crew.h"
+#include "Player.h"
 #include "Monster.h"
+#include "GameObject.h"
 #include "InputManager.h"
 #include "CollisionManager.h"
 #include "TextureAtlas.h"
@@ -28,16 +29,26 @@ void GameScene::Init()
 	Scene::SetViewPortSize(ConstValue::vec2ViewPortSize);
 
 	// 플레이어 생성
-	Crew* pPlayer = new Crew;
+	Player* pPlayer = new Player;
 	Vector2 PlayerStart(m_pBackGround->GetWidth() / 2, m_pBackGround->GetHeight() / 2);
 	pPlayer->Init(PlayerStart);
 	Scene::AddObject(pPlayer);
 	m_Player = pPlayer;
 
+	Monster* pMonster = new Monster;
+	PlayerStart.m_fx += 200;
+	pMonster->Init(PlayerStart);
+	Scene::AddObject(pMonster);
+
+	GameObject* pGameObjet = new GameObject;
+	PlayerStart.m_fx += 200;
+	pGameObjet->Init(PlayerStart);
+	Scene::AddObject(pGameObjet);
+
 	// 벽 생성
-	Wall* wall = new Wall;
-	wall->Init();
-	Scene::AddObject(wall);
+	//Wall* wall = new Wall;
+	//wall->Init();
+	//Scene::AddObject(wall);
 	
 	//for (int i = 0; i < 1; ++i)
 	//{
@@ -48,7 +59,11 @@ void GameScene::Init()
 	//	Scene::AddObject(monster, OBJECT_GROUP::MONSTER);
 	//}
 
-	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::CHARACTER, COLLISION_TAG::WALL);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::WALL_DETECTOR, COLLISION_TAG::WALL);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_PLAYER_DETECTOR);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_ATTACK_RANGE);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_INTERACTION, COLLISION_TAG::OBJECT_INTERACTION_DETECTOR);
+
 	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::MONSTER);
 	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYER_SKILL);
 }

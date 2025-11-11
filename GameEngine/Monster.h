@@ -1,18 +1,16 @@
 #pragma once
-#include"Actor.h"
-#include"ResourceManager.h"
-class Monster : public Actor
+#include "Character.h"
+
+class Monster : public Character
 {
-	enum ANIMATION
-	{
-		IDLE,
-		END
-	};
 private:
+	Collider* m_pPlayerDetectCollider;
+	Collider* m_pAttackRangeCollider;
 public:
 	Monster();
 	~Monster();
-	virtual void Init(Vector2 _vec2Position);
+
+	void Init(Vector2 _vec2Position) override;
 	virtual void Update() override;
-	virtual void Render(HDC _memDC) override;
 };
+
