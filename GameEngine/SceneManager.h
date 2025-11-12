@@ -2,6 +2,7 @@
 #include "Scene.h"
 enum class SCENE_TYPE
 {
+	TITLE,
 	GAME,
 	END,
 };

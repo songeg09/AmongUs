@@ -1,0 +1,33 @@
+#include "pch.h"
+#include "SettingsManager.h"
+#include "Core.h"
+
+SettingsManager::SettingsManager()
+{
+
+}
+
+SettingsManager::~SettingsManager()
+{
+
+}
+
+void SettingsManager::Init()
+{
+	SetResoultion();
+}
+
+void SettingsManager::SetResoultion()
+{
+	Vector2 vec2ScreenStartPosition = { GetSystemMetrics(SM_CXSCREEN) / 2.0f,GetSystemMetrics(SM_CYSCREEN) / 2.0f };
+	Vector2 m_vec2WindowStartPosition = { vec2ScreenStartPosition.m_fx - (ConstValue::vec2Resolution.m_fx / 2.0f),
+											  vec2ScreenStartPosition.m_fy - (ConstValue::vec2Resolution.m_fy / 2.0f) };
+
+	SetWindowPos(Core::GetInstance()->GethWnd(), nullptr, m_vec2WindowStartPosition.m_fx, m_vec2WindowStartPosition.m_fy,
+		ConstValue::vec2Resolution.m_fx + 16, ConstValue::vec2Resolution.m_fy + 39, SWP_SHOWWINDOW);
+}
+
+Vector2 SettingsManager::GetResolution()
+{
+	return ConstValue::vec2Resolution;
+}

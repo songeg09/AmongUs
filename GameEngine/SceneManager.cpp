@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "Scene.h"
 #include "GameScene.h"
+#include "TitleScene.h"
 
 SceneManager::SceneManager() : m_arrScene{}
 {
@@ -21,8 +22,8 @@ SceneManager::~SceneManager()
 }
 void SceneManager::Init()
 {
-	m_arrScene[static_cast<int>(SCENE_TYPE::GAME)] = new GameScene(L"Play");
-	SceneChange(SCENE_TYPE::GAME);
+	m_arrScene[static_cast<int>(SCENE_TYPE::TITLE)] = new TitleScene(L"Title");
+	SceneChange(SCENE_TYPE::TITLE);
 }
 
 void SceneManager::Update()

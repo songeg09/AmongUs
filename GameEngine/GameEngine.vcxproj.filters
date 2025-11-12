@@ -146,6 +146,24 @@
     <Filter Include="Engine\04. Object\GameObject\Vent">
       <UniqueIdentifier>{1f7f2bdf-7de5-4973-a1fb-54a6a9cb8ea9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06. Scene\TitleScene">
+      <UniqueIdentifier>{8c9f0fe6-f17f-4af3-afca-5fc1eddf4987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Manager\SettingsManager">
+      <UniqueIdentifier>{8b2ff356-cd47-43fc-9607-7f0b9a0de018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UIElement">
+      <UniqueIdentifier>{c77b3e4b-a636-4c3e-97f6-3089a1b1403d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UIElement\Button">
+      <UniqueIdentifier>{0a4c91b0-1a88-45cd-b250-3daeb1d68c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. UI">
+      <UniqueIdentifier>{02bca386-3607-4de5-927e-2db819ebc0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. UI\TitleUI">
+      <UniqueIdentifier>{580d373d-2877-48bc-ae5d-1ae238f55ee5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -290,6 +308,24 @@
     <ClInclude Include="Vent.h">
       <Filter>Engine\04. Object\GameObject\Vent</Filter>
     </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Engine\06. Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsManager.h">
+      <Filter>Engine\03. Manager\SettingsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Engine\10. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Engine\11. UIElement\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleUI.h">
+      <Filter>Engine\10. UI\TitleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>Engine\11. UIElement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -422,6 +458,24 @@
     </ClCompile>
     <ClCompile Include="Vent.cpp">
       <Filter>Engine\04. Object\GameObject\Vent</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Engine\06. Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsManager.cpp">
+      <Filter>Engine\03. Manager\SettingsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Engine\10. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Engine\11. UIElement\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleUI.cpp">
+      <Filter>Engine\10. UI\TitleUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>Engine\11. UIElement</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

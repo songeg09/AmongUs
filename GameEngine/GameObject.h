@@ -4,7 +4,7 @@
 
 class GameObject : public Object, public Interactable
 {
-private:
+protected:
 	Collider* m_pInteractRange;
 
 public:
@@ -12,8 +12,8 @@ public:
 	~GameObject();
 
 	void Update() override;
-	void Init(Vector2 _vec2Position) override;
-	virtual void Interact() override;
+	void Init(Vector2 _vec2Position) = 0;
+	virtual void Interact(Character* _Interactor) = 0;
 	Vector2 GetPosition() override;
 };
 

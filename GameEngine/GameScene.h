@@ -2,7 +2,6 @@
 #include "Scene.h"
 #include "ResourceManager.h"
 
-class TextureAtlas;
 class Character;
 class GameScene : public Scene
 {

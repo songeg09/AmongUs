@@ -12,6 +12,7 @@ InputManager::~InputManager()
 
 void InputManager::Init()
 {
+	RegistKey(VK_LBUTTON);
 }
 
 void InputManager::Update()

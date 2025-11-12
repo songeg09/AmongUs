@@ -3,7 +3,7 @@
 #include "Texture.h"
 #include "Player.h"
 #include "Monster.h"
-#include "GameObject.h"
+#include "Vent.h"
 #include "InputManager.h"
 #include "CollisionManager.h"
 #include "TextureAtlas.h"
@@ -22,11 +22,13 @@ GameScene::~GameScene()
 void GameScene::Init()
 {
 	srand(time(NULL));
-	InputManager::GetInstance()->RegistKey(VK_SPACE);
 
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::BACKGROUND);
-	Scene::SetSceneSize(m_pBackGround->GetWidth(), m_pBackGround->GetHeight());
-	Scene::SetViewPortSize(ConstValue::vec2ViewPortSize);
+	ConfigureRenderSurface(
+		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
+			ConstValue::vec2ViewPortSize,
+			ConstValue::fGameSceneGaurdBandPx
+	);
 
 	// 플레이어 생성
 	Player* pPlayer = new Player;
@@ -35,15 +37,15 @@ void GameScene::Init()
 	Scene::AddObject(pPlayer);
 	m_Player = pPlayer;
 
-	Monster* pMonster = new Monster;
-	PlayerStart.m_fx += 200;
-	pMonster->Init(PlayerStart);
-	Scene::AddObject(pMonster);
+	//Monster* pMonster = new Monster;
+	//PlayerStart.m_fx += 200;
+	//pMonster->Init(PlayerStart);
+	//Scene::AddObject(pMonster);
 
-	GameObject* pGameObjet = new GameObject;
+	Vent* vent = new Vent;
 	PlayerStart.m_fx += 200;
-	pGameObjet->Init(PlayerStart);
-	Scene::AddObject(pGameObjet);
+	vent->Init(PlayerStart);
+	Scene::AddObject(vent);
 
 	// 벽 생성
 	//Wall* wall = new Wall;
@@ -64,8 +66,6 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_ATTACK_RANGE);
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_INTERACTION, COLLISION_TAG::OBJECT_INTERACTION_DETECTOR);
 
-	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::MONSTER);
-	//CollisionManager::GetInstance()->RegistCollisionGroup(OBJECT_GROUP::MONSTER, OBJECT_GROUP::PLAYER_SKILL);
 }
 
 void GameScene::Update()

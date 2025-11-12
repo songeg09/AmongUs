@@ -4,6 +4,10 @@
 class Vent : public GameObject
 {
 public:
-	void Interact() override;
+	Vent();
+	~Vent();
+
+	void Init(Vector2 _vec2Position) override;
+	void Interact(Character* _Interactor) override;
 };
 

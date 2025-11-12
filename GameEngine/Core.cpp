@@ -7,6 +7,8 @@
 #include "TimerManager.h"
 #include "CollisionManager.h"
 #include "ResourceManager.h"
+#include "SettingsManager.h"
+
 Core::Core()
 {
 	m_hBackBitMap = nullptr;
@@ -43,8 +45,10 @@ void Core::Render()
 
 	std::wstring FPSMessage = std::format(L"FPS : {}", TimerManager::GetInstance()->intGetFPS());
 	TextOutW(m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, FPSMessage.c_str(), FPSMessage.length());
-	BitBlt(m_hDC, 0, 0, ViewPortSize.m_fx, ViewPortSize.m_fy, m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, SRCCOPY);
 	
+	Vector2 vec2Resoultion = SettingsManager::GetInstance()->GetInstance()->GetResolution();
+	StretchBlt(m_hDC, 0, 0, vec2Resoultion.m_fx, vec2Resoultion.m_fy,
+		m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, ViewPortSize.m_fx, ViewPortSize.m_fy, SRCCOPY);
 }
 
 
@@ -64,6 +68,8 @@ void Core::Init(HWND _hWnd)
 	CollisionManager::GetInstance()->Init();
 
 	SceneManager::GetInstance()->Init();
+
+	SettingsManager::GetInstance()->Init();
 
 	CreateBackDC();
 }

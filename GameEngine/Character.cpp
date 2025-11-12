@@ -12,8 +12,6 @@
 
 Character::Character()
 {
-	m_eState = CHARACTER_STATE::ALIVE;
-	m_bInput = true;
 	m_pWallCollider = nullptr;
 }
 
@@ -47,17 +45,4 @@ void Character::Render(HDC _memDC)
 	Actor::Render(_memDC);
 }
 
-void Character::InitAnimation()
-{
-	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
-	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.7f, ANCHOR::CENTER);
-	AnimationData Ghost(TEXTURE_TYPE::CHARACTER, Vector2(0, 10), Vector2(128, 128), 0, 16, ANIMATION_TYPE::LOOP, 2.0f, ANCHOR::CENTER);
 
-	// 애니메이션 설정 == 여기를 나중에 데이터를 받아서 자동으로 하는 방향으로 바꿔야 됨
-	
-	Actor::ResizeAnimation(ANIMATION::END);
-	Actor::InitAnimation(ANIMATION::IDLE, Idle);
-	Actor::InitAnimation(ANIMATION::RUN, Run);
-	Actor::InitAnimation(ANIMATION::GHOST, Ghost);
-	Actor::SetAnimation(ANIMATION::IDLE);
-}
