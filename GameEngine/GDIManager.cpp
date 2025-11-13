@@ -8,6 +8,12 @@ GDIManager::GDIManager()
 	m_PrevPen = nullptr;
 	CreateMyPen();
 	CreateMyBrush();
+
+	m_BlendFunction = {};
+	m_BlendFunction.BlendOp = AC_SRC_OVER;      // 고정
+	m_BlendFunction.BlendFlags = 0;             // 고정
+	m_BlendFunction.SourceConstantAlpha = 128;  // 전체 반투명도(0~255)
+	m_BlendFunction.AlphaFormat = 0;
 }
 GDIManager::~GDIManager()
 {

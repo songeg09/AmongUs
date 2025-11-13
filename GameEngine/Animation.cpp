@@ -88,7 +88,7 @@ void Animation::Render(HDC _memDC, Vector2 _vec2Position)
 		m_vecList[m_iCurIndex].m_pTextureAtlas->GetDC(),
 		m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fx,
 		m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fy,
-		iWidth, iHeight, RGB(255, 255, 255));
+		iWidth, iHeight, RGB(255, 0, 255));
 }
 
 void Animation::SetEvent(int _iTextureIndex, std::function<void()> _pCallBack)

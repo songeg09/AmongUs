@@ -3,6 +3,10 @@
 
 class PlayerHUD : public UI
 {
+public:
+	PlayerHUD();
+	~PlayerHUD();
 
+	void Init() override;
 };
 

@@ -167,6 +167,9 @@
     <Filter Include="Engine\10. UI\PlayerHUD">
       <UniqueIdentifier>{7347e9d4-e93b-49a6-bf6f-baf5024f9dc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\10. UI\MapUI">
+      <UniqueIdentifier>{2ce256fb-207d-48f2-8521-879efd43feea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -332,6 +335,9 @@
     <ClInclude Include="PlayerHUD.h">
       <Filter>Engine\10. UI\PlayerHUD</Filter>
     </ClInclude>
+    <ClInclude Include="MapUI.h">
+      <Filter>Engine\10. UI\MapUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -485,6 +491,9 @@
     </ClCompile>
     <ClCompile Include="PlayerHUD.cpp">
       <Filter>Engine\10. UI\PlayerHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="MapUI.cpp">
+      <Filter>Engine\10. UI\MapUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

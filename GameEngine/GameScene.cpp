@@ -9,6 +9,9 @@
 #include "TextureAtlas.h"
 #include "Wall.h"
 
+#include "MapUI.h"
+#include "PlayerHUD.h"
+
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
 	m_pBackGround = nullptr;
@@ -28,6 +31,12 @@ void GameScene::Init()
 		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
 			ConstValue::fGameSceneGaurdBandPx
 	);
+
+	m_eCurUI = UI_MODE::HUD;
+	m_arrUIs[UI_MODE::HUD] = new PlayerHUD;
+	m_arrUIs[UI_MODE::HUD]->Init();
+	m_arrUIs[UI_MODE::MAP] = new MapUI;
+	m_arrUIs[UI_MODE::MAP]->Init();
 
 	// 플레이어 생성
 	Player* pPlayer = new Player;
@@ -70,15 +79,21 @@ void GameScene::Init()
 void GameScene::Update()
 {
 	Scene::Update();
+	m_arrUIs[m_eCurUI]->Update();
 }
 
 void GameScene::Render(HDC _memDC)
 {
+	// 1. 배경 그리기
 	Vector2 BackBufferTopLeftInScene = GetBackBufferTopLeftInScene();
 	BitBlt(_memDC, 0, 0, m_vec2BackBufferSize.m_fx, m_vec2BackBufferSize.m_fy,
 		m_pBackGround->GetDC(), BackBufferTopLeftInScene.m_fx, BackBufferTopLeftInScene.m_fy, SRCCOPY);
 
+	// 2. 오브젝트 그리기
 	Scene::Render(_memDC);
+
+	// 3. UI 그리기
+	m_arrUIs[m_eCurUI]->Render(_memDC);
 }
 
 Vector2 GameScene::GetViewPortTopLeftInScene()

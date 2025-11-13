@@ -153,6 +153,7 @@
     <ClInclude Include="GameResource.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GDIManager.h" />
+    <ClInclude Include="MapUI.h" />
     <ClInclude Include="PlayerHUD.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIElement.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="GameResource.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GDIManager.cpp" />
+    <ClCompile Include="MapUI.cpp" />
     <ClCompile Include="PlayerHUD.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIElement.cpp" />

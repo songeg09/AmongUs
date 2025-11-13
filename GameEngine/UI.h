@@ -12,6 +12,6 @@ public:
 
 	virtual void Init() = 0;
 	virtual void Update() final;
-	virtual void Render(HDC _memDC) final;
+	virtual void Render(HDC _memDC);
 };
 

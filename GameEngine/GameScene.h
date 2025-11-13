@@ -2,13 +2,26 @@
 #include "Scene.h"
 #include "ResourceManager.h"
 
+class UI;
 class Character;
 class GameScene : public Scene
 {
+	enum UI_MODE
+	{
+		HUD,
+		MAP,
+		END
+	};
+
+
 private:
 	Texture* m_pBackGround;
 	Vector2 m_vec2BackGroundPosition;	
 	Character* m_Player;
+
+	UI* m_arrUIs[UI_MODE::END];
+	UI_MODE				m_eCurUI;
+
 public:
 	GameScene(std::wstring _strName);
 	~GameScene();

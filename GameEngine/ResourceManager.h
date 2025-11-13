@@ -7,6 +7,8 @@ enum TEXTURE_TYPE
 	DEVMAP,
 	TITLE,
 	CHARACTER,
+	MAP,
+	BTN_START,
 };
 
 class Texture;

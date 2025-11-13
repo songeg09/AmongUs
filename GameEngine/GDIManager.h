@@ -28,6 +28,8 @@ private:
 	HPEN m_PenList[static_cast<int>(PEN_TYPE::END)];
 	HBRUSH m_PrevBrush;
 	HPEN m_PrevPen;
+	BLENDFUNCTION m_BlendFunction;
+
 public:
 	void CreateMyPen();
 	void ReleaseMyPen();
@@ -51,5 +53,7 @@ public:
 		if (m_PrevPen != nullptr)
 			SelectObject(_hDC, m_PrevPen);
 	}
+
+	BLENDFUNCTION GetBlendFunction(){return m_BlendFunction;}
 };
 

@@ -26,6 +26,7 @@ void Player::Init(Vector2 _vec2Position)
 	InputManager::GetInstance()->RegistKey(VK_UP);
 	InputManager::GetInstance()->RegistKey(VK_DOWN);
 	InputManager::GetInstance()->RegistKey('E');
+	InputManager::GetInstance()->RegistKey('M');
 	InputManager::GetInstance()->RegistKey(VK_ESCAPE);
 
 	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
@@ -49,6 +50,11 @@ void Player::Input()
 	
 	if (m_eState == CHARACTER_STATE::NONE)
 	{
+		if (InputManager::GetInstance()->GetKeyState('M') == KEY_STATE::PRESS)
+		{
+
+		}
+
 		Vector2 vec2MoveForce;
 		if (InputManager::GetInstance()->GetKeyState(VK_LEFT) == KEY_STATE::PRESS)
 			vec2MoveForce.m_fx += -1.0f;
