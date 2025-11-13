@@ -26,7 +26,6 @@ void GameScene::Init()
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::BACKGROUND);
 	ConfigureRenderSurface(
 		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
-			ConstValue::vec2ViewPortSize,
 			ConstValue::fGameSceneGaurdBandPx
 	);
 
@@ -84,26 +83,20 @@ void GameScene::Render(HDC _memDC)
 
 Vector2 GameScene::GetViewPortTopLeftInScene()
 {
-	/*if (m_Player == nullptr)
-		Scene::GetViewPortTopLeft();*/
 
-	if (m_vec2ViewPortSize.m_fx > m_vec2SceneSize.m_fx || m_vec2ViewPortSize.m_fy > m_vec2SceneSize.m_fy)
-	{
-		return Vector2(0, 0);
-	}
-		
-
+	assert(m_Player != nullptr);
 	Vector2 PlayerPosition = m_Player->GetPosition();
-	PlayerPosition.m_fx = std::clamp(PlayerPosition.m_fx - m_vec2ViewPortSize.m_fx * 0.5f, 0.0f, m_vec2SceneSize.m_fx - m_vec2ViewPortSize.m_fx);
-	PlayerPosition.m_fy = std::clamp(PlayerPosition.m_fy - m_vec2ViewPortSize.m_fy * 0.5f, 0.0f, m_vec2SceneSize.m_fy - m_vec2ViewPortSize.m_fy);
+	PlayerPosition.m_fx = std::clamp(PlayerPosition.m_fx - ConstValue::vec2BaseWindowSize.m_fx * 0.5f, 0.0f, m_vec2SceneSize.m_fx - ConstValue::vec2BaseWindowSize.m_fx);
+	PlayerPosition.m_fy = std::clamp(PlayerPosition.m_fy - ConstValue::vec2BaseWindowSize.m_fy * 0.5f, 0.0f, m_vec2SceneSize.m_fy - ConstValue::vec2BaseWindowSize.m_fy);
 	return PlayerPosition;
+	return Vector2(0, 0);
 }
 
 Vector2 GameScene::GetBackBufferTopLeftInScene()
 {
 	Vector2 BackBufferTopLeftInScene = GetViewPortTopLeftInScene();
-	BackBufferTopLeftInScene.m_fx -= m_vec2ViewPortSize.m_fx / 2;
-	BackBufferTopLeftInScene.m_fy -= m_vec2ViewPortSize.m_fy / 2;
+	BackBufferTopLeftInScene.m_fx -= m_fGuardBandPx;
+	BackBufferTopLeftInScene.m_fy -= m_fGuardBandPx;
 
 	return BackBufferTopLeftInScene;
 }

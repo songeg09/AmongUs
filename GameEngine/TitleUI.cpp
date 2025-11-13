@@ -20,14 +20,14 @@ void TitleUI::Init()
 	//m_btnSetting = new Button;
 	//m_btnExit = new Button;
 
-	m_btnStart->Init(Vector2(0.5f,0.5f), Vector2(100.0f,100.0f));
+	m_btnStart->Init(Vector2(0.5f,0.5f), Vector2(100.0f,100.0f), std::bind(&TitleUI::OnClick, this));
 
 	m_arrUIElemetns.push_back(m_btnStart);
 	//m_arrUIElemetns.push_back(m_btnSetting);
 	//m_arrUIElemetns.push_back(m_btnExit);
 }
 
-void TitleUI::OnStartClick()
+void TitleUI::OnClick()
 {
 	SceneManager::GetInstance()->SceneChange(SCENE_TYPE::GAME);
 }

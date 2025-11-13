@@ -27,50 +27,16 @@ void Scene::Release()
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
 }
 
-//void Scene::SetSceneSize(int _iWidth, int _iHeight)
-//{
-//	m_vec2SceneSize = { static_cast<float>(_iWidth),static_cast<float>(_iHeight) };
-//}
-//
-//void Scene::SetViewPortSize(Vector2 _Size)
-//{
-//	m_vec2ViewPortSize = _Size;
-//	m_vec2BackBufferSize = m_vec2ViewPortSize;
-//	m_vec2BackBufferSize.m_fx += m_fGuardBandPx;
-//	m_vec2BackBufferSize.m_fy += m_fGuardBandPx;
-//
-//
-//	Vector2 vec2ScreenStartPosition = { GetSystemMetrics(SM_CXSCREEN) / 2.0f,GetSystemMetrics(SM_CYSCREEN) / 2.0f };
-//	Vector2 m_vec2WindowStartPosition = { vec2ScreenStartPosition.m_fx - (m_vec2ViewPortSize.m_fx / 2.0f),
-//											  vec2ScreenStartPosition.m_fy - (m_vec2ViewPortSize.m_fy / 2.0f) };
-//
-//	//SetWindowPos(Core::GetInstance()->GethWnd(), nullptr, m_vec2WindowStartPosition.m_fx, m_vec2WindowStartPosition.m_fy,
-//	//	m_vec2ViewPortSize.m_fx + 16, m_vec2ViewPortSize.m_fy + 39, SWP_SHOWWINDOW);
-//
-//}
-
-void Scene::ConfigureRenderSurface(Vector2 _vec2SceneSize, Vector2 _vec2ViewPortSize, float _fGuardBandPx)
+void Scene::ConfigureRenderSurface(Vector2 _vec2SceneSize, float _fGuardBandPx)
 {
 	m_vec2SceneSize = _vec2SceneSize;
-	m_vec2ViewPortSize = _vec2ViewPortSize;
 	m_fGuardBandPx = _fGuardBandPx;
 	
-	m_vec2BackBufferSize = m_vec2ViewPortSize;
+	m_vec2BackBufferSize = ConstValue::vec2BaseWindowSize;
 	m_vec2BackBufferSize.m_fx += _fGuardBandPx * 2;
 	m_vec2BackBufferSize.m_fy += _fGuardBandPx * 2;
 }
 
-Vector2 Scene::GetViewportTopLeftInBackBuffer()
-{
-	Vector2 CenterPos = m_vec2BackBufferSize;
-	CenterPos.m_fx /= 2;
-	CenterPos.m_fy /= 2;
-
-	CenterPos.m_fx -= (m_vec2ViewPortSize.m_fx / 2);
-	CenterPos.m_fy -= (m_vec2ViewPortSize.m_fy / 2);
-
-	return CenterPos;
-}
 
 void Scene::AddObject(Object* _object)
 {

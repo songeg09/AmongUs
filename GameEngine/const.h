@@ -6,6 +6,8 @@ namespace ConstValue
 	static const std::wstring strTexturePath = L"texture\\";
 	static const std::wstring strDataPath = L"data\\";
 
+	static const Vector2 vec2BaseWindowSize = { 1280.0f, 720.0f };
+
 	static const Vector2 vec2ViewPortSize = { 1024.0f,576.0f };
 	static const Vector2 vec2Resolution = { 1024.0f,576.0f };
 	static const float fGameSceneGaurdBandPx = 128;

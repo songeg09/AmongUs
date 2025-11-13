@@ -15,6 +15,6 @@ public:
 
 	void Init() override;
 
-	void OnStartClick();
+	void OnClick();
 };
 

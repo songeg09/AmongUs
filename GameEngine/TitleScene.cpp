@@ -20,8 +20,7 @@ void TitleScene::Init()
 {
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TITLE);
 	ConfigureRenderSurface(
-		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
-		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
+		ConstValue::vec2BaseWindowSize,
 		0
 	);
 
@@ -39,8 +38,8 @@ void TitleScene::Update()
 void TitleScene::Render(HDC _memDC)
 {
 	// 1. 배경화면 그리기
-	BitBlt(_memDC, 0, 0, m_pBackGround->GetWidth(), m_pBackGround->GetHeight(),
-		m_pBackGround->GetDC(), 0, 0, SRCCOPY);
+	StretchBlt(_memDC, 0, 0, ConstValue::vec2BaseWindowSize.m_fx, ConstValue::vec2BaseWindowSize.m_fy,
+		m_pBackGround->GetDC(), 0, 0, m_pBackGround->GetWidth(), m_pBackGround->GetHeight(), SRCCOPY);
 
 	// 2. GUI 그리기
 	m_arrUIs[m_eCurUI]->Render(_memDC);

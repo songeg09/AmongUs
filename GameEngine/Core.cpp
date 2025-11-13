@@ -41,14 +41,13 @@ void Core::Render()
 	SceneManager::GetInstance()->Render(m_hBackDC);
 
 	Vector2 ViewPortTopLeft = SceneManager::GetInstance()->GetCurScene()->GetViewportTopLeftInBackBuffer();
-	Vector2 ViewPortSize = SceneManager::GetInstance()->GetCurScene()->GetViewPortSize();
 
 	std::wstring FPSMessage = std::format(L"FPS : {}", TimerManager::GetInstance()->intGetFPS());
 	TextOutW(m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, FPSMessage.c_str(), FPSMessage.length());
 	
-	Vector2 vec2Resoultion = SettingsManager::GetInstance()->GetInstance()->GetResolution();
-	StretchBlt(m_hDC, 0, 0, vec2Resoultion.m_fx, vec2Resoultion.m_fy,
-		m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, ViewPortSize.m_fx, ViewPortSize.m_fy, SRCCOPY);
+	//Vector2 vec2Resoultion = SettingsManager::GetInstance()->GetInstance()->GetResolution();
+	BitBlt(m_hDC, 0, 0, ConstValue::vec2BaseWindowSize.m_fx, ConstValue::vec2BaseWindowSize.m_fy,
+		m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, SRCCOPY);
 }
 
 
@@ -82,9 +81,8 @@ void Core::CreateBackDC()
 		DeleteDC(m_hBackDC);
 	if (SceneManager::GetInstance()->GetCurScene() != nullptr)
 	{
-		// 실제 출력에 필요한 두배 크기의 백버퍼 크기 생성
-		Vector2 ViewPortSize = SceneManager::GetInstance()->GetCurScene()->GetViewPortSize();
-		m_hBackBitMap = CreateCompatibleBitmap(m_hDC, ViewPortSize.m_fx * 2, ViewPortSize.m_fy * 2);
+		Vector2 BackBufferSize = SceneManager::GetInstance()->GetCurScene()->GetBackBufferSize();
+		m_hBackBitMap = CreateCompatibleBitmap(m_hDC, BackBufferSize.m_fx, BackBufferSize.m_fy);
 		m_hBackDC = CreateCompatibleDC(m_hDC);
 		HBITMAP hOldBitMap = (HBITMAP)SelectObject(m_hBackDC, m_hBackBitMap);
 		DeleteObject(hOldBitMap);
