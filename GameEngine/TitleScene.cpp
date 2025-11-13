@@ -24,15 +24,15 @@ void TitleScene::Init()
 		0
 	);
 
-	m_eCurUI = UI_MODE::TITLE;
-	m_arrUIs[m_eCurUI] = new TitleUI;
-	m_arrUIs[m_eCurUI]->Init();
+	m_iCurUI = UI_MODE::TITLE;
+	m_arrUIs.push_back(new TitleUI);
+	m_arrUIs[m_iCurUI]->Init();
 
 }
 
 void TitleScene::Update()
 {
-	m_arrUIs[m_eCurUI]->Update();
+	m_arrUIs[m_iCurUI]->Update();
 }
 
 void TitleScene::Render(HDC _memDC)
@@ -42,5 +42,5 @@ void TitleScene::Render(HDC _memDC)
 		m_pBackGround->GetDC(), 0, 0, m_pBackGround->GetWidth(), m_pBackGround->GetHeight(), SRCCOPY);
 
 	// 2. GUI ±×¸®±â
-	m_arrUIs[m_eCurUI]->Render(_memDC);
+	m_arrUIs[m_iCurUI]->Render(_memDC);
 }

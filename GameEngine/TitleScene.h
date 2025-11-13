@@ -13,8 +13,6 @@ class TitleScene : public Scene
 
 private:
 	Texture*			m_pBackGround;
-	UI*					m_arrUIs[UI_MODE::END];
-	UI_MODE				m_eCurUI;
 
 public:
 	TitleScene(std::wstring _strName);

@@ -8,7 +8,7 @@ public:
 	enum CHARACTER_STATE
 	{
 		NONE,
-		DEAD,
+		MAP,
 		WORKING,
 		HIDDEN,
 	};
@@ -40,5 +40,11 @@ public:
 
 	void InitAnimation() override;
 	void SetState(int _iIndex) override { m_eState = static_cast<CHARACTER_STATE>(_iIndex); }
+
+private:
+	void CheckMapKey();
+	void CheckInteractKey();
+	void CheckMoveKeys();
+
 };
 

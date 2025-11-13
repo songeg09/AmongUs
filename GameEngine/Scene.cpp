@@ -5,10 +5,12 @@
 #include "InputManager.h"
 #include "CollisionManager.h"
 #include "Collider.h"
+#include "UI.h"
 
 Scene::Scene(std::wstring _strName)
 {
 	m_strName = _strName;
+	m_iCurUI = 0;
 }
 
 Scene::~Scene()
@@ -52,6 +54,8 @@ void Scene::Update()
 {
 	for (int i = 0; i < m_arrObjects.size(); i++)
 		m_arrObjects[i]->Update();
+
+	m_arrUIs[m_iCurUI]->Update();
 }
 
 void Scene::LateUpdate()
@@ -65,4 +69,6 @@ void Scene::Render(HDC _memDC)
 {
 	for (Object* object : m_arrObjects)
 		object->Render(_memDC);
+
+	m_arrUIs[m_iCurUI]->Render(_memDC);
 }

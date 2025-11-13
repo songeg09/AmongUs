@@ -3,6 +3,8 @@
 #include "InputManager.h"
 #include "GameObject.h"
 #include "Collider.h"
+#include "SceneManager.h"
+#include "GameScene.h"
 
 Player::Player()
 {
@@ -44,38 +46,14 @@ void Player::Update()
 
 void Player::Input()
 {
-	//for (Skill* skill : m_Skills)
-	//	skill->Input();
+	// 지도 눌렀는지 확인
+	CheckMapKey();
 
-	
-	if (m_eState == CHARACTER_STATE::NONE)
-	{
-		if (InputManager::GetInstance()->GetKeyState('M') == KEY_STATE::PRESS)
-		{
+	// 이동 키 확인
+	CheckMoveKeys();
 
-		}
-
-		Vector2 vec2MoveForce;
-		if (InputManager::GetInstance()->GetKeyState(VK_LEFT) == KEY_STATE::PRESS)
-			vec2MoveForce.m_fx += -1.0f;
-		if (InputManager::GetInstance()->GetKeyState(VK_RIGHT) == KEY_STATE::PRESS)
-			vec2MoveForce.m_fx += 1.0f;
-		if (InputManager::GetInstance()->GetKeyState(VK_UP) == KEY_STATE::PRESS)
-			vec2MoveForce.m_fy += -1.0f;
-		if (InputManager::GetInstance()->GetKeyState(VK_DOWN) == KEY_STATE::PRESS)
-			vec2MoveForce.m_fy += 1.0f;
-
-		if (vec2MoveForce.isValid() == true)
-		{
-			Actor::Move(vec2MoveForce);
-			Actor::SetAnimation(ANIMATION::RUN);
-		}
-		else
-			Actor::SetAnimation(ANIMATION::IDLE);
-	}
-
-	if (InputManager::GetInstance()->GetKeyState('E') == KEY_STATE::PRESS && m_pInteractableObject != nullptr)
-		m_pInteractableObject->Interact(this);
+	// 인터랙트 키 확인
+	CheckInteractKey();
 
 	if (InputManager::GetInstance()->GetKeyState(VK_ESCAPE) == KEY_STATE::PRESS)
 	{
@@ -121,4 +99,52 @@ void Player::InitAnimation()
 	Actor::InitAnimation(ANIMATION::RUN, Run);
 	Actor::InitAnimation(ANIMATION::GHOST, Ghost);
 	Actor::SetAnimation(ANIMATION::IDLE);
+}
+
+void Player::CheckMapKey()
+{
+	if (InputManager::GetInstance()->GetKeyState('M') != KEY_STATE::DOWN)
+		return;
+
+	if (m_eState == CHARACTER_STATE::NONE)
+	{
+		SceneManager::GetInstance()->GetCurScene()->ChangeUI(GameScene::UI_MODE::MAP);
+		m_eState = CHARACTER_STATE::MAP;
+	}
+	else if (m_eState == CHARACTER_STATE::MAP)
+	{
+		SceneManager::GetInstance()->GetCurScene()->ChangeUI(GameScene::UI_MODE::HUD);
+		m_eState = CHARACTER_STATE::NONE;
+	}
+}
+
+void Player::CheckInteractKey()
+{
+	if (InputManager::GetInstance()->GetKeyState('E') != KEY_STATE::DOWN || m_pInteractableObject == nullptr)
+		return;
+
+	if (m_eState == CHARACTER_STATE::NONE)
+		m_pInteractableObject->Interact(this);
+}
+
+void Player::CheckMoveKeys()
+{
+	// 이동 키 확인
+	Vector2 vec2MoveForce;
+	if (InputManager::GetInstance()->GetKeyState(VK_LEFT) == KEY_STATE::PRESS)
+		vec2MoveForce.m_fx += -1.0f;
+	if (InputManager::GetInstance()->GetKeyState(VK_RIGHT) == KEY_STATE::PRESS)
+		vec2MoveForce.m_fx += 1.0f;
+	if (InputManager::GetInstance()->GetKeyState(VK_UP) == KEY_STATE::PRESS)
+		vec2MoveForce.m_fy += -1.0f;
+	if (InputManager::GetInstance()->GetKeyState(VK_DOWN) == KEY_STATE::PRESS)
+		vec2MoveForce.m_fy += 1.0f;
+
+	if ((m_eState == CHARACTER_STATE::NONE || m_eState == CHARACTER_STATE::MAP) && vec2MoveForce.isValid() == true)
+	{
+		Actor::Move(vec2MoveForce);
+		Actor::SetAnimation(ANIMATION::RUN);
+	}
+	else
+		Actor::SetAnimation(ANIMATION::IDLE);
 }

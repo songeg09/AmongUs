@@ -31,6 +31,7 @@ std::wstring ResourceManager::GetTextureFileName(TEXTURE_TYPE _eTextureType)
 	case TEXTURE_TYPE::CHARACTER:			return L"character.bmp";
 	case TEXTURE_TYPE::BTN_START:           return L"btn_start.bmp";
 	case TEXTURE_TYPE::MAP:					return L"map.bmp";
+	case TEXTURE_TYPE::SINGLEPLAYMAP:		return L"singleplaymap.bmp";
 	default: return L"";
 	}
 }
