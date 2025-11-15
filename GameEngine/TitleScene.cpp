@@ -24,9 +24,12 @@ void TitleScene::Init()
 		0
 	);
 
+	m_arrUIs.resize(UI_MODE::END);
+	TitleUI* titleUI = new TitleUI;
+	titleUI->Init();
+	m_arrUIs[UI_MODE::TITLE] = titleUI;
+
 	m_iCurUI = UI_MODE::TITLE;
-	m_arrUIs.push_back(new TitleUI);
-	m_arrUIs[m_iCurUI]->Init();
 
 }
 

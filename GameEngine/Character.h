@@ -16,5 +16,4 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC _memDC) override;
 	virtual void InitAnimation() = 0;
-	virtual void SetState(int _iIndex) = 0;
 };

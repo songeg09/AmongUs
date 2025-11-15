@@ -22,20 +22,14 @@ void Player::Init(Vector2 _vec2Position)
 {
 	Character::Init(_vec2Position);
 
-	// 키 설정
-	InputManager::GetInstance()->RegistKey(VK_LEFT);
-	InputManager::GetInstance()->RegistKey(VK_RIGHT);
-	InputManager::GetInstance()->RegistKey(VK_UP);
-	InputManager::GetInstance()->RegistKey(VK_DOWN);
-	InputManager::GetInstance()->RegistKey('E');
-	InputManager::GetInstance()->RegistKey('M');
-	InputManager::GetInstance()->RegistKey(VK_ESCAPE);
-
 	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
 	
 	m_pInteractionCollider = CreateCircleCollider(COLLISION_TAG::PLAYER_INTERACTION, true, 110.f, Vector2(0, 15));
 	m_pInteractionCollider->SetOnCollisionCallBack(std::bind(&Player::UpdateInteractableObject, this, std::placeholders::_1));
 	m_pInteractionCollider->SetEndCollisionCallBack(std::bind(&Player::ClearCurrentInteractable, this, std::placeholders::_1));
+
+	m_iTasksTotal = 5;
+	m_iTasksCompleted = 0;
 }
 
 void Player::Update()
@@ -55,11 +49,8 @@ void Player::Input()
 	// 인터랙트 키 확인
 	CheckInteractKey();
 
-	if (InputManager::GetInstance()->GetKeyState(VK_ESCAPE) == KEY_STATE::PRESS)
-	{
-		if (m_eState != CHARACTER_STATE::NONE)
-			m_eState = CHARACTER_STATE::NONE;
-	}
+	// ESC키 확인
+	CheckEscapeKey();
 		
 }
 
@@ -90,7 +81,7 @@ void Player::ClearCurrentInteractable(Collider* _pOther)
 void Player::InitAnimation()
 {
 	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
-	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.7f, ANCHOR::CENTER);
+	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
 	AnimationData Ghost(TEXTURE_TYPE::CHARACTER, Vector2(0, 10), Vector2(128, 128), 0, 16, ANIMATION_TYPE::LOOP, 2.0f, ANCHOR::CENTER);
 
 	// 애니메이션 설정 == 여기를 나중에 데이터를 받아서 자동으로 하는 방향으로 바꿔야 됨
@@ -103,19 +94,13 @@ void Player::InitAnimation()
 
 void Player::CheckMapKey()
 {
-	if (InputManager::GetInstance()->GetKeyState('M') != KEY_STATE::DOWN)
-		return;
+	//if (InputManager::GetInstance()->GetKeyState('M') != KEY_STATE::DOWN)
+	//	return;
 
-	if (m_eState == CHARACTER_STATE::NONE)
-	{
-		SceneManager::GetInstance()->GetCurScene()->ChangeUI(GameScene::UI_MODE::MAP);
-		m_eState = CHARACTER_STATE::MAP;
-	}
-	else if (m_eState == CHARACTER_STATE::MAP)
-	{
-		SceneManager::GetInstance()->GetCurScene()->ChangeUI(GameScene::UI_MODE::HUD);
-		m_eState = CHARACTER_STATE::NONE;
-	}
+	//if (m_eState == CHARACTER_STATE::NONE)
+	//	OpenMap();
+	//else if (m_eState == CHARACTER_STATE::MAP)
+	//	OpenHUD();
 }
 
 void Player::CheckInteractKey()
@@ -124,20 +109,20 @@ void Player::CheckInteractKey()
 		return;
 
 	if (m_eState == CHARACTER_STATE::NONE)
-		m_pInteractableObject->Interact(this);
+		UseInteractableObject();
 }
 
 void Player::CheckMoveKeys()
 {
 	// 이동 키 확인
 	Vector2 vec2MoveForce;
-	if (InputManager::GetInstance()->GetKeyState(VK_LEFT) == KEY_STATE::PRESS)
+	if (InputManager::GetInstance()->GetKeyState('A') == KEY_STATE::PRESS)
 		vec2MoveForce.m_fx += -1.0f;
-	if (InputManager::GetInstance()->GetKeyState(VK_RIGHT) == KEY_STATE::PRESS)
+	if (InputManager::GetInstance()->GetKeyState('D') == KEY_STATE::PRESS)
 		vec2MoveForce.m_fx += 1.0f;
-	if (InputManager::GetInstance()->GetKeyState(VK_UP) == KEY_STATE::PRESS)
+	if (InputManager::GetInstance()->GetKeyState('W') == KEY_STATE::PRESS)
 		vec2MoveForce.m_fy += -1.0f;
-	if (InputManager::GetInstance()->GetKeyState(VK_DOWN) == KEY_STATE::PRESS)
+	if (InputManager::GetInstance()->GetKeyState('S') == KEY_STATE::PRESS)
 		vec2MoveForce.m_fy += 1.0f;
 
 	if ((m_eState == CHARACTER_STATE::NONE || m_eState == CHARACTER_STATE::MAP) && vec2MoveForce.isValid() == true)
@@ -147,4 +132,25 @@ void Player::CheckMoveKeys()
 	}
 	else
 		Actor::SetAnimation(ANIMATION::IDLE);
+}
+
+void Player::CheckEscapeKey()
+{
+	if (InputManager::GetInstance()->GetKeyState(VK_ESCAPE) != KEY_STATE::DOWN)
+		return;
+
+	//if (m_eState != CHARACTER_STATE::NONE)
+	//	OpenHUD();
+		
+}
+
+void Player::UseInteractableObject()
+{
+	m_pInteractableObject->Interact(this);
+}
+
+void Player::CompleteTask()
+{
+	if (m_iTasksCompleted + 1 <= m_iTasksTotal)
+		m_iTasksCompleted++;
 }

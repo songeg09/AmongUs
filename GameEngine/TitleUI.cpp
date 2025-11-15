@@ -21,7 +21,7 @@ void TitleUI::Init()
 	//m_btnSetting = new Button;
 	//m_btnExit = new Button;
 
-	m_btnStart->Init(TEXTURE_TYPE::BTN_START, Vector2(0.5f,0.6f), std::bind(&TitleUI::OnClick, this));
+	m_btnStart->Init(TEXTURE_TYPE::BTN_START, Vector2(0.5f,0.6f), UIElement::ANCHOR::CENTER, std::bind(&TitleUI::OnClick, this));
 
 	m_arrUIElemetns.push_back(m_btnStart);
 	//m_arrUIElemetns.push_back(m_btnSetting);

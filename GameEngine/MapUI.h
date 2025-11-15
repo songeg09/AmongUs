@@ -2,26 +2,26 @@
 #include "UI.h"
 
 class Texture;
-class TextureAtlas;
-class GameScene;
-class Character;
+class Player;
+class Button;
 class MapUI : public UI
 {
 private:
+	Button*			m_ExitButton;
+
 	Texture*		m_pMap;
-	TextureAtlas*	m_pPlayerIcon;
+	Texture*		m_pPlayerIcon;
 
 	Vector2			m_vec2MapStartPosInBackBuffer;
 	Vector2			m_vec2Ratio;
 
-	GameScene*		m_sceneCurGameScene;
-	Character*		m_Player;
+	Player*			m_Player;
 	
 public:
 	MapUI();
 	~MapUI();
 
-	void Init() override;
+	void Init(Player* _Player);
 	void Render(HDC _memDC) override;
 };
 

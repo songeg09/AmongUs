@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "GameScene.h"
+#include "GameMode.h"
+
 #include "Texture.h"
 #include "Player.h"
 #include "Monster.h"
@@ -14,22 +16,27 @@
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
+	m_GameMode = nullptr;
 	m_pBackGround = nullptr;
 	m_Player = nullptr;
 }
 
 GameScene::~GameScene()
 {
+	delete m_GameMode;
 }
 
 void GameScene::Init()
 {
 	srand(time(NULL));
 
+	// 배경화면 설정
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::SINGLEPLAYMAP);
+	
+	// Scene 크기 설정
 	ConfigureRenderSurface(
 		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
-			ConstValue::fGameSceneGaurdBandPx
+		ConstValue::fGameSceneGaurdBandPx
 	);
 
 	// 플레이어 생성
@@ -39,15 +46,24 @@ void GameScene::Init()
 	Scene::AddObject(pPlayer);
 	m_Player = pPlayer;
 
+	// GameMode 생성
+	m_GameMode = new GameMode;
+	m_GameMode->Init(m_Player, this, 5);	// 임시로 토탈 태스크 갯수 설정
+
+	// UI 생성
 	m_arrUIs.resize(UI_MODE::END);
-	m_arrUIs[UI_MODE::HUD] = new PlayerHUD;
-	m_arrUIs[UI_MODE::HUD]->Init();
-	m_arrUIs[UI_MODE::MAP] = new MapUI;
-	m_arrUIs[UI_MODE::MAP]->Init();
+	
+	PlayerHUD* playerHUD = new PlayerHUD;
+	playerHUD->Init(m_GameMode, m_Player);
+	m_arrUIs[UI_MODE::HUD] = playerHUD;
+	
+	MapUI* mapUI = new MapUI;
+	mapUI->Init(m_Player);
+	m_arrUIs[UI_MODE::MAP] = mapUI;
+
 	m_iCurUI = UI_MODE::HUD;
 
-
-
+	// 오브젝트 생성
 	Vent* vent = new Vent;
 	PlayerStart.m_fx += 200;
 	vent->Init(PlayerStart);
@@ -98,4 +114,12 @@ Vector2 GameScene::GetBackBufferTopLeftInScene()
 	BackBufferTopLeftInScene.m_fy -= m_fGuardBandPx;
 
 	return BackBufferTopLeftInScene;
+}
+
+void GameScene::ChangeUI(int _newUI)
+{
+	if (m_iCurUI == _newUI)
+		return;
+
+	m_iCurUI = _newUI;
 }

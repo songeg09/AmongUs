@@ -15,7 +15,7 @@ protected:
 	std::vector<Collider*>  m_arrColliders[static_cast<int>(COLLISION_TAG::END)];
 	std::wstring			m_strName;
 
-	std::vector<UI*>			m_arrUIs;
+	std::vector<UI*>		m_arrUIs;
 	int						m_iCurUI;
 public:
 	Scene(std::wstring _strName);

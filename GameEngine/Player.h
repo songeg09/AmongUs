@@ -27,6 +27,10 @@ private:
 	CHARACTER_STATE m_eState;
 
 	Interactable*	m_pInteractableObject;
+
+	int				m_iTasksTotal;
+	int				m_iTasksCompleted;
+
 public:
 	Player();
 	~Player();
@@ -39,12 +43,25 @@ public:
 	void ClearCurrentInteractable(Collider* _pOther);
 
 	void InitAnimation() override;
-	void SetState(int _iIndex) override { m_eState = static_cast<CHARACTER_STATE>(_iIndex); }
+	void SetCharacterState(CHARACTER_STATE _eState) { m_eState = _eState; }
+	CHARACTER_STATE GetCharacterState() { return m_eState; }
+
+	Interactable* GetInteractableObject() {return m_pInteractableObject;}
+
+	void UseInteractableObject();
+
+	float GetProgress() {return (float)m_iTasksCompleted / (float)m_iTasksTotal;}
+	void CompleteTask();
+	
 
 private:
 	void CheckMapKey();
 	void CheckInteractKey();
 	void CheckMoveKeys();
+	void CheckEscapeKey();
+
+
+
 
 };
 

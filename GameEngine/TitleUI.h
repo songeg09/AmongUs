@@ -13,7 +13,7 @@ public:
 	TitleUI();
 	~TitleUI();
 
-	void Init() override;
+	void Init();
 
 	void OnClick();
 };

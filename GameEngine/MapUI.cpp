@@ -5,7 +5,8 @@
 #include "Texture.h"
 #include "TextureAtlas.h"
 #include "GameScene.h"
-#include "Character.h"
+#include "Player.h"
+#include "Button.h"
 
 MapUI::MapUI()
 {
@@ -16,10 +17,12 @@ MapUI::~MapUI()
 {
 }
 
-void MapUI::Init()
+void MapUI::Init(Player* _Player)
 {
+	m_Player = _Player;
+
 	m_pMap = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::MAP);
-	m_pPlayerIcon = ResourceManager::GetInstance()->LoadTextureAtlas(TEXTURE_TYPE::CHARACTER, Vector2(0,11), Vector2(128,128), 0, false);
+	m_pPlayerIcon = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::CHARACTER_ICON);
 	
 	Texture* RealMap = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::SINGLEPLAYMAP);
 
@@ -31,10 +34,9 @@ void MapUI::Init()
 
 	m_vec2Ratio = Vector2((float)m_pMap->GetWidth() / (float)RealMap->GetWidth(), (float)m_pMap->GetHeight() / (float)RealMap->GetHeight());
 
-	if (GameScene* GS = dynamic_cast<GameScene*>(SceneManager::GetInstance()->GetCurScene()))
-	{
-		m_Player = GS->GetPlayer();
-	}
+	m_ExitButton = new Button;
+	m_ExitButton->Init(TEXTURE_TYPE::BTN_X, Vector2(0.85, 0.15), UIElement::ANCHOR::CENTER);
+	m_arrUIElemetns.push_back(m_ExitButton);
 }
 
 void MapUI::Render(HDC _memDC)
@@ -57,8 +59,10 @@ void MapUI::Render(HDC _memDC)
 		m_vec2MapStartPosInBackBuffer.m_fy + PlayerPosOnMap.m_fy - m_pPlayerIcon->GetHeight() / 2,
 		m_pPlayerIcon->GetWidth(), m_pPlayerIcon->GetHeight(),
 		m_pPlayerIcon->GetDC(),
-		m_pPlayerIcon->GetAtlasPosition().m_fx, m_pPlayerIcon->GetAtlasPosition().m_fy,
+		0, 0,
 		m_pPlayerIcon->GetWidth(), m_pPlayerIcon->GetHeight(),
 		RGB(255, 0, 255)
 	);
+
+	UI::Render(_memDC);
 }

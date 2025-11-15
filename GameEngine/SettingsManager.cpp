@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SettingsManager.h"
+#include "InputManager.h"
 #include "Core.h"
 
 SettingsManager::SettingsManager()
@@ -15,6 +16,14 @@ SettingsManager::~SettingsManager()
 void SettingsManager::Init()
 {
 	SetResoultion();
+	InputManager::GetInstance()->RegistKey(VK_LBUTTON);
+	InputManager::GetInstance()->RegistKey(VK_ESCAPE);
+	InputManager::GetInstance()->RegistKey('W');
+	InputManager::GetInstance()->RegistKey('A');
+	InputManager::GetInstance()->RegistKey('S');
+	InputManager::GetInstance()->RegistKey('D');
+	InputManager::GetInstance()->RegistKey('M');
+	InputManager::GetInstance()->RegistKey('E');
 }
 
 void SettingsManager::SetResoultion()

@@ -10,8 +10,7 @@ public:
 	UI();
 	virtual ~UI();
 
-	virtual void Init() = 0;
-	virtual void Update() final;
+	virtual void Update();
 	virtual void Render(HDC _memDC);
 };
 

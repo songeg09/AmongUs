@@ -22,13 +22,18 @@ enum class PEN_TYPE
 
 class GDIManager
 {
+
 	SINGLETON(GDIManager)
+
 private:
-	HBRUSH m_BrushList[static_cast<int>(BRUSH_TYPE::END)];
-	HPEN m_PenList[static_cast<int>(PEN_TYPE::END)];
-	HBRUSH m_PrevBrush;
-	HPEN m_PrevPen;
-	BLENDFUNCTION m_BlendFunction;
+	HBRUSH						m_BrushList[static_cast<int>(BRUSH_TYPE::END)];
+	HPEN						m_PenList[static_cast<int>(PEN_TYPE::END)];
+	HBRUSH						m_PrevBrush;
+	HPEN						m_PrevPen;
+	
+	BLENDFUNCTION				m_BlendFunction;
+	HDC							m_BtnConfigureDC;
+	HBITMAP						m_TempBmp;
 
 public:
 	void CreateMyPen();
@@ -55,5 +60,7 @@ public:
 	}
 
 	BLENDFUNCTION GetBlendFunction(){return m_BlendFunction;}
+
+	HDC GetBtnConfigureDC() { return m_BtnConfigureDC; }
 };
 

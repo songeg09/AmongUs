@@ -1,25 +1,26 @@
 #pragma once
 #include "UIElement.h"
-#include "ResourceManager.h"
+
 
 class Texture;
 class Button : public UIElement
 {
 private:
-	//Vector2		m_vec2Size;
-	Texture*	m_pImage;
-	std::function<void()> m_callBackFunc;
+	
+	std::function<void()>	m_callBackFunc;
+	bool					m_bActivate;
 
-	bool m_bHover;
-
-	Vector2 GetAbsoluteStartPosition();
+	RECT					m_btnArea;
+	
 
 public:
 	Button();
 	~Button();
 
-	void Init(TEXTURE_TYPE _eTextureType, Vector2 _vec2RelativePosition, std::function<void()> _callBackFunc = nullptr);
+	void Init(TEXTURE_TYPE _eTextureType, Vector2 _vec2RelativePosition, UIElement::ANCHOR _eAnchor, std::function<void()> _callBackFunc = nullptr, bool _bActivate = true);
 	void Update() override;
 	void Render(HDC _memDC) override;
+	void SetActivate(bool _bActiavet) { m_bActivate = _bActiavet; }
+
 };
 

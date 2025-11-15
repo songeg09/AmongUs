@@ -170,6 +170,15 @@
     <Filter Include="Engine\10. UI\MapUI">
       <UniqueIdentifier>{2ce256fb-207d-48f2-8521-879efd43feea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\11. UIElement\ProgressBar">
+      <UniqueIdentifier>{3fc0af65-58c1-4a82-b5b7-83dfde924769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. UI\MenuUI">
+      <UniqueIdentifier>{9b007213-81e1-4a49-b865-53748d8f7ffe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\12. GameMode">
+      <UniqueIdentifier>{f6325803-5453-4926-892e-012c50636229}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -338,6 +347,13 @@
     <ClInclude Include="MapUI.h">
       <Filter>Engine\10. UI\MapUI</Filter>
     </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>Engine\11. UIElement\ProgressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuUI.h" />
+    <ClInclude Include="GameMode.h">
+      <Filter>Engine\12. GameMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -494,6 +510,15 @@
     </ClCompile>
     <ClCompile Include="MapUI.cpp">
       <Filter>Engine\10. UI\MapUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>Engine\11. UIElement\ProgressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuUI.cpp">
+      <Filter>Engine\10. UI\MenuUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>Engine\12. GameMode</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -18,10 +18,13 @@ void Vent::Init(Vector2 _vec2Position)
 
 void Vent::Interact(Character* _Interactor)
 {
-	if (Player* player = dynamic_cast<Player*>(_Interactor))
-	{
-		player->SetState(Player::CHARACTER_STATE::WORKING);
-		player->SetAnimation(Player::ANIMATION::IDLE);
-		player->SetPosition(GetPosition());
-	}
+	//if (Player* player = dynamic_cast<Player*>(_Interactor))
+	//{
+	//	player->SetState(Player::CHARACTER_STATE::WORKING);
+	//	player->SetAnimation(Player::ANIMATION::IDLE);
+	//	player->SetPosition(GetPosition());
+
+	//	// 임시 테스트용
+	//	player->CompleteTask();
+	//}
 }
