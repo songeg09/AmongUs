@@ -6,6 +6,7 @@
 UIElement::UIElement()
 {
 	m_pImage = nullptr;
+	m_bVisibility = true;
 }
 
 UIElement::~UIElement()

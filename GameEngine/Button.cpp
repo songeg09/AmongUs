@@ -39,7 +39,7 @@ void Button::Init(TEXTURE_TYPE _eTextureType, Vector2 _vec2RelativePosition, UIE
 
 void Button::Update()
 {
-	if (m_bActivate == false)
+	if (m_bActivate == false || m_bVisibility == false)
 		return;
 
 	POINT m_ptMouse;
@@ -53,6 +53,9 @@ void Button::Update()
 
 void Button::Render(HDC _memDC)
 {
+	if (m_bVisibility == false)
+		return;
+
 	HDC hAlphaDC = GDIManager::GetInstance()->GetBtnConfigureDC();
 
 	BitBlt(

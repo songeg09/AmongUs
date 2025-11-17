@@ -16,7 +16,7 @@ protected:
 	std::wstring			m_strName;
 
 	std::vector<UI*>		m_arrUIs;
-	int						m_iCurUI;
+
 public:
 	Scene(std::wstring _strName);
 	virtual ~Scene();
@@ -40,8 +40,5 @@ public:
 	virtual Vector2 GetViewPortTopLeftInScene() { return GetBackBufferTopLeftInScene() + Vector2(m_fGuardBandPx, m_fGuardBandPx); }
 	virtual Vector2 GetBackBufferTopLeftInScene() { return Vector2(-m_fGuardBandPx, -m_fGuardBandPx); }
 
-	// UI ฐüทร
-	void ChangeUI(int _iNewUI) { m_iCurUI = _iNewUI; }
-	int GetCurUI() { return m_iCurUI; }
 };
 

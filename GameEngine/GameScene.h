@@ -7,14 +7,6 @@ class Player;
 class GameMode;
 class GameScene : public Scene
 {
-public:
-	enum UI_MODE
-	{
-		HUD,
-		MAP,
-		END
-	};
-
 
 private:
 	GameMode*				m_GameMode;
@@ -35,6 +27,6 @@ public:
 	Vector2 GetViewPortTopLeftInScene() override;
 	Vector2 GetBackBufferTopLeftInScene() override;
 
-	void ChangeUI(int _newUI);
+	void UpdateUIVisibility();
 };
 

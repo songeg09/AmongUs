@@ -8,9 +8,8 @@ public:
 	enum CHARACTER_STATE
 	{
 		NONE,
-		MAP,
 		WORKING,
-		HIDDEN,
+		DEAD
 	};
 
 	enum ANIMATION

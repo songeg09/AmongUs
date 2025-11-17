@@ -4,6 +4,7 @@
 
 UI::UI()
 {
+	m_bVisibility = false;
 }
 
 UI::~UI()
@@ -17,6 +18,9 @@ UI::~UI()
 
 void UI::Update()
 {
+	if (m_bVisibility == false)
+		return;
+
 	for (UIElement* element : m_arrUIElemetns)
 	{
 		element->Update();
@@ -25,6 +29,9 @@ void UI::Update()
 
 void UI::Render(HDC _memDC)
 {
+	if (m_bVisibility == false)
+		return;
+
 	for (UIElement* element : m_arrUIElemetns)
 	{
 		element->Render(_memDC);

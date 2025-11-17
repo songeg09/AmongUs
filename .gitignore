@@ -1,5 +1,8 @@
 .vs
 
+**/texture/background.bmp
+**/texture/singleplaymap.bmp
+
 *.obj
 *.iobj
 

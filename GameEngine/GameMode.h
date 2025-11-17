@@ -1,25 +1,25 @@
 #pragma once
 class Player;
-class GameScene;
+
 class GameMode
 {
 private:
 	Player*			m_Player;
-	GameScene*		m_GameScene;
 
 	int				m_iTotalTasks;
 	int				m_iCompletedTasks;
+
+	Flags			m_UIFlags;
 
 public:
 	GameMode();
 	~GameMode();
 
-	void Init(Player* _Player, GameScene* _GameScene,  int _iTotalTasks);
+	void Init(Player* _Player);
 
-	void ChangeUI(int _uiIndex);
+	void OpenUI(int _uiIndex);
 	float GetProgress() { return (float)m_iCompletedTasks / (float)m_iTotalTasks; }
-
-	void OpenMapUI();
-	void OpenHUDUI();
+	
+	Flags GetUIFlag() {return m_UIFlags;}
 };
 

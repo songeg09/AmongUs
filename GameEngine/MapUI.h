@@ -15,13 +15,13 @@ private:
 	Vector2			m_vec2MapStartPosInBackBuffer;
 	Vector2			m_vec2Ratio;
 
-	Player*			m_Player;
+	const Player*	m_Player;
 	
 public:
 	MapUI();
 	~MapUI();
 
-	void Init(Player* _Player);
+	void Init(Player* _Player, std::function<void()> _btnExitCallback);
 	void Render(HDC _memDC) override;
 };
 

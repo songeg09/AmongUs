@@ -1,15 +1,4 @@
 #pragma once
-
-enum DIRECTION
-{
-	START,
-	LEFT = START,
-	RIGHT,
-	UP,
-	DOWN,
-	END
-};
-
 struct Rect
 {
 	float left;
@@ -107,3 +96,7 @@ struct Vector2
 			m_fy = 0.0f;
 	}
 };
+
+using Flags = unsigned int;
+
+constexpr Flags Flag(int kind) { return 1u << static_cast<unsigned>(kind); }

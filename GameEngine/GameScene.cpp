@@ -39,29 +39,12 @@ void GameScene::Init()
 		ConstValue::fGameSceneGaurdBandPx
 	);
 
-	// 플레이어 생성
+	// 플레이어 생성 및 오브젝트 생성
 	Player* pPlayer = new Player;
 	Vector2 PlayerStart(m_pBackGround->GetWidth() / 2, m_pBackGround->GetHeight() / 2);
 	pPlayer->Init(PlayerStart);
 	Scene::AddObject(pPlayer);
 	m_Player = pPlayer;
-
-	// GameMode 생성
-	m_GameMode = new GameMode;
-	m_GameMode->Init(m_Player, this, 5);	// 임시로 토탈 태스크 갯수 설정
-
-	// UI 생성
-	m_arrUIs.resize(UI_MODE::END);
-	
-	PlayerHUD* playerHUD = new PlayerHUD;
-	playerHUD->Init(m_GameMode, m_Player);
-	m_arrUIs[UI_MODE::HUD] = playerHUD;
-	
-	MapUI* mapUI = new MapUI;
-	mapUI->Init(m_Player);
-	m_arrUIs[UI_MODE::MAP] = mapUI;
-
-	m_iCurUI = UI_MODE::HUD;
 
 	// 오브젝트 생성
 	Vent* vent = new Vent;
@@ -69,17 +52,32 @@ void GameScene::Init()
 	vent->Init(PlayerStart);
 	Scene::AddObject(vent);
 
+	// GameMode 생성
+	m_GameMode = new GameMode;
+	m_GameMode->Init(m_Player);
+
+	// UI 생성
+	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
+	
+	// UI z축 순서에 맞게 생성 필요!
+	PlayerHUD* playerHUD = new PlayerHUD;
+	playerHUD->Init(m_GameMode, m_Player);
+	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = playerHUD;
+	
+	MapUI* mapUI = new MapUI;
+	mapUI->Init(m_Player, std::bind(&GameMode::OpenUI, m_GameMode, static_cast<int>(UI_TYPE::HUD)));
+	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
+
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::WALL_DETECTOR, COLLISION_TAG::WALL);
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_PLAYER_DETECTOR);
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_ATTACK_RANGE);
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_INTERACTION, COLLISION_TAG::OBJECT_INTERACTION_DETECTOR);
-
 }
 
 void GameScene::Update()
 {
 	Scene::Update();
-	m_arrUIs[m_iCurUI]->Update();
+	UpdateUIVisibility();
 }
 
 void GameScene::Render(HDC _memDC)
@@ -89,16 +87,12 @@ void GameScene::Render(HDC _memDC)
 	BitBlt(_memDC, 0, 0, m_vec2BackBufferSize.m_fx, m_vec2BackBufferSize.m_fy,
 		m_pBackGround->GetDC(), BackBufferTopLeftInScene.m_fx, BackBufferTopLeftInScene.m_fy, SRCCOPY);
 
-	// 2. 오브젝트 그리기
+	// 2. 오브젝트 그리기 및 UI 그리기
 	Scene::Render(_memDC);
-
-	// 3. UI 그리기
-	m_arrUIs[m_iCurUI]->Render(_memDC);
 }
 
 Vector2 GameScene::GetViewPortTopLeftInScene()
 {
-
 	assert(m_Player != nullptr);
 	Vector2 PlayerPosition = m_Player->GetPosition();
 	PlayerPosition.m_fx = std::clamp(PlayerPosition.m_fx - ConstValue::vec2BaseWindowSize.m_fx * 0.5f, 0.0f, m_vec2SceneSize.m_fx - ConstValue::vec2BaseWindowSize.m_fx);
@@ -116,10 +110,11 @@ Vector2 GameScene::GetBackBufferTopLeftInScene()
 	return BackBufferTopLeftInScene;
 }
 
-void GameScene::ChangeUI(int _newUI)
+void GameScene::UpdateUIVisibility()
 {
-	if (m_iCurUI == _newUI)
-		return;
+	Flags flag = m_GameMode->GetUIFlag();
 
-	m_iCurUI = _newUI;
+	m_arrUIs[static_cast<int>(UI_TYPE::HUD)]->SetVisibility(flag & Flag(static_cast<int>(UI_TYPE::HUD)));
+	m_arrUIs[static_cast<int>(UI_TYPE::MAP)]->SetVisibility(flag & Flag(static_cast<int>(UI_TYPE::MAP)));
 }
+

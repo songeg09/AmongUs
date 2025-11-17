@@ -1,53 +1,37 @@
 #include "pch.h"
 #include "GameMode.h"
-#include "GameScene.h"
 #include "Player.h"
 
 GameMode::GameMode()
 {
 	m_Player = nullptr;
-	m_GameScene = nullptr;
+	m_UIFlags = 0;
 }
 
 GameMode::~GameMode()
 {
 }
 
-void GameMode::Init(Player* _Player, GameScene* _GameScene, int _iTotalTasks)
+void GameMode::Init(Player* _Player)
 {
 	m_Player = _Player;
-	m_GameScene = _GameScene;
-	m_iTotalTasks = _iTotalTasks;
+	m_iTotalTasks = 0;			// 임시 설정
 	m_iCompletedTasks = 0;
+	
+	m_UIFlags |= Flag(static_cast<int>(UI_TYPE::HUD));
 }
 
-void GameMode::ChangeUI(int _uiIndex)
+void GameMode::OpenUI(int _uiIndex)
 {
-	switch ((GameScene::UI_MODE)_uiIndex)
+	switch ((UI_TYPE)_uiIndex)
 	{
-	case GameScene::UI_MODE::HUD:
+	case UI_TYPE::HUD:
+		m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD));
 		break;
-	case GameScene::UI_MODE::MAP:
+
+	case UI_TYPE::MAP:
+		if(m_Player->GetCharacterState() == Player::CHARACTER_STATE::NONE)
+			m_UIFlags ^= Flag(static_cast<int>(UI_TYPE::MAP));
 		break;
 	}
 }
-
-void GameMode::OpenMapUI()
-{
-	if (m_Player->GetCharacterState() == Player::CHARACTER_STATE::NONE)
-	{
-		m_GameScene->ChangeUI(GameScene::UI_MODE::MAP);
-		m_Player->SetCharacterState(Player::CHARACTER_STATE::MAP);
-	}
-}
-
-void GameMode::OpenHUDUI()
-{
-	m_GameScene->ChangeUI(GameScene::UI_MODE::HUD);
-	m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE);
-}
-
-
-
-
-

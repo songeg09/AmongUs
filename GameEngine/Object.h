@@ -27,7 +27,7 @@ public:
 	inline void AddPosition(Vector2 _vec2Add) { m_vec2Position += _vec2Add; }
 	inline void SetPosition(Vector2 _vec2Position) { m_vec2Position = _vec2Position; }
 	inline void SetScale(Vector2 _vec2Scale) { m_vec2Scale = _vec2Scale; }
-	inline Vector2 GetPosition() { return m_vec2Position; }
+	inline Vector2 GetPosition() const { return m_vec2Position; }
 	inline Vector2 GetScale() { return m_vec2Scale; }
 };
 

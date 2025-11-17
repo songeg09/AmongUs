@@ -10,7 +10,6 @@
 Scene::Scene(std::wstring _strName)
 {
 	m_strName = _strName;
-	m_iCurUI = 0;
 }
 
 Scene::~Scene()
@@ -55,12 +54,12 @@ void Scene::Update()
 	for (int i = 0; i < m_arrObjects.size(); i++)
 		m_arrObjects[i]->Update();
 
-	m_arrUIs[m_iCurUI]->Update();
+	for (UI* ui : m_arrUIs)
+		ui->Update();
 }
 
 void Scene::LateUpdate()
 {
-
 	for (int i = 0; i < m_arrObjects.size(); i++)
 		m_arrObjects[i]->LateUpdate();
 }
@@ -70,5 +69,6 @@ void Scene::Render(HDC _memDC)
 	for (Object* object : m_arrObjects)
 		object->Render(_memDC);
 
-	m_arrUIs[m_iCurUI]->Render(_memDC);
+	for (UI* ui : m_arrUIs)
+		ui->Render(_memDC);
 }

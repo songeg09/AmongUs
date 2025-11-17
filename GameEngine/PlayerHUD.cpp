@@ -28,7 +28,7 @@ void PlayerHUD::Init(GameMode* _GameMode, Player* _Player)
 	m_arrUIElemetns.push_back(m_btnUse);
 
 	m_btnMap = new Button;
-	m_btnMap->Init(TEXTURE_TYPE::BTN_MAP, Vector2(0.95, 0.07), UIElement::ANCHOR::CENTER, std::bind(&GameMode::OpenMapUI, m_GameMode));
+	m_btnMap->Init(TEXTURE_TYPE::BTN_MAP, Vector2(0.95, 0.07), UIElement::ANCHOR::CENTER, std::bind(&GameMode::OpenUI, m_GameMode, static_cast<int>(UI_TYPE::MAP)));
 	m_arrUIElemetns.push_back(m_btnMap);
 
 	m_btnSetting = new Button;
@@ -43,6 +43,9 @@ void PlayerHUD::Init(GameMode* _GameMode, Player* _Player)
 
 void PlayerHUD::Update()
 {
+	if (m_bVisibility == false)
+		return;
+
 	if (m_Player != nullptr)
 	{
 		if (m_Player->GetInteractableObject() != nullptr)

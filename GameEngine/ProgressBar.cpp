@@ -22,6 +22,9 @@ void ProgressBar::Update()
 
 void ProgressBar::Render(HDC _memDC)
 {
+	if (m_bVisibility == false)
+		return;
+
 	// 프레임 그리기
 	TransparentBlt(_memDC, 
 		m_vecAbsoluteStartPos.m_fx, m_vecAbsoluteStartPos.m_fy,

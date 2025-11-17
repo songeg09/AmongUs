@@ -29,3 +29,20 @@ enum class COLLISION_TAG
 	WALL,
 	END
 };
+
+enum DIRECTION
+{
+	START,
+	LEFT = START,
+	RIGHT,
+	UP,
+	DOWN,
+	END
+};
+
+enum class UI_TYPE
+{
+	HUD,
+	MAP,
+	END
+};

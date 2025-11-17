@@ -125,7 +125,7 @@ void Player::CheckMoveKeys()
 	if (InputManager::GetInstance()->GetKeyState('S') == KEY_STATE::PRESS)
 		vec2MoveForce.m_fy += 1.0f;
 
-	if ((m_eState == CHARACTER_STATE::NONE || m_eState == CHARACTER_STATE::MAP) && vec2MoveForce.isValid() == true)
+	if (m_eState == CHARACTER_STATE::NONE  && vec2MoveForce.isValid() == true)
 	{
 		Actor::Move(vec2MoveForce);
 		Actor::SetAnimation(ANIMATION::RUN);
