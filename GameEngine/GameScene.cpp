@@ -13,6 +13,7 @@
 
 #include "MapUI.h"
 #include "PlayerHUD.h"
+#include "NumberSequenceTask.h"
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
@@ -47,10 +48,11 @@ void GameScene::Init()
 	m_Player = pPlayer;
 
 	// 坷宏璃飘 积己
-	Vent* vent = new Vent;
-	PlayerStart.m_fx += 200;
-	vent->Init(PlayerStart);
-	Scene::AddObject(vent);
+	//Vent* vent = new Vent;
+	//PlayerStart.m_fx += 200;
+	//vent->Init(PlayerStart);
+	//Scene::AddObject(vent);
+
 
 	// GameMode 积己
 	m_GameMode = new GameMode;
@@ -67,6 +69,10 @@ void GameScene::Init()
 	MapUI* mapUI = new MapUI;
 	mapUI->Init(m_Player, std::bind(&GameMode::OpenUI, m_GameMode, static_cast<int>(UI_TYPE::HUD)));
 	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
+
+	NumberSequenceTask* Task1 = new NumberSequenceTask;
+	Task1->Init(nullptr, nullptr, std::bind(&GameMode::OpenUI, m_GameMode, static_cast<int>(UI_TYPE::HUD)));
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)] = Task1;
 
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::WALL_DETECTOR, COLLISION_TAG::WALL);
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_PLAYER_DETECTOR);

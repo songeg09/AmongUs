@@ -17,7 +17,7 @@ MapUI::~MapUI()
 {
 }
 
-void MapUI::Init(Player* _Player, std::function<void()> _btnExitCallback)
+void MapUI::Init(Player* _Player, std::function<void()> _CloseBtnCallback)
 {
 	m_Player = _Player;
 
@@ -34,9 +34,9 @@ void MapUI::Init(Player* _Player, std::function<void()> _btnExitCallback)
 
 	m_vec2Ratio = Vector2((float)m_pMap->GetWidth() / (float)RealMap->GetWidth(), (float)m_pMap->GetHeight() / (float)RealMap->GetHeight());
 
-	m_ExitButton = new Button;
-	m_ExitButton->Init(TEXTURE_TYPE::BTN_X, Vector2(0.85, 0.15), UIElement::ANCHOR::CENTER, _btnExitCallback);
-	m_arrUIElemetns.push_back(m_ExitButton);
+	m_btnClose = new Button;
+	m_btnClose->Init(TEXTURE_TYPE::BTN_X, Vector2(0.15, 0.15), UIElement::ANCHOR::CENTER, _CloseBtnCallback);
+	m_arrUIElemetns.push_back(m_btnClose);
 }
 
 void MapUI::Render(HDC _memDC)

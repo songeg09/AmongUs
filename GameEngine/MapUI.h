@@ -7,7 +7,7 @@ class Button;
 class MapUI : public UI
 {
 private:
-	Button*			m_ExitButton;
+	Button*			m_btnClose;
 
 	Texture*		m_pMap;
 	Texture*		m_pPlayerIcon;
@@ -21,7 +21,7 @@ public:
 	MapUI();
 	~MapUI();
 
-	void Init(Player* _Player, std::function<void()> _btnExitCallback);
+	void Init(Player* _Player, std::function<void()> _CloseBtnCallback);
 	void Render(HDC _memDC) override;
 };
 

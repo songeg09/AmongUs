@@ -179,6 +179,12 @@
     <Filter Include="Engine\12. GameMode">
       <UniqueIdentifier>{f6325803-5453-4926-892e-012c50636229}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\10. UI\TaskUI">
+      <UniqueIdentifier>{552dfc80-aaff-4e58-85f1-3ad51567ac81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. UI\TaskUI\NumberSequenceTask">
+      <UniqueIdentifier>{0218cff6-2aae-48d3-b36d-6495a181bb0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -350,9 +356,17 @@
     <ClInclude Include="ProgressBar.h">
       <Filter>Engine\11. UIElement\ProgressBar</Filter>
     </ClInclude>
-    <ClInclude Include="MenuUI.h" />
     <ClInclude Include="GameMode.h">
       <Filter>Engine\12. GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskUI.h">
+      <Filter>Engine\10. UI\TaskUI</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberSequenceTask.h">
+      <Filter>Engine\10. UI\TaskUI\NumberSequenceTask</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuUI.h">
+      <Filter>Engine\10. UI\MenuUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -519,6 +533,12 @@
     </ClCompile>
     <ClCompile Include="GameMode.cpp">
       <Filter>Engine\12. GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskUI.cpp">
+      <Filter>Engine\10. UI\TaskUI</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberSequenceTask.cpp">
+      <Filter>Engine\10. UI\TaskUI\NumberSequenceTask</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

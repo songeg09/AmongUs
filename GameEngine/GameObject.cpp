@@ -14,8 +14,8 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-}
 
+}
 
 Vector2 GameObject::GetPosition()
 {

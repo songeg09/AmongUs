@@ -156,8 +156,10 @@
     <ClInclude Include="GDIManager.h" />
     <ClInclude Include="MapUI.h" />
     <ClInclude Include="MenuUI.h" />
+    <ClInclude Include="NumberSequenceTask.h" />
     <ClInclude Include="PlayerHUD.h" />
     <ClInclude Include="ProgressBar.h" />
+    <ClInclude Include="TaskUI.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="Imposter.h" />
@@ -214,8 +216,10 @@
     <ClCompile Include="GDIManager.cpp" />
     <ClCompile Include="MapUI.cpp" />
     <ClCompile Include="MenuUI.cpp" />
+    <ClCompile Include="NumberSequenceTask.cpp" />
     <ClCompile Include="PlayerHUD.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
+    <ClCompile Include="TaskUI.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="Imposter.cpp" />
