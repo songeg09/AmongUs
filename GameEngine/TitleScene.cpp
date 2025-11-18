@@ -18,6 +18,8 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init()
 {
+	m_UIFlags = Flag(0);
+
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TITLE);
 	ConfigureRenderSurface(
 		ConstValue::vec2BaseWindowSize,

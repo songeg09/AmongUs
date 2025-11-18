@@ -19,12 +19,14 @@ MapUI::~MapUI()
 
 void MapUI::Init(Player* _Player, std::function<void()> _CloseBtnCallback)
 {
+	UI::Init();
+
 	m_Player = _Player;
 
 	m_pMap = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::MAP);
 	m_pPlayerIcon = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::CHARACTER_ICON);
 	
-	Texture* RealMap = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::SINGLEPLAYMAP);
+	Texture* RealMap = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::BACKGROUND);
 
 	m_vec2MapStartPosInBackBuffer = SceneManager::GetInstance()->GetCurScene()->GetBackBufferSize();
 	m_vec2MapStartPosInBackBuffer.m_fx /= 2;

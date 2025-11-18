@@ -39,11 +39,3 @@ enum DIRECTION
 	DOWN,
 	END
 };
-
-enum class UI_TYPE
-{
-	HUD,
-	MAP,
-	TASK_NUMBER_SEQUNECE,
-	END
-};

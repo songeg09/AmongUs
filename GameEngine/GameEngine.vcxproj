@@ -158,7 +158,7 @@
     <ClInclude Include="MenuUI.h" />
     <ClInclude Include="NumberSequenceTask.h" />
     <ClInclude Include="NumPadButton.h" />
-    <ClInclude Include="PlayerHUD.h" />
+    <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="TaskUI.h" />
     <ClInclude Include="UI.h" />
@@ -218,7 +218,7 @@
     <ClCompile Include="MenuUI.cpp" />
     <ClCompile Include="NumberSequenceTask.cpp" />
     <ClCompile Include="NumPadButton.cpp" />
-    <ClCompile Include="PlayerHUD.cpp" />
+    <ClCompile Include="PlayerStatusUI.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="TaskUI.cpp" />
     <ClCompile Include="UI.cpp" />

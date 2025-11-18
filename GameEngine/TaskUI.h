@@ -11,6 +11,11 @@ public:
 	TaskUI();
 	~TaskUI();
 
-	void Init(std::function<void()> _SuccessCallback, std::function<void()> _FailCallback);
+	void Init(
+		std::function<void()>	_funcOpenCallback,
+		std::function<void()>	_funcCloseCallback,
+		std::function<void()> _SuccessCallback, 
+		std::function<void()> _FailCallback
+	);
 };
 

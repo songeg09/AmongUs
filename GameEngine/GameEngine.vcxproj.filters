@@ -161,9 +161,6 @@
     <Filter Include="Engine\10. UI\TitleUI">
       <UniqueIdentifier>{580d373d-2877-48bc-ae5d-1ae238f55ee5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\10. UI\PlayerHUD">
-      <UniqueIdentifier>{7347e9d4-e93b-49a6-bf6f-baf5024f9dc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\10. UI\MapUI">
       <UniqueIdentifier>{2ce256fb-207d-48f2-8521-879efd43feea}</UniqueIdentifier>
     </Filter>
@@ -184,6 +181,9 @@
     </Filter>
     <Filter Include="Engine\11. UIElement\Button\NumPadButton">
       <UniqueIdentifier>{85d4309d-d110-4246-9a0b-4c8993bc0290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. UI\PlayerStatusUI">
+      <UniqueIdentifier>{7347e9d4-e93b-49a6-bf6f-baf5024f9dc7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -344,8 +344,8 @@
     <ClInclude Include="UIElement.h">
       <Filter>Engine\11. UIElement</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerHUD.h">
-      <Filter>Engine\10. UI\PlayerHUD</Filter>
+    <ClInclude Include="PlayerStatusUI.h">
+      <Filter>Engine\10. UI\PlayerStatusUI</Filter>
     </ClInclude>
     <ClInclude Include="MapUI.h">
       <Filter>Engine\10. UI\MapUI</Filter>
@@ -516,8 +516,8 @@
     <ClCompile Include="UIElement.cpp">
       <Filter>Engine\11. UIElement</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerHUD.cpp">
-      <Filter>Engine\10. UI\PlayerHUD</Filter>
+    <ClCompile Include="PlayerStatusUI.cpp">
+      <Filter>Engine\10. UI\PlayerStatusUI</Filter>
     </ClCompile>
     <ClCompile Include="MapUI.cpp">
       <Filter>Engine\10. UI\MapUI</Filter>

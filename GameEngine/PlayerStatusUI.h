@@ -5,7 +5,7 @@ class Button;
 class ProgressBar;
 class GameMode;
 class Player;
-class PlayerHUD : public UI
+class PlayerStatusUI : public UI
 {
 private:
 	GameMode*		m_GameMode;
@@ -18,14 +18,12 @@ private:
 	
 
 public:
-	PlayerHUD();
-	~PlayerHUD();
+	PlayerStatusUI();
+	~PlayerStatusUI();
 
-	void Init(GameMode* _GameMode, Player* _Player);
+	void Init(GameMode* _GameMode, Player* _Player, std::function<void()> _mapBtnCallback);
 	void Update() override;
 	void Render(HDC _memDC) override;
-
-private:
 
 };
 

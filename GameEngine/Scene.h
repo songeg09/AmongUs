@@ -16,6 +16,8 @@ protected:
 	std::wstring			m_strName;
 
 	std::vector<UI*>		m_arrUIs;
+	Flags					m_UIFlags;
+	Flags					m_PrevUIFlags;
 
 public:
 	Scene(std::wstring _strName);
@@ -40,5 +42,7 @@ public:
 	virtual Vector2 GetViewPortTopLeftInScene() { return GetBackBufferTopLeftInScene() + Vector2(m_fGuardBandPx, m_fGuardBandPx); }
 	virtual Vector2 GetBackBufferTopLeftInScene() { return Vector2(-m_fGuardBandPx, -m_fGuardBandPx); }
 
+	virtual void OpenUI(int _flagIndex);
+	virtual void UpdateUIVisibility();
 };
 

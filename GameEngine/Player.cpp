@@ -18,9 +18,11 @@ Player::~Player()
 {
 }
 
-void Player::Init(Vector2 _vec2Position)
+void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback)
 {
 	Character::Init(_vec2Position);
+
+	m_funcMapKeyCallback = _funcMapKeyCallback;
 
 	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
 	
@@ -94,13 +96,11 @@ void Player::InitAnimation()
 
 void Player::CheckMapKey()
 {
-	//if (InputManager::GetInstance()->GetKeyState('M') != KEY_STATE::DOWN)
-	//	return;
+	if (InputManager::GetInstance()->GetKeyState('M') != KEY_STATE::DOWN)
+		return;
 
-	//if (m_eState == CHARACTER_STATE::NONE)
-	//	OpenMap();
-	//else if (m_eState == CHARACTER_STATE::MAP)
-	//	OpenHUD();
+	if (m_funcMapKeyCallback != nullptr)
+		m_funcMapKeyCallback();
 }
 
 void Player::CheckInteractKey()

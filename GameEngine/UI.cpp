@@ -5,6 +5,8 @@
 UI::UI()
 {
 	m_bVisibility = false;
+	m_funcOpenCallback = nullptr;
+	m_funcCloseCallback = nullptr;
 }
 
 UI::~UI()
@@ -14,6 +16,12 @@ UI::~UI()
 		delete element;
 	}
 	m_arrUIElemetns.clear();
+}
+
+void UI::Init(std::function<void()> _funcOpenCallback, std::function<void()> _funcCloseCallback)
+{
+	m_funcOpenCallback = _funcOpenCallback;
+	m_funcCloseCallback = _funcCloseCallback;
 }
 
 void UI::Update()
@@ -37,3 +45,19 @@ void UI::Render(HDC _memDC)
 		element->Render(_memDC);
 	}
 }
+
+void UI::Open()
+{
+	SetVisibility(true);
+	if (m_funcOpenCallback != nullptr)
+		m_funcOpenCallback();
+}
+
+void UI::Close()
+{
+	SetVisibility(false);
+	if (m_funcCloseCallback != nullptr)
+		m_funcCloseCallback();
+}
+
+

@@ -38,7 +38,6 @@ std::wstring ResourceManager::GetTextureFileName(TEXTURE_TYPE _eTextureType)
 	case TEXTURE_TYPE::PROGRESSBAR_FRAME:				return L"progressbar_frame.bmp";
 	case TEXTURE_TYPE::PROGRESSBAR:						return L"progressbar.bmp";
 	case TEXTURE_TYPE::MAP:								return L"map.bmp";
-	case TEXTURE_TYPE::SINGLEPLAYMAP:					return L"singleplaymap.bmp";
 	case TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_FRAME:		return L"\\Tasks\\NumberSequence\\frame.bmp";
 	case TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_1:			return L"\\Tasks\\NumberSequence\\numberpad_1.bmp";
 	case TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_2:			return L"\\Tasks\\NumberSequence\\numberpad_2.bmp";

@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "PlayerHUD.h"
+#include "PlayerStatusUI.h"
 #include "Button.h"
 #include "ProgressBar.h"
 #include "GameMode.h"
 #include "Player.h "
 #include "SceneManager.h"
 
-PlayerHUD::PlayerHUD()
+PlayerStatusUI::PlayerStatusUI()
 {
 	m_btnUse = nullptr;
 	m_btnMap = nullptr;
@@ -14,12 +14,14 @@ PlayerHUD::PlayerHUD()
 	m_GameMode = nullptr;
 }
 
-PlayerHUD::~PlayerHUD()
+PlayerStatusUI::~PlayerStatusUI()
 {
 }
 
-void PlayerHUD::Init(GameMode* _GameMode, Player* _Player)
+void PlayerStatusUI::Init(GameMode* _GameMode, Player* _Player, std::function<void()> _mapBtnCallback)
 {
+	UI::Init();
+
 	m_GameMode = _GameMode;
 	m_Player = _Player;
 
@@ -28,7 +30,7 @@ void PlayerHUD::Init(GameMode* _GameMode, Player* _Player)
 	m_arrUIElemetns.push_back(m_btnUse);
 
 	m_btnMap = new Button;
-	m_btnMap->Init(TEXTURE_TYPE::BTN_MAP, Vector2(0.95, 0.07), UIElement::ANCHOR::CENTER, std::bind(&GameMode::OpenUI, m_GameMode, static_cast<int>(UI_TYPE::MAP)));
+	m_btnMap->Init(TEXTURE_TYPE::BTN_MAP, Vector2(0.95, 0.07), UIElement::ANCHOR::CENTER, _mapBtnCallback);
 	m_arrUIElemetns.push_back(m_btnMap);
 
 	m_btnSetting = new Button;
@@ -41,7 +43,7 @@ void PlayerHUD::Init(GameMode* _GameMode, Player* _Player)
 }
 
 
-void PlayerHUD::Update()
+void PlayerStatusUI::Update()
 {
 	if (m_bVisibility == false)
 		return;
@@ -59,7 +61,7 @@ void PlayerHUD::Update()
 	m_progressbarTasks->SetProgress(m_GameMode->GetProgress());
 }
 
-void PlayerHUD::Render(HDC _memDC)
+void PlayerStatusUI::Render(HDC _memDC)
 {
 	UI::Render(_memDC);
 }

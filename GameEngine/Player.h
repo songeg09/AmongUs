@@ -30,11 +30,13 @@ private:
 	int				m_iTasksTotal;
 	int				m_iTasksCompleted;
 
+	std::function<void()> m_funcMapKeyCallback;
+
 public:
 	Player();
 	~Player();
 
-	void Init(Vector2 _vec2Position) override;
+	void Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback = nullptr);
 	virtual void Update() override;
 	void Input();
 	

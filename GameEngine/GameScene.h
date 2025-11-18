@@ -7,15 +7,21 @@ class Player;
 class GameMode;
 class GameScene : public Scene
 {
+	enum class UI_TYPE
+	{
+		START,
+		HUD = START,
+		MAP,
+		TASK_NUMBER_SEQUNECE,
+		END
+	};
 
 private:
 	GameMode*				m_GameMode;
-	Flags					m_UIFlags;
+	
 	Texture*				m_pBackGround;
 	Vector2					m_vec2BackGroundPosition;	
 	Player*					m_Player;
-
-
 
 public:
 	GameScene(std::wstring _strName);
@@ -28,6 +34,7 @@ public:
 	Vector2 GetViewPortTopLeftInScene() override;
 	Vector2 GetBackBufferTopLeftInScene() override;
 
-	void UpdateUIVisibility();
+	void OpenUI(int _flagIndex) override;
+	void OpenTask(int _flagIndex);
 };
 

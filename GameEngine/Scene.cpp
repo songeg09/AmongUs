@@ -10,6 +10,7 @@
 Scene::Scene(std::wstring _strName)
 {
 	m_strName = _strName;
+	m_UIFlags = 0;
 }
 
 Scene::~Scene()
@@ -38,6 +39,25 @@ void Scene::ConfigureRenderSurface(Vector2 _vec2SceneSize, float _fGuardBandPx)
 	m_vec2BackBufferSize.m_fy += _fGuardBandPx * 2;
 }
 
+void Scene::OpenUI(int _flagIndex)
+{
+	m_UIFlags |= Flag(_flagIndex);
+}
+
+void Scene::UpdateUIVisibility()
+{
+	for (int i = 0; i < m_arrUIs.size(); ++i)
+	{
+		if ((m_UIFlags & Flag(i)) == ((m_PrevUIFlags & Flag(i))))
+			continue;
+		else if ((m_UIFlags & Flag(i)) != 0)
+			m_arrUIs[i]->Open();
+		else
+			m_arrUIs[i]->Close();
+	}
+
+	m_PrevUIFlags = m_UIFlags;
+}
 
 void Scene::AddObject(Object* _object)
 {
@@ -56,6 +76,8 @@ void Scene::Update()
 
 	for (UI* ui : m_arrUIs)
 		ui->Update();
+
+	UpdateUIVisibility();
 }
 
 void Scene::LateUpdate()

@@ -18,9 +18,9 @@ NumberSequenceTask::~NumberSequenceTask()
 {
 }
 
-void NumberSequenceTask::Init(std::function<void()> _SuccessCallback, std::function<void()> _FailCallback, std::function<void()> _BtnCloseCallback)
+void NumberSequenceTask::Init(std::function<void()> _funcOpenCallback, std::function<void()> _funcCloseCallback, std::function<void()> _SuccessCallback, std::function<void()> _FailCallback, std::function<void()> _BtnCloseCallback)
 {
-	TaskUI::Init(_SuccessCallback, _FailCallback);
+	TaskUI::Init(_funcOpenCallback, _funcCloseCallback, _SuccessCallback, _FailCallback);
 
 	m_pFrame = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_FRAME);
 
@@ -52,7 +52,7 @@ void NumberSequenceTask::Init(std::function<void()> _SuccessCallback, std::funct
 
 			m_arrNumPadBtns[btnIndex] = new NumPadButton;
 			m_arrNumPadBtns[btnIndex]->Init(
-				(TEXTURE_TYPE)(btnIndex + TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_NUMBER_START), 
+				(TEXTURE_TYPE)(btnIndex + TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_NUMBER_START),
 				vec2NumPadPos,
 				UIElement::ANCHOR::TOP_LEFT,
 				std::bind(&Button::SetActivate, m_arrNumPadBtns[btnIndex], false)
@@ -60,7 +60,6 @@ void NumberSequenceTask::Init(std::function<void()> _SuccessCallback, std::funct
 			m_arrUIElemetns.push_back(m_arrNumPadBtns[btnIndex]);
 		}
 	}
-
 	Reset();
 }
 
@@ -84,7 +83,7 @@ void NumberSequenceTask::Reset()
 {
 	for (NumPadButton* numPadBtn : m_arrNumPadBtns)
 	{
-		numPadBtn->SetVisibility(true);
+		numPadBtn->SetActivate(true);
 	}
 
 	int a, b;
@@ -94,6 +93,12 @@ void NumberSequenceTask::Reset()
 		b = rand() % 10;
 		Swap(m_arrNumPadBtns[a], m_arrNumPadBtns[b]);
 	}
+}
+
+void NumberSequenceTask::Open()
+{
+	Reset();
+	UI::Open();
 }
 
 void NumberSequenceTask::Swap(NumPadButton* btn1, NumPadButton* btn2)
