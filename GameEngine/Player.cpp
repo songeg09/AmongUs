@@ -138,10 +138,6 @@ void Player::CheckEscapeKey()
 {
 	if (InputManager::GetInstance()->GetKeyState(VK_ESCAPE) != KEY_STATE::DOWN)
 		return;
-
-	//if (m_eState != CHARACTER_STATE::NONE)
-	//	OpenHUD();
-		
 }
 
 void Player::UseInteractableObject()
@@ -149,8 +145,4 @@ void Player::UseInteractableObject()
 	m_pInteractableObject->Interact(this);
 }
 
-void Player::CompleteTask()
-{
-	if (m_iTasksCompleted + 1 <= m_iTasksTotal)
-		m_iTasksCompleted++;
-}
+

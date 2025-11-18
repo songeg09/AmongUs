@@ -143,9 +143,6 @@
     <Filter Include="Engine\04. Object\Interactable">
       <UniqueIdentifier>{3227c5c3-1bb6-4688-99b8-5e3cc7edcbf5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\GameObject\Vent">
-      <UniqueIdentifier>{1f7f2bdf-7de5-4973-a1fb-54a6a9cb8ea9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\06. Scene\TitleScene">
       <UniqueIdentifier>{8c9f0fe6-f17f-4af3-afca-5fc1eddf4987}</UniqueIdentifier>
     </Filter>
@@ -184,6 +181,9 @@
     </Filter>
     <Filter Include="Engine\10. UI\TaskUI\NumberSequenceTask">
       <UniqueIdentifier>{0218cff6-2aae-48d3-b36d-6495a181bb0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UIElement\Button\NumPadButton">
+      <UniqueIdentifier>{85d4309d-d110-4246-9a0b-4c8993bc0290}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -326,9 +326,6 @@
     <ClInclude Include="Interactable.h">
       <Filter>Engine\04. Object\Interactable</Filter>
     </ClInclude>
-    <ClInclude Include="Vent.h">
-      <Filter>Engine\04. Object\GameObject\Vent</Filter>
-    </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>Engine\06. Scene\TitleScene</Filter>
     </ClInclude>
@@ -367,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="MenuUI.h">
       <Filter>Engine\10. UI\MenuUI</Filter>
+    </ClInclude>
+    <ClInclude Include="NumPadButton.h">
+      <Filter>Engine\11. UIElement\Button\NumPadButton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -498,9 +498,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine\04. Object\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Vent.cpp">
-      <Filter>Engine\04. Object\GameObject\Vent</Filter>
-    </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>Engine\06. Scene\TitleScene</Filter>
     </ClCompile>
@@ -539,6 +536,9 @@
     </ClCompile>
     <ClCompile Include="NumberSequenceTask.cpp">
       <Filter>Engine\10. UI\TaskUI\NumberSequenceTask</Filter>
+    </ClCompile>
+    <ClCompile Include="NumPadButton.cpp">
+      <Filter>Engine\11. UIElement\Button\NumPadButton</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

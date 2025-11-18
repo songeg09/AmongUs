@@ -9,8 +9,6 @@ private:
 	int				m_iTotalTasks;
 	int				m_iCompletedTasks;
 
-	Flags			m_UIFlags;
-
 public:
 	GameMode();
 	~GameMode();
@@ -18,8 +16,7 @@ public:
 	void Init(Player* _Player);
 
 	void OpenUI(int _uiIndex);
+	void OpenTask(int _uiIndex);
 	float GetProgress() { return (float)m_iCompletedTasks / (float)m_iTotalTasks; }
-	
-	Flags GetUIFlag() {return m_UIFlags;}
 };
 

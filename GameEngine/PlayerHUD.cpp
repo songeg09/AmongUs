@@ -24,7 +24,7 @@ void PlayerHUD::Init(GameMode* _GameMode, Player* _Player)
 	m_Player = _Player;
 
 	m_btnUse = new Button;
-	m_btnUse->Init(TEXTURE_TYPE::BTN_USE, Vector2(0.95, 0.9), UIElement::ANCHOR::CENTER);
+	m_btnUse->Init(TEXTURE_TYPE::BTN_USE, Vector2(0.95, 0.9), UIElement::ANCHOR::CENTER, std::bind(&Player::UseInteractableObject, m_Player));
 	m_arrUIElemetns.push_back(m_btnUse);
 
 	m_btnMap = new Button;

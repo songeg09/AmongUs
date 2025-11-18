@@ -10,10 +10,11 @@ class GameScene : public Scene
 
 private:
 	GameMode*				m_GameMode;
-
+	Flags					m_UIFlags;
 	Texture*				m_pBackGround;
 	Vector2					m_vec2BackGroundPosition;	
 	Player*					m_Player;
+
 
 
 public:

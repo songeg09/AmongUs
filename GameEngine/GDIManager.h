@@ -31,7 +31,9 @@ private:
 	HBRUSH						m_PrevBrush;
 	HPEN						m_PrevPen;
 	
-	BLENDFUNCTION				m_BlendFunction;
+	BLENDFUNCTION				m_TransparencyBlendFunc;
+	BLENDFUNCTION				m_GreenBlendFunc;
+
 	HDC							m_BtnConfigureDC;
 	HBITMAP						m_TempBmp;
 
@@ -59,7 +61,8 @@ public:
 			SelectObject(_hDC, m_PrevPen);
 	}
 
-	BLENDFUNCTION GetBlendFunction(){return m_BlendFunction;}
+	BLENDFUNCTION GetTransparencyBlendFunction(){return m_TransparencyBlendFunc;}
+	BLENDFUNCTION GetGreenBlendFunction(){return m_GreenBlendFunc;}
 
 	HDC GetBtnConfigureDC() { return m_BtnConfigureDC; }
 };

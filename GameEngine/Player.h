@@ -49,8 +49,6 @@ public:
 
 	void UseInteractableObject();
 
-	float GetProgress() {return (float)m_iTasksCompleted / (float)m_iTasksTotal;}
-	void CompleteTask();
 	
 
 private:

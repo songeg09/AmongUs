@@ -157,6 +157,7 @@
     <ClInclude Include="MapUI.h" />
     <ClInclude Include="MenuUI.h" />
     <ClInclude Include="NumberSequenceTask.h" />
+    <ClInclude Include="NumPadButton.h" />
     <ClInclude Include="PlayerHUD.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="TaskUI.h" />
@@ -189,7 +190,6 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureAtlas.h" />
     <ClInclude Include="TimerManager.h" />
-    <ClInclude Include="Vent.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="ZoneData.h" />
   </ItemGroup>
@@ -217,6 +217,7 @@
     <ClCompile Include="MapUI.cpp" />
     <ClCompile Include="MenuUI.cpp" />
     <ClCompile Include="NumberSequenceTask.cpp" />
+    <ClCompile Include="NumPadButton.cpp" />
     <ClCompile Include="PlayerHUD.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="TaskUI.cpp" />
@@ -244,7 +245,6 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
     <ClCompile Include="TimerManager.cpp" />
-    <ClCompile Include="Vent.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="ZoneData.cpp" />
   </ItemGroup>

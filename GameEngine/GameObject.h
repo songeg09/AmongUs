@@ -5,15 +5,16 @@
 class GameObject : public Object, public Interactable
 {
 protected:
-	Collider* m_pInteractRange;
+	Collider*				m_pInteractRange;
+	std::function<void()>	m_funcInteractCallback;
 
 public:
 	GameObject();
 	~GameObject();
 
 	void Update() override;
-	void Init(Vector2 _vec2Position) = 0;
-	virtual void Interact(Character* _Interactor) = 0;
+	virtual void Init(Vector2 _vec2Position, Vector2 _colliderSize, std::function<void()> _funcInteractCallback);
+	virtual void Interact(Character* _Interactor);
 	Vector2 GetPosition() override;
 };
 

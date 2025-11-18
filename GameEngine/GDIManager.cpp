@@ -10,11 +10,13 @@ GDIManager::GDIManager()
 	CreateMyPen();
 	CreateMyBrush();
 
-	m_BlendFunction = {};
-	m_BlendFunction.BlendOp = AC_SRC_OVER;      // 고정
-	m_BlendFunction.BlendFlags = 0;             // 고정
-	m_BlendFunction.SourceConstantAlpha = 100;  // 전체 반투명도(0~255)
-	m_BlendFunction.AlphaFormat = 0;
+	m_TransparencyBlendFunc = {};
+	m_TransparencyBlendFunc.BlendOp = AC_SRC_OVER;      // 고정
+	m_TransparencyBlendFunc.BlendFlags = 0;             // 고정
+	m_TransparencyBlendFunc.SourceConstantAlpha = 100;  // 전체 반투명도(0~255)
+	m_TransparencyBlendFunc.AlphaFormat = 0;
+
+	m_GreenBlendFunc = {};
 
 	// 버튼 효과 추가용 DC 설정
 	m_TempBmp = CreateCompatibleBitmap(Core::GetInstance()->GetMainDC(), 200, 200);				// 버튼 사이즈는 임시로 200x200을 넘지 않는다고 가정

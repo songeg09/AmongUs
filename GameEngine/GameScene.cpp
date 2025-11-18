@@ -1,15 +1,17 @@
 #include "pch.h"
 #include "GameScene.h"
-#include "GameMode.h"
 
-#include "Texture.h"
-#include "Player.h"
-#include "Monster.h"
-#include "Vent.h"
 #include "InputManager.h"
 #include "CollisionManager.h"
+
+#include "Texture.h"
 #include "TextureAtlas.h"
-#include "Wall.h"
+
+#include "GameMode.h"
+
+#include "Player.h"
+#include "Monster.h"
+#include "GameObject.h"
 
 #include "MapUI.h"
 #include "PlayerHUD.h"
@@ -20,6 +22,7 @@ GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 	m_GameMode = nullptr;
 	m_pBackGround = nullptr;
 	m_Player = nullptr;
+	m_UIFlags = 0;
 }
 
 GameScene::~GameScene()
@@ -40,25 +43,26 @@ void GameScene::Init()
 		ConstValue::fGameSceneGaurdBandPx
 	);
 
-	// 플레이어 생성 및 오브젝트 생성
+	// 1. 플레이어 생성 및 오브젝트 생성
 	Player* pPlayer = new Player;
 	Vector2 PlayerStart(m_pBackGround->GetWidth() / 2, m_pBackGround->GetHeight() / 2);
 	pPlayer->Init(PlayerStart);
 	Scene::AddObject(pPlayer);
 	m_Player = pPlayer;
 
-	// 오브젝트 생성
-	//Vent* vent = new Vent;
-	//PlayerStart.m_fx += 200;
-	//vent->Init(PlayerStart);
-	//Scene::AddObject(vent);
-
-
-	// GameMode 생성
+	// 2. GameMode 생성
 	m_GameMode = new GameMode;
 	m_GameMode->Init(m_Player);
 
+	// 3. 오브젝트 생성
+	GameObject* gameObject = new GameObject;
+	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameMode::OpenUI, m_GameMode, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
+	Scene::AddObject(gameObject);
+
+
+
 	// UI 생성
+	m_UIFlags |= Flag(static_cast<int>(UI_TYPE::HUD));
 	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
 	
 	// UI z축 순서에 맞게 생성 필요!
@@ -118,9 +122,46 @@ Vector2 GameScene::GetBackBufferTopLeftInScene()
 
 void GameScene::UpdateUIVisibility()
 {
-	Flags flag = m_GameMode->GetUIFlag();
-
-	m_arrUIs[static_cast<int>(UI_TYPE::HUD)]->SetVisibility(flag & Flag(static_cast<int>(UI_TYPE::HUD)));
-	m_arrUIs[static_cast<int>(UI_TYPE::MAP)]->SetVisibility(flag & Flag(static_cast<int>(UI_TYPE::MAP)));
+	m_arrUIs[static_cast<int>(UI_TYPE::HUD)]->SetVisibility(m_UIFlags & Flag(static_cast<int>(UI_TYPE::HUD)));
+	m_arrUIs[static_cast<int>(UI_TYPE::MAP)]->SetVisibility(m_UIFlags & Flag(static_cast<int>(UI_TYPE::MAP)));
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)]->SetVisibility(m_UIFlags & Flag(static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
 }
 
+void GameScene::OpenUI(int _uiIndex)
+{
+	static Flags mapBit = Flag(static_cast<int>(UI_TYPE::MAP));
+
+
+	switch ((UI_TYPE)_uiIndex)
+	{
+	case UI_TYPE::HUD:
+		m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD));
+		m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE);
+		break;
+
+	case UI_TYPE::MAP:
+		m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD)) | (m_UIFlags ^ mapBit) & mapBit;
+		m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE);
+		break;
+
+	case UI_TYPE::TASK_NUMBER_SEQUNECE:
+		OpenTask(_uiIndex);
+		break;
+	}
+}
+
+void GameScene::OpenTask(int _uiIndex)
+{
+	static Flags numberSequenceBit = Flag(static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE));
+
+	if (m_Player->GetCharacterState() == Player::CHARACTER_STATE::WORKING)
+		return;
+
+	switch ((UI_TYPE)_uiIndex)
+	{
+	case UI_TYPE::TASK_NUMBER_SEQUNECE:
+		m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD)) | (m_UIFlags ^ numberSequenceBit) & numberSequenceBit;
+		m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING);
+		break;
+	}
+}

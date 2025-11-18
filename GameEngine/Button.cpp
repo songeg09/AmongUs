@@ -24,18 +24,35 @@ void Button::Init(TEXTURE_TYPE _eTextureType, Vector2 _vec2RelativePosition, UIE
 	m_callBackFunc = _callBackFunc;
 	SetActivate(_bActivate);
 
-	Vector2 btnAreaStartPos = m_vec2RelativePosition * ConstValue::vec2BaseWindowSize;
-	btnAreaStartPos.m_fx -= m_pImage->GetWidth() / 2;
-	btnAreaStartPos.m_fy -= m_pImage->GetHeight() / 2;
+	SetBtnArea();
+}
 
+void Button::SetBtnArea()
+{	
+	Vector2 btnAreaStartPos = m_vec2RelativePosition * ConstValue::vec2BaseWindowSize;
+
+	switch(m_eAnchor)
+	{
+	case ANCHOR::TOP_LEFT:
+		break;
+	case ANCHOR::CENTER:
+		btnAreaStartPos.m_fx -= m_pImage->GetWidth() / 2;
+		btnAreaStartPos.m_fy -= m_pImage->GetHeight() / 2;
+		break;
+	case ANCHOR::BOTTOM_RIGHT:
+		btnAreaStartPos.m_fx -= m_pImage->GetWidth();
+		btnAreaStartPos.m_fy -= m_pImage->GetHeight();
+		break;
+	}
+	
 	m_btnArea = {
 		(long)btnAreaStartPos.m_fx,
 		(long)btnAreaStartPos.m_fy,
 		(long)btnAreaStartPos.m_fx + m_pImage->GetWidth(),
 		(long)btnAreaStartPos.m_fy + m_pImage->GetHeight()
 	};
-
 }
+
 
 void Button::Update()
 {
@@ -52,6 +69,11 @@ void Button::Update()
 }
 
 void Button::Render(HDC _memDC)
+{
+	Render(_memDC, GDIManager::GetInstance()->GetTransparencyBlendFunction());
+}
+
+void Button::Render(HDC _memDC, BLENDFUNCTION bf)
 {
 	if (m_bVisibility == false)
 		return;
@@ -81,18 +103,18 @@ void Button::Render(HDC _memDC)
 	if (m_bActivate == false)
 	{
 		AlphaBlend(
-			_memDC, 
+			_memDC,
 			m_vecAbsoluteStartPos.m_fx, m_vecAbsoluteStartPos.m_fy,
 			m_pImage->GetWidth(), m_pImage->GetHeight(),
 			hAlphaDC,
 			0, 0,
 			m_pImage->GetWidth(), m_pImage->GetHeight(),
-			GDIManager::GetInstance()->GetBlendFunction()
+			bf
 		);
 	}
 	else
 	{
-		BitBlt(_memDC, 
+		BitBlt(_memDC,
 			m_vecAbsoluteStartPos.m_fx, m_vecAbsoluteStartPos.m_fy,
 			m_pImage->GetWidth(), m_pImage->GetHeight(),
 			hAlphaDC,
@@ -101,3 +123,4 @@ void Button::Render(HDC _memDC)
 		);
 	}
 }
+
