@@ -38,6 +38,7 @@ private:
 	HBITMAP						m_TempBmp;
 
 public:
+	void Init();
 	void CreateMyPen();
 	void ReleaseMyPen();
 	void CreateMyBrush();

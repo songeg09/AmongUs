@@ -7,6 +7,15 @@ GDIManager::GDIManager()
 {
 	m_PrevBrush = nullptr;
 	m_PrevPen = nullptr;
+}
+GDIManager::~GDIManager()
+{
+	ReleaseMyPen();
+	ReleaseMyBrush();
+}
+
+void GDIManager::Init()
+{
 	CreateMyPen();
 	CreateMyBrush();
 
@@ -21,14 +30,11 @@ GDIManager::GDIManager()
 	// 버튼 효과 추가용 DC 설정
 	m_TempBmp = CreateCompatibleBitmap(Core::GetInstance()->GetMainDC(), 200, 200);				// 버튼 사이즈는 임시로 200x200을 넘지 않는다고 가정
 	m_BtnConfigureDC = CreateCompatibleDC(Core::GetInstance()->GetMainDC());
-	
+
 	HBITMAP hOldBitMap = (HBITMAP)SelectObject(m_BtnConfigureDC, m_TempBmp);
 	DeleteObject(hOldBitMap);
-}
-GDIManager::~GDIManager()
-{
-	ReleaseMyPen();
-	ReleaseMyBrush();
+
+	SetBkMode(Core::GetInstance()->GetMainDC(), TRANSPARENT);
 }
 
 void GDIManager::CreateMyPen()

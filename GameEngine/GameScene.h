@@ -13,6 +13,7 @@ class GameScene : public Scene
 		HUD = START,
 		MAP,
 		TASK_NUMBER_SEQUNECE,
+		TASK_DATA_UPLOAD,
 		END
 	};
 
@@ -36,5 +37,6 @@ public:
 
 	void OpenUI(int _flagIndex) override;
 	void OpenTask(int _flagIndex);
+
 };
 

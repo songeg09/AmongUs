@@ -18,4 +18,6 @@ namespace ConstValue
 	static const std::wstring strDataTableNamesFileName = L"DataTableNames.txt";
 	static const std::wstring strSettingsTableFileName = L"Settings.txt";
 
+
+	static const float fMaxUploadTime = 10.0f;
 }

@@ -10,12 +10,11 @@ private:
 	Texture*			m_pFrame;
 
 	NumPadButton*		m_arrNumPadBtns[10];
-	Button*				m_btnClose;
 
-	Vector2				m_vec2FrameStartPosInBackBuffer;
 	Vector2				m_NumPadSize;
 	Vector2				m_NumPadStartPosInBackBuffer;
 
+	int					m_NextBtnIndex;
 public:
 	NumberSequenceTask();
 	~NumberSequenceTask();
@@ -25,13 +24,12 @@ public:
 		std::function<void()>	_funcCloseCallback,
 		std::function<void()>	_SuccessCallback, 
 		std::function<void()>	_FailCallback,
-		std::function<void()> _BtnCloseCallback
+		std::function<void()>	_BtnCloseCallback
 	);
-	void Render(HDC _memDC) override;
 
-	void Reset();
-
+	void Reset() override;
 	void Open() override;
+	void CheckWinStatus() override;
 
 private:
 	void Swap(NumPadButton* btn1, NumPadButton* btn2);

@@ -64,4 +64,7 @@ void PlayerStatusUI::Update()
 void PlayerStatusUI::Render(HDC _memDC)
 {
 	UI::Render(_memDC);
+
+	static std::wstring txt = L"TOTAL TASK COMPLETED";
+	TextOutW(_memDC, 500, 500, txt.c_str(), txt.length());
 }

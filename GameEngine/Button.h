@@ -22,6 +22,7 @@ public:
 	void Render(HDC _memDC) override;
 	void Render(HDC _memDC, BLENDFUNCTION bf);
 	void SetActivate(bool _bActiavet) { m_bActivate = _bActiavet; }
+	bool IsActivate() { return m_bActivate; }
 	
 	virtual void SetBtnArea();
 };

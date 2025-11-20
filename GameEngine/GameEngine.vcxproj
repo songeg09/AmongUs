@@ -146,6 +146,7 @@
     <ClInclude Include="Core.h" />
     <ClInclude Include="Crew.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="DataUploadTask.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameEngine.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Crew.cpp" />
     <ClCompile Include="Data.cpp" />
+    <ClCompile Include="DataUploadTask.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GameObject.cpp" />

@@ -20,25 +20,13 @@ NumberSequenceTask::~NumberSequenceTask()
 
 void NumberSequenceTask::Init(std::function<void()> _funcOpenCallback, std::function<void()> _funcCloseCallback, std::function<void()> _SuccessCallback, std::function<void()> _FailCallback, std::function<void()> _BtnCloseCallback)
 {
-	TaskUI::Init(_funcOpenCallback, _funcCloseCallback, _SuccessCallback, _FailCallback);
-
-	m_pFrame = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_FRAME);
-
-	m_vec2FrameStartPosInBackBuffer = SceneManager::GetInstance()->GetCurScene()->GetBackBufferSize();
-	m_vec2FrameStartPosInBackBuffer.m_fx /= 2;
-	m_vec2FrameStartPosInBackBuffer.m_fy /= 2;
-	m_vec2FrameStartPosInBackBuffer.m_fx -= m_pFrame->GetWidth() / 2;
-	m_vec2FrameStartPosInBackBuffer.m_fy -= m_pFrame->GetHeight() / 2;
+	TaskUI::Init(TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_FRAME, _funcOpenCallback, _funcCloseCallback, _SuccessCallback, _FailCallback, _BtnCloseCallback);
 
 	Texture* NumPad = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_NUMBER_START);
 	m_NumPadSize = Vector2(NumPad->GetWidth(), NumPad->GetHeight());
 	m_NumPadStartPosInBackBuffer = m_vec2FrameStartPosInBackBuffer;
 	m_NumPadStartPosInBackBuffer.m_fx += 40;
 	m_NumPadStartPosInBackBuffer.m_fy += 40;
-
-	m_btnClose = new Button;
-	m_btnClose->Init(TEXTURE_TYPE::BTN_X, Vector2(0.25, 0.29), UIElement::ANCHOR::CENTER, _BtnCloseCallback);
-	m_arrUIElemetns.push_back(m_btnClose);
 
 	int btnIndex = 0;
 	Vector2 vec2NumPadPos;
@@ -63,24 +51,11 @@ void NumberSequenceTask::Init(std::function<void()> _funcOpenCallback, std::func
 	Reset();
 }
 
-void NumberSequenceTask::Render(HDC _memDC)
-{
-	if (m_bVisibility == false)
-		return;
-
-	TransparentBlt(_memDC, m_vec2FrameStartPosInBackBuffer.m_fx, m_vec2FrameStartPosInBackBuffer.m_fy,
-		m_pFrame->GetWidth(), m_pFrame->GetHeight(),
-		m_pFrame->GetDC(),
-		0, 0,
-		m_pFrame->GetWidth(), m_pFrame->GetHeight(),
-		RGB(255, 0, 255)
-	);
-
-	UI::Render(_memDC);
-}
-
 void NumberSequenceTask::Reset()
 {
+	m_eTaskStatus = TASK_STATUS::PLAYING;
+	m_NextBtnIndex = 0;
+
 	for (NumPadButton* numPadBtn : m_arrNumPadBtns)
 	{
 		numPadBtn->SetActivate(true);
@@ -109,4 +84,32 @@ void NumberSequenceTask::Swap(NumPadButton* btn1, NumPadButton* btn2)
 
 	btn1->SetBtnArea();
 	btn2->SetBtnArea();
+}
+
+void NumberSequenceTask::CheckWinStatus()
+{
+	if (m_NextBtnIndex == 10)
+	{
+		m_eTaskStatus = TASK_STATUS::SUCCESS;
+		return;
+	}
+	
+	int NumOfDeactivatedButtons = 0;
+	for (NumPadButton* btn : m_arrNumPadBtns)
+	{
+		if (!btn->IsActivate())
+			NumOfDeactivatedButtons++;
+	}
+
+	if (NumOfDeactivatedButtons == m_NextBtnIndex)
+		m_eTaskStatus = TASK_STATUS::PLAYING;
+	else if(!m_arrNumPadBtns[m_NextBtnIndex]->IsActivate())
+	{
+		m_eTaskStatus = TASK_STATUS::PLAYING;
+		m_NextBtnIndex++;
+	}
+	else
+	{
+		m_eTaskStatus = TASK_STATUS::FAIL;
+	}
 }

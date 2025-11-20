@@ -185,6 +185,9 @@
     <Filter Include="Engine\10. UI\PlayerStatusUI">
       <UniqueIdentifier>{7347e9d4-e93b-49a6-bf6f-baf5024f9dc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\10. UI\TaskUI\DataUploadTask">
+      <UniqueIdentifier>{c8491947-096a-420b-abd4-56098ccdb62f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -368,6 +371,9 @@
     <ClInclude Include="NumPadButton.h">
       <Filter>Engine\11. UIElement\Button\NumPadButton</Filter>
     </ClInclude>
+    <ClInclude Include="DataUploadTask.h">
+      <Filter>Engine\10. UI\TaskUI\DataUploadTask</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -539,6 +545,9 @@
     </ClCompile>
     <ClCompile Include="NumPadButton.cpp">
       <Filter>Engine\11. UIElement\Button\NumPadButton</Filter>
+    </ClCompile>
+    <ClCompile Include="DataUploadTask.cpp">
+      <Filter>Engine\10. UI\TaskUI\DataUploadTask</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

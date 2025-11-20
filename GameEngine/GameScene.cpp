@@ -16,6 +16,7 @@
 #include "MapUI.h"
 #include "PlayerStatusUI.h"
 #include "NumberSequenceTask.h"
+#include "DataUploadTask.h"
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
@@ -59,6 +60,12 @@ void GameScene::Init()
 	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
 	Scene::AddObject(gameObject);
 
+	Vector2 Pos = m_Player->GetPosition();
+	Pos.m_fx += 100;
+	GameObject* gameObject2 = new GameObject;
+	gameObject2->Init(Pos, Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)));
+	Scene::AddObject(gameObject2);
+
 	// UI 생성
 	m_UIFlags |= Flag(static_cast<int>(UI_TYPE::HUD));
 	m_PrevUIFlags = m_UIFlags;
@@ -70,7 +77,6 @@ void GameScene::Init()
 	playerUI->SetVisibility(true);
 	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = playerUI;
 
-	
 	MapUI* mapUI = new MapUI;
 	mapUI->Init(m_Player, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
 	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
@@ -79,11 +85,20 @@ void GameScene::Init()
 	Task1->Init(
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
-		nullptr, 
-		nullptr,
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)), // 테스트용 성공시 맵 열기
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
 	);
 	m_arrUIs[static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)] = Task1;
+
+	DataUploadTask* Task2 = new DataUploadTask;
+	Task2->Init(
+		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
+		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)),
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
+	);
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)] = Task2;
 
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::WALL_DETECTOR, COLLISION_TAG::WALL);
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_PLAYER_DETECTOR);
@@ -137,10 +152,10 @@ void GameScene::OpenUI(int _flagIndex)
 		break;
 
 	case UI_TYPE::MAP:
-		m_UIFlags = (m_UIFlags ^ mapBit) & mapBit |  Flag(static_cast<int>(UI_TYPE::HUD));
+		m_UIFlags = ((m_UIFlags ^ mapBit) & mapBit) |  Flag(static_cast<int>(UI_TYPE::HUD));
 		break;
 
-	case UI_TYPE::TASK_NUMBER_SEQUNECE:
+	default:
 		OpenTask(_flagIndex);
 		break;
 	}
@@ -149,6 +164,7 @@ void GameScene::OpenUI(int _flagIndex)
 void GameScene::OpenTask(int _flagIndex)
 {
 	static Flags numberSequenceBit = Flag(static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE));
+	static Flags dataUploadBit = Flag(static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD));
 
 	if (m_Player->GetCharacterState() == Player::CHARACTER_STATE::WORKING)
 		return;
@@ -157,6 +173,9 @@ void GameScene::OpenTask(int _flagIndex)
 	{
 	case UI_TYPE::TASK_NUMBER_SEQUNECE:
 		m_UIFlags = (m_UIFlags ^ numberSequenceBit) & numberSequenceBit | Flag(static_cast<int>(UI_TYPE::HUD));
+		break;
+	case UI_TYPE::TASK_DATA_UPLOAD:
+		m_UIFlags = (m_UIFlags ^ dataUploadBit) & dataUploadBit | Flag(static_cast<int>(UI_TYPE::HUD));
 		break;
 	}
 }
