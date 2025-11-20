@@ -29,5 +29,6 @@ public:
 	void CheckWinStatus() override;
 	void Open()	override;
 	void StartUpload();
+	float Easeout(float _ftime);
 };
 

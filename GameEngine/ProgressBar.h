@@ -5,11 +5,14 @@ class Texture;
 class ProgressBar : public UIElement
 {
 private:
-	Texture* m_pProgressBar;
-	Vector2  m_vec2ProgressStartPos;
-	float    m_fProgress;
+	Texture*		m_pProgressBar;
+	Vector2			m_vec2ProgressStartPos;
+	float			m_fProgress;
 
 public:
+	ProgressBar();
+	~ProgressBar();
+
 	void Init(TEXTURE_TYPE _eFrame, TEXTURE_TYPE _eProgress, Vector2 _vec2RelativePosition, ANCHOR _eAnchor = ANCHOR::CENTER);
 	void Update() override;
 	void Render(HDC _memDC) override;

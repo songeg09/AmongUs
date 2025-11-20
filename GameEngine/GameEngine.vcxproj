@@ -157,6 +157,7 @@
     <ClInclude Include="GDIManager.h" />
     <ClInclude Include="MapUI.h" />
     <ClInclude Include="MenuUI.h" />
+    <ClInclude Include="MinimapProvider.h" />
     <ClInclude Include="NumberSequenceTask.h" />
     <ClInclude Include="NumPadButton.h" />
     <ClInclude Include="PlayerStatusUI.h" />

@@ -3,6 +3,16 @@
 #include "ResourceManager.h"
 #include "Texture.h"
 
+ProgressBar::ProgressBar()
+{
+	m_pProgressBar = nullptr;
+	m_fProgress = 0.0f;
+}
+
+ProgressBar::~ProgressBar()
+{
+}
+
 void ProgressBar::Init(TEXTURE_TYPE _eFrame, TEXTURE_TYPE _eProgress, Vector2 _vec2RelativePosition, ANCHOR _eAnchor)
 {
 	UIElement::Init(_eFrame, _vec2RelativePosition, _eAnchor);

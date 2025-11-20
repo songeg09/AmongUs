@@ -57,8 +57,6 @@ void Core::Init(HWND _hWnd)
 	m_hWnd = _hWnd;
 	m_hDC = GetDC(m_hWnd);
 
-	GDIManager::GetInstance()->Init();
-
 	TimerManager::GetInstance()->Init();
 
 	InputManager::GetInstance()->Init();

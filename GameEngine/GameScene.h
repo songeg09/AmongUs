@@ -1,11 +1,13 @@
 #pragma once
 #include "Scene.h"
+#include "MinimapProvider.h"
 #include "ResourceManager.h"
 
 class UI;
 class Player;
 class GameMode;
-class GameScene : public Scene
+class GameObject;
+class GameScene : public Scene, public MinimapProvider
 {
 	enum class UI_TYPE
 	{
@@ -19,10 +21,14 @@ class GameScene : public Scene
 
 private:
 	GameMode*				m_GameMode;
-	
+
 	Texture*				m_pBackGround;
 	Vector2					m_vec2BackGroundPosition;	
 	Player*					m_Player;
+
+	std::set<GameObject*>	m_setTotalTasks;
+
+	float					m_fTotalTaskProgress;
 
 public:
 	GameScene(std::wstring _strName);
@@ -37,6 +43,9 @@ public:
 
 	void OpenUI(int _flagIndex) override;
 	void OpenTask(int _flagIndex);
+
+	Vector2 GetPlayerPos() const override;
+	const std::set<GameObject*>& GetGameObjects() const override { return m_setTotalTasks; }
 
 };
 

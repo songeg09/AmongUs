@@ -7,15 +7,7 @@ GDIManager::GDIManager()
 {
 	m_PrevBrush = nullptr;
 	m_PrevPen = nullptr;
-}
-GDIManager::~GDIManager()
-{
-	ReleaseMyPen();
-	ReleaseMyBrush();
-}
 
-void GDIManager::Init()
-{
 	CreateMyPen();
 	CreateMyBrush();
 
@@ -33,8 +25,17 @@ void GDIManager::Init()
 
 	HBITMAP hOldBitMap = (HBITMAP)SelectObject(m_BtnConfigureDC, m_TempBmp);
 	DeleteObject(hOldBitMap);
+}
+GDIManager::~GDIManager()
+{
+	ReleaseMyPen();
+	ReleaseMyBrush();
+}
 
-	SetBkMode(Core::GetInstance()->GetMainDC(), TRANSPARENT);
+void GDIManager::Init()
+{
+	
+
 }
 
 void GDIManager::CreateMyPen()

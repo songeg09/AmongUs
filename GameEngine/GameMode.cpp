@@ -3,18 +3,15 @@
 #include "Player.h"
 
 GameMode::GameMode()
-{
-	m_Player = nullptr;
-	
+{	
 }
 
 GameMode::~GameMode()
 {
 }
 
-void GameMode::Init(Player* _Player)
+void GameMode::Init()
 {
-	m_Player = _Player;
 	m_iTotalTasks = 0;			// 임시 설정
 	m_iCompletedTasks = 0;
 }

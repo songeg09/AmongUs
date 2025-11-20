@@ -11,7 +11,6 @@ PlayerStatusUI::PlayerStatusUI()
 	m_btnUse = nullptr;
 	m_btnMap = nullptr;
 	m_btnSetting = nullptr;
-	m_GameMode = nullptr;
 }
 
 PlayerStatusUI::~PlayerStatusUI()
@@ -37,11 +36,10 @@ void PlayerStatusUI::Init(GameMode* _GameMode, Player* _Player, std::function<vo
 	m_btnSetting->Init(TEXTURE_TYPE::BTN_SETTING, Vector2(0.95, 0.17), UIElement::ANCHOR::CENTER);
 	m_arrUIElemetns.push_back(m_btnSetting);
 
-	m_progressbarTasks = new ProgressBar;
+	m_progressbarTasks = new ProgressBar();
 	m_progressbarTasks->Init(TEXTURE_TYPE::PROGRESSBAR_FRAME, TEXTURE_TYPE::PROGRESSBAR, Vector2(0.01, 0.01), UIElement::ANCHOR::TOP_LEFT);
 	m_arrUIElemetns.push_back(m_progressbarTasks);
 }
-
 
 void PlayerStatusUI::Update()
 {
@@ -57,14 +55,12 @@ void PlayerStatusUI::Update()
 	}
 
 	UI::Update();
-
-	m_progressbarTasks->SetProgress(m_GameMode->GetProgress());
 }
 
 void PlayerStatusUI::Render(HDC _memDC)
 {
 	UI::Render(_memDC);
 
-	static std::wstring txt = L"TOTAL TASK COMPLETED";
-	TextOutW(_memDC, 500, 500, txt.c_str(), txt.length());
+	//static std::wstring txt = L"TOTAL TASK COMPLETED";
+	//TextOutW(_memDC, 500, 500, txt.c_str(), txt.length());
 }

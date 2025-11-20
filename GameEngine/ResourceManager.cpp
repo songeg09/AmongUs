@@ -30,6 +30,7 @@ std::wstring ResourceManager::GetTextureFileName(TEXTURE_TYPE _eTextureType)
 	case TEXTURE_TYPE::TITLE:								return L"title.bmp";
 	case TEXTURE_TYPE::CHARACTER:							return L"character.bmp";
 	case TEXTURE_TYPE::CHARACTER_ICON:						return L"character_icon.bmp";
+	case TEXTURE_TYPE::OBJECT_ICON:							return L"object_icon.bmp";
 	case TEXTURE_TYPE::BTN_START:							return L"btn_start.bmp";
 	case TEXTURE_TYPE::BTN_USE:								return L"btn_use.bmp";
 	case TEXTURE_TYPE::BTN_MAP:								return L"btn_map.bmp";

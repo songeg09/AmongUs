@@ -140,9 +140,6 @@
     <Filter Include="Engine\04. Object\GameObject">
       <UniqueIdentifier>{cb1375c0-e460-4806-b7f8-36b2037c8c74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\Interactable">
-      <UniqueIdentifier>{3227c5c3-1bb6-4688-99b8-5e3cc7edcbf5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\06. Scene\TitleScene">
       <UniqueIdentifier>{8c9f0fe6-f17f-4af3-afca-5fc1eddf4987}</UniqueIdentifier>
     </Filter>
@@ -187,6 +184,15 @@
     </Filter>
     <Filter Include="Engine\10. UI\TaskUI\DataUploadTask">
       <UniqueIdentifier>{c8491947-096a-420b-abd4-56098ccdb62f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\13. Interface">
+      <UniqueIdentifier>{2dcc5d11-c78b-42e9-abbc-e485ace03fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\13. Interface\Interactable">
+      <UniqueIdentifier>{3227c5c3-1bb6-4688-99b8-5e3cc7edcbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\13. Interface\MinimapProvider">
+      <UniqueIdentifier>{91ffad0f-9480-4cfe-b609-9a90cfa21979}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -327,7 +333,7 @@
       <Filter>Engine\04. Object\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Interactable.h">
-      <Filter>Engine\04. Object\Interactable</Filter>
+      <Filter>Engine\13. Interface\Interactable</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>Engine\06. Scene\TitleScene</Filter>
@@ -373,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="DataUploadTask.h">
       <Filter>Engine\10. UI\TaskUI\DataUploadTask</Filter>
+    </ClInclude>
+    <ClInclude Include="MinimapProvider.h">
+      <Filter>Engine\13. Interface\MinimapProvider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

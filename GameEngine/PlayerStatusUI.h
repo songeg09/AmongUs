@@ -3,8 +3,8 @@
 
 class Button;
 class ProgressBar;
-class GameMode;
 class Player;
+class GameMode;
 class PlayerStatusUI : public UI
 {
 private:
@@ -15,7 +15,6 @@ private:
 	Button*			m_btnMap;
 	Button*			m_btnSetting;
 	ProgressBar*	m_progressbarTasks;
-	
 
 public:
 	PlayerStatusUI();

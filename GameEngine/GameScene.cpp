@@ -1,13 +1,12 @@
 #include "pch.h"
 #include "GameScene.h"
+#include "GameMode.h"
 
 #include "InputManager.h"
 #include "CollisionManager.h"
 
 #include "Texture.h"
 #include "TextureAtlas.h"
-
-#include "GameMode.h"
 
 #include "Player.h"
 #include "Monster.h"
@@ -18,9 +17,10 @@
 #include "NumberSequenceTask.h"
 #include "DataUploadTask.h"
 
+#include "MinimapProvider.h"
+
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
-	m_GameMode = nullptr;
 	m_pBackGround = nullptr;
 	m_Player = nullptr;
 	m_UIFlags = 0;
@@ -28,7 +28,6 @@ GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 
 GameScene::~GameScene()
 {
-	delete m_GameMode;
 }
 
 void GameScene::Init()
@@ -51,22 +50,25 @@ void GameScene::Init()
 	Scene::AddObject(pPlayer);
 	m_Player = pPlayer;
 
-	// 2. GameMode 积己
-	m_GameMode = new GameMode;
-	m_GameMode->Init(m_Player);
-
-	// 3. 坷宏璃飘 积己
+	// 2. 坷宏璃飘 积己
 	GameObject* gameObject = new GameObject;
 	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
 	Scene::AddObject(gameObject);
+	m_setTotalTasks.insert(gameObject);
 
 	Vector2 Pos = m_Player->GetPosition();
 	Pos.m_fx += 100;
+	Pos.m_fy += 500;
 	GameObject* gameObject2 = new GameObject;
 	gameObject2->Init(Pos, Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)));
 	Scene::AddObject(gameObject2);
+	m_setTotalTasks.insert(gameObject2);
 
-	// UI 积己
+	// 3. 霸烙 葛靛 积己
+	m_GameMode = new GameMode;
+	m_GameMode->Init();
+
+	// 4. UI 积己
 	m_UIFlags |= Flag(static_cast<int>(UI_TYPE::HUD));
 	m_PrevUIFlags = m_UIFlags;
 	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
@@ -78,7 +80,7 @@ void GameScene::Init()
 	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = playerUI;
 
 	MapUI* mapUI = new MapUI;
-	mapUI->Init(m_Player, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
+	mapUI->Init(dynamic_cast<MinimapProvider*>(this), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
 	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
 
 	NumberSequenceTask* Task1 = new NumberSequenceTask;
@@ -179,3 +181,10 @@ void GameScene::OpenTask(int _flagIndex)
 		break;
 	}
 }
+
+Vector2 GameScene::GetPlayerPos() const
+{
+	return m_Player->GetPosition();
+}
+
+
