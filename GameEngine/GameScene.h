@@ -3,7 +3,6 @@
 #include "MinimapProvider.h"
 #include "ResourceManager.h"
 
-class UI;
 class Player;
 class GameMode;
 class GameObject;

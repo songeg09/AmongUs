@@ -22,7 +22,7 @@ void SettingsManager::Init()
 	InputManager::GetInstance()->RegistKey('A');
 	InputManager::GetInstance()->RegistKey('S');
 	InputManager::GetInstance()->RegistKey('D');
-	InputManager::GetInstance()->RegistKey('M');
+	InputManager::GetInstance()->RegistKey(VK_TAB);
 	InputManager::GetInstance()->RegistKey('E');
 }
 

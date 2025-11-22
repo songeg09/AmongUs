@@ -96,7 +96,7 @@ void Player::InitAnimation()
 
 void Player::CheckMapKey()
 {
-	if (InputManager::GetInstance()->GetKeyState('M') != KEY_STATE::DOWN)
+	if (InputManager::GetInstance()->GetKeyState(VK_TAB) != KEY_STATE::DOWN)
 		return;
 
 	if (m_funcMapKeyCallback != nullptr)
