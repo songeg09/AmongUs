@@ -1,16 +1,17 @@
 #pragma once
+class MinimapProvider;
 class GameMode
 {
 private:
-
-	int				m_iTotalTasks;
-	int				m_iCompletedTasks;
+	MinimapProvider*	m_MinimapProvider;
+	int					m_iTotalTasks;
 
 public:
 	GameMode();
 	~GameMode();
 
-	void Init();
-	float GetProgress() { return (float)m_iCompletedTasks / (float)m_iTotalTasks; }
+	void Init(MinimapProvider* _MinimapProvider);
+	void Update();
+	float GetProgress();
 };
 

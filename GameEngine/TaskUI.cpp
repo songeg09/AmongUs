@@ -76,3 +76,9 @@ void TaskUI::Render(HDC _memDC)
 
 	UI::Render(_memDC);
 }
+
+void TaskUI::Open()
+{
+	Reset();
+	UI::Open();
+}

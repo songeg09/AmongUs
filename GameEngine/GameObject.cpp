@@ -35,3 +35,8 @@ Vector2 GameObject::GetPosition()
 	return Object::GetPosition();
 }
 
+void GameObject::OnSuccess()
+{
+	m_pInteractRange->SetEnable(false);
+}
+

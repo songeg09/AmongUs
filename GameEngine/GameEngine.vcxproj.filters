@@ -194,6 +194,15 @@
     <Filter Include="Engine\13. Interface\MinimapProvider">
       <UniqueIdentifier>{91ffad0f-9480-4cfe-b609-9a90cfa21979}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\10. UI\TaskUI\TimedButtonsTask">
+      <UniqueIdentifier>{d986c7d7-0b91-49e3-89d7-d5f666e5b6fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UIElement\TimingBar">
+      <UniqueIdentifier>{593b08dc-c687-4ceb-b5d6-d38387b04bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\14. Utility">
+      <UniqueIdentifier>{2450be60-5675-4e99-be62-4679892eb464}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -383,6 +392,15 @@
     <ClInclude Include="MinimapProvider.h">
       <Filter>Engine\13. Interface\MinimapProvider</Filter>
     </ClInclude>
+    <ClInclude Include="TimedButtonsTask.h">
+      <Filter>Engine\10. UI\TaskUI\TimedButtonsTask</Filter>
+    </ClInclude>
+    <ClInclude Include="TimingBar.h">
+      <Filter>Engine\11. UIElement\TimingBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Easing.h">
+      <Filter>Engine\14. Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -557,6 +575,12 @@
     </ClCompile>
     <ClCompile Include="DataUploadTask.cpp">
       <Filter>Engine\10. UI\TaskUI\DataUploadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="TimedButtonsTask.cpp">
+      <Filter>Engine\10. UI\TaskUI\TimedButtonsTask</Filter>
+    </ClCompile>
+    <ClCompile Include="TimingBar.cpp">
+      <Filter>Engine\11. UIElement\TimingBar</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

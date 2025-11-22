@@ -148,6 +148,7 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="DataUploadTask.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="Easing.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameMode.h" />
@@ -163,6 +164,8 @@
     <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="TaskUI.h" />
+    <ClInclude Include="TimedButtonsTask.h" />
+    <ClInclude Include="TimingBar.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="Imposter.h" />
@@ -224,6 +227,8 @@
     <ClCompile Include="PlayerStatusUI.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="TaskUI.cpp" />
+    <ClCompile Include="TimedButtonsTask.cpp" />
+    <ClCompile Include="TimingBar.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="Imposter.cpp" />

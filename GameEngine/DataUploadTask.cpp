@@ -82,12 +82,6 @@ void DataUploadTask::CheckWinStatus()
 		m_eTaskStatus = TASK_STATUS::SUCCESS;
 }
 
-void DataUploadTask::Open()
-{
-	Reset();
-	UI::Open();
-}
-
 void DataUploadTask::StartUpload()
 {
 	m_bUploadStarted = true;

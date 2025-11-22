@@ -64,8 +64,10 @@ void Button::Update()
 	ScreenToClient(Core::GetInstance()->GethWnd(), &m_ptMouse);
 
 	if (PtInRect(&m_btnArea, m_ptMouse) && InputManager::GetInstance()->GetKeyState(VK_LBUTTON) == KEY_STATE::DOWN)
-		m_callBackFunc();
-		
+	{
+		if(m_callBackFunc != nullptr)
+			m_callBackFunc();
+	}
 }
 
 void Button::Render(HDC _memDC)

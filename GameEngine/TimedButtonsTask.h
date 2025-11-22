@@ -2,32 +2,30 @@
 #include "TaskUI.h"
 
 class Button;
-class Texture;
 class ProgressBar;
-class DataUploadTask : public TaskUI
+class TimingBar;
+class TimedButtonsTask : public TaskUI
 {
 private:
-	Button*			m_btnUpload;
-	ProgressBar*	m_ProgressBar;
-	float			m_fTimePassed;
-	float			m_fUploadTime;
-	bool			m_bUploadStarted;
-
+	Button*			m_btnButtons[3];
+	ProgressBar*	m_ProgressBars[3];
+	TimingBar*		m_TimingBars[3];
+	
 public:
-	DataUploadTask();
-	~DataUploadTask();
+	TimedButtonsTask();
+	~TimedButtonsTask();
 
 	void Init(
 		std::function<void()>	_funcOpenCallback,
 		std::function<void()>	_funcCloseCallback,
 		std::function<void()>	_funcSuccessCallback,
+		std::function<void()>	_funcFailCallback,
 		std::function<void()>	_funcBtnCloseCallback
 	);
-
 	void Update() override;
+
 	void Reset() override;
 	void CheckWinStatus() override;
-	void StartUpload();
-	float Easeout(float _ftime);
+	void Open() override;
 };
 

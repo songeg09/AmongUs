@@ -100,3 +100,4 @@ struct Vector2
 using Flags = unsigned int;
 
 constexpr Flags Flag(int kind) { return 1u << static_cast<unsigned>(kind); }
+

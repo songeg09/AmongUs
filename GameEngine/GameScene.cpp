@@ -16,8 +16,10 @@
 #include "PlayerStatusUI.h"
 #include "NumberSequenceTask.h"
 #include "DataUploadTask.h"
+#include "TimedButtonsTask.h"
 
 #include "MinimapProvider.h"
+#include "Interactable.h"
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
@@ -52,9 +54,9 @@ void GameScene::Init()
 
 	// 2. 오브젝트 생성
 	GameObject* gameObject = new GameObject;
-	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
+	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)));
 	Scene::AddObject(gameObject);
-	m_setTotalTasks.insert(gameObject);
+	m_setTasksLeft.insert(gameObject);
 
 	Vector2 Pos = m_Player->GetPosition();
 	Pos.m_fx += 100;
@@ -62,45 +64,16 @@ void GameScene::Init()
 	GameObject* gameObject2 = new GameObject;
 	gameObject2->Init(Pos, Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)));
 	Scene::AddObject(gameObject2);
-	m_setTotalTasks.insert(gameObject2);
+	m_setTasksLeft.insert(gameObject2);
 
 	// 3. 게임 모드 생성
 	m_GameMode = new GameMode;
-	m_GameMode->Init();
+	m_GameMode->Init(this);
 
 	// 4. UI 생성
 	m_UIFlags |= Flag(static_cast<int>(UI_TYPE::HUD));
 	m_PrevUIFlags = m_UIFlags;
-	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
-	
-	// UI z축 순서에 맞게 생성 필요!
-	PlayerStatusUI* playerUI= new PlayerStatusUI;
-	playerUI->Init(m_GameMode, m_Player, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
-	playerUI->SetVisibility(true);
-	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = playerUI;
-
-	MapUI* mapUI = new MapUI;
-	mapUI->Init(dynamic_cast<MinimapProvider*>(this), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
-	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
-
-	NumberSequenceTask* Task1 = new NumberSequenceTask;
-	Task1->Init(
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
-		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)), // 테스트용 성공시 맵 열기
-		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)),
-		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
-	);
-	m_arrUIs[static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)] = Task1;
-
-	DataUploadTask* Task2 = new DataUploadTask;
-	Task2->Init(
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
-		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)),
-		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
-	);
-	m_arrUIs[static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)] = Task2;
+	InitUI();
 
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::WALL_DETECTOR, COLLISION_TAG::WALL);
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_PLAYER_DETECTOR);
@@ -111,6 +84,7 @@ void GameScene::Init()
 void GameScene::Update()
 {
 	Scene::Update();
+	//m_GameMode->Update();
 }
 
 void GameScene::Render(HDC _memDC)
@@ -122,6 +96,51 @@ void GameScene::Render(HDC _memDC)
 
 	// 2. 오브젝트 그리기 및 UI 그리기
 	Scene::Render(_memDC);
+}
+
+void GameScene::InitUI()
+{
+	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
+
+	// UI z축 순서에 맞게 생성 필요!
+	PlayerStatusUI* playerUI = new PlayerStatusUI;
+	playerUI->Init(m_GameMode, m_Player, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
+	playerUI->SetVisibility(true);
+	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = playerUI;
+
+	MapUI* mapUI = new MapUI;
+	mapUI->Init(dynamic_cast<MinimapProvider*>(this), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
+	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
+
+	// Task UI 생성
+	NumberSequenceTask* Task1 = new NumberSequenceTask;
+	Task1->Init(
+		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
+		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
+		std::bind(&GameScene::OnTaskSuccess, this), 
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)),
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
+	);
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)] = Task1;
+
+	DataUploadTask* Task2 = new DataUploadTask;
+	Task2->Init(
+		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
+		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
+		std::bind(&GameScene::OnTaskSuccess, this),
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
+	);
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)] = Task2;
+
+	TimedButtonsTask* Task3 = new TimedButtonsTask;
+	Task3->Init(
+		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
+		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
+		std::bind(&GameScene::OnTaskSuccess, this),
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)),
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
+	);
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)] = Task3;
 }
 
 Vector2 GameScene::GetViewPortTopLeftInScene()
@@ -167,6 +186,7 @@ void GameScene::OpenTask(int _flagIndex)
 {
 	static Flags numberSequenceBit = Flag(static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE));
 	static Flags dataUploadBit = Flag(static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD));
+	static Flags timedbuttonsBit = Flag(static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS));
 
 	if (m_Player->GetCharacterState() == Player::CHARACTER_STATE::WORKING)
 		return;
@@ -179,6 +199,9 @@ void GameScene::OpenTask(int _flagIndex)
 	case UI_TYPE::TASK_DATA_UPLOAD:
 		m_UIFlags = (m_UIFlags ^ dataUploadBit) & dataUploadBit | Flag(static_cast<int>(UI_TYPE::HUD));
 		break;
+	case UI_TYPE::TASK_TIMED_BUTTONS:
+		m_UIFlags = (m_UIFlags ^ timedbuttonsBit) & timedbuttonsBit | Flag(static_cast<int>(UI_TYPE::HUD));
+		break;
 	}
 }
 
@@ -187,4 +210,9 @@ Vector2 GameScene::GetPlayerPos() const
 	return m_Player->GetPosition();
 }
 
-
+void GameScene::OnTaskSuccess()
+{
+	m_Player->GetInteractableObject()->OnSuccess();
+	m_setTasksLeft.erase(m_Player->GetInteractableObject());
+	OpenUI(static_cast<int>(UI_TYPE::HUD));
+}

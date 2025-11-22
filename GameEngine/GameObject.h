@@ -16,5 +16,6 @@ public:
 	virtual void Init(Vector2 _vec2Position, Vector2 _colliderSize, std::function<void()> _funcInteractCallback);
 	virtual void Interact(Character* _Interactor);
 	Vector2 GetPosition() override;
+	void OnSuccess() override;
 };
 

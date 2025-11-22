@@ -28,7 +28,6 @@ public:
 	);
 
 	void Reset() override;
-	void Open() override;
 	void CheckWinStatus() override;
 
 private:

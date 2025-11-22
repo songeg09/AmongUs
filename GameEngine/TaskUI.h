@@ -40,5 +40,7 @@ public:
 	void Render(HDC _memDC) override;
 	virtual void Reset() = 0;
 	virtual void CheckWinStatus() = 0;
+	void Open();
 };
+
 

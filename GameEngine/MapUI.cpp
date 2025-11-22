@@ -7,7 +7,7 @@
 #include "GameScene.h"
 #include "Player.h"
 #include "Button.h"
-#include "GameObject.h"
+#include "Interactable.h"
 
 MapUI::MapUI()
 {
@@ -75,7 +75,7 @@ void MapUI::Render(HDC _memDC)
 
 	
 
-	for (GameObject* obejct : m_minimapProvider->GetGameObjects())
+	for (Interactable* obejct : m_minimapProvider->GetGameObjects())
 	{
 		ObjectPos = obejct->GetPosition();
 		ObjectPos.m_fx = ObjectPos.m_fx * m_vec2Ratio.m_fx;

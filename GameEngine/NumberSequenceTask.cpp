@@ -70,12 +70,6 @@ void NumberSequenceTask::Reset()
 	}
 }
 
-void NumberSequenceTask::Open()
-{
-	Reset();
-	UI::Open();
-}
-
 void NumberSequenceTask::Swap(NumPadButton* btn1, NumPadButton* btn2)
 {
 	Vector2 temp = btn1->GetAbsoluteStartPos();

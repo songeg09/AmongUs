@@ -7,6 +7,7 @@ class UI;
 class Player;
 class GameMode;
 class GameObject;
+class Interactable;
 class GameScene : public Scene, public MinimapProvider
 {
 	enum class UI_TYPE
@@ -16,6 +17,7 @@ class GameScene : public Scene, public MinimapProvider
 		MAP,
 		TASK_NUMBER_SEQUNECE,
 		TASK_DATA_UPLOAD,
+		TASK_TIMED_BUTTONS,
 		END
 	};
 
@@ -26,7 +28,7 @@ private:
 	Vector2					m_vec2BackGroundPosition;	
 	Player*					m_Player;
 
-	std::set<GameObject*>	m_setTotalTasks;
+	std::set<Interactable*>	m_setTasksLeft;
 
 	float					m_fTotalTaskProgress;
 
@@ -38,6 +40,9 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC _memDC) override;
 	
+	void InitUI();
+
+
 	Vector2 GetViewPortTopLeftInScene() override;
 	Vector2 GetBackBufferTopLeftInScene() override;
 
@@ -45,7 +50,9 @@ public:
 	void OpenTask(int _flagIndex);
 
 	Vector2 GetPlayerPos() const override;
-	const std::set<GameObject*>& GetGameObjects() const override { return m_setTotalTasks; }
+	const std::set<Interactable*>& GetGameObjects() const override { return m_setTasksLeft; }
+
+	void OnTaskSuccess();
 
 };
 
