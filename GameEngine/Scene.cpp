@@ -26,6 +26,13 @@ void Scene::Release()
 		delete object;
 	}
 	m_arrObjects.clear();
+
+	for (UI* ui : m_arrUIs)
+	{
+		delete ui;
+	}
+	m_arrUIs.clear();
+
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
 }
 

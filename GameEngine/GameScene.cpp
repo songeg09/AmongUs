@@ -30,6 +30,7 @@ GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 
 GameScene::~GameScene()
 {
+	delete m_GameMode;
 }
 
 void GameScene::Init()
@@ -54,7 +55,7 @@ void GameScene::Init()
 
 	// 2. 오브젝트 생성
 	GameObject* gameObject = new GameObject;
-	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)));
+	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
 	Scene::AddObject(gameObject);
 	m_setTasksLeft.insert(gameObject);
 
@@ -65,6 +66,13 @@ void GameScene::Init()
 	gameObject2->Init(Pos, Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)));
 	Scene::AddObject(gameObject2);
 	m_setTasksLeft.insert(gameObject2);
+
+	Pos.m_fx += 100;
+	Pos.m_fy += 500;
+	GameObject* gameObject3 = new GameObject;
+	gameObject3->Init(Pos, Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)));
+	Scene::AddObject(gameObject3);
+	m_setTasksLeft.insert(gameObject3);
 
 	// 3. 게임 모드 생성
 	m_GameMode = new GameMode;

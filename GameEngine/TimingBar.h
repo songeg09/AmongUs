@@ -41,7 +41,5 @@ public:
 	void Stop();
 
 	float GetRatio() { return m_fRatio; }
-
-	
 };
 
