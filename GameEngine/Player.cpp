@@ -40,6 +40,7 @@ void Player::Update()
 	Input();
 }
 
+
 void Player::Input()
 {
 	if (m_eState == CHARACTER_STATE::DEAD)
@@ -86,13 +87,29 @@ void Player::InitAnimation()
 {
 	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::ONCE, 0.1f, ANCHOR::CENTER);
 	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
+	AnimationData Hide(TEXTURE_TYPE::CHARACTER, Vector2(0, 1), Vector2(128, 128), 0, 4, ANIMATION_TYPE::ONCE, 0.5f, ANCHOR::CENTER);
+	AnimationData Reveal(TEXTURE_TYPE::CHARACTER, Vector2(4, 1), Vector2(128, 128), 0, 4, ANIMATION_TYPE::ONCE, 0.5f, ANCHOR::CENTER);
 	AnimationData Dead(TEXTURE_TYPE::CHARACTER, Vector2(9, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::ONCE, 0.1f, ANCHOR::CENTER);
 
 	// 애니메이션 설정 == 여기를 나중에 데이터를 받아서 자동으로 하는 방향으로 바꿔야 됨
 	Actor::ResizeAnimation(static_cast<int>(ANIMATION::END));
 	Actor::InitAnimation(static_cast<int>(ANIMATION::IDLE), Idle);
 	Actor::InitAnimation(static_cast<int>(ANIMATION::RUN), Run);
+	Actor::InitAnimation(static_cast<int>(ANIMATION::HIDE), Hide);
+	Actor::InitAnimation(static_cast<int>(ANIMATION::REVEAL), Reveal);
 	Actor::InitAnimation(static_cast<int>(ANIMATION::DEAD), Dead);
+
+	SetAnimationEvent(static_cast<int>(ANIMATION::HIDE), 3, 
+		[this]() {
+			m_eState = CHARACTER_STATE::HIDDEN; 
+			m_pHurtBoxCollider->SetEnable(false);
+		});
+	SetAnimationEvent(static_cast<int>(ANIMATION::REVEAL), 3, 
+		[this]() {
+			m_eState = CHARACTER_STATE::NONE; 
+			m_pHurtBoxCollider->SetEnable(true);
+		});
+
 	Actor::SetAnimation(static_cast<int>(ANIMATION::IDLE));
 }
 
@@ -110,8 +127,7 @@ void Player::CheckInteractKey()
 	if (InputManager::GetInstance()->GetKeyState('E') != KEY_STATE::DOWN || m_pInteractableObject == nullptr)
 		return;
 
-	if (m_eState == CHARACTER_STATE::NONE)
-		UseInteractableObject();
+	UseInteractableObject();
 }
 
 void Player::CheckMoveKeys()
@@ -146,13 +162,11 @@ void Player::Hide()
 {
 	if (m_eState == CHARACTER_STATE::HIDDEN)
 	{
-		m_eState = CHARACTER_STATE::NONE;
-		m_pHurtBoxCollider->SetEnable(true);
+		SetAnimation(static_cast<int>(ANIMATION::HIDE));
 	}
 	else
 	{
-		m_eState = CHARACTER_STATE::HIDDEN;
-		m_pHurtBoxCollider->SetEnable(false);
+		SetAnimation(static_cast<int>(ANIMATION::REVEAL));
 	}
 }
 

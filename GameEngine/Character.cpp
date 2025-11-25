@@ -23,15 +23,4 @@ void Character::Init(Vector2 _vec2Position)
 	Actor::SetPosition(_vec2Position);
 }
 
-void Character::Update()
-{
-  	Actor::Update();
-	
-}
-
-void Character::Render(HDC _memDC)
-{
-	Actor::Render(_memDC);
-}
-
 

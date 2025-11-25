@@ -227,9 +227,6 @@ void GameScene::OpenTask(int _flagIndex)
 	static Flags dataUploadBit = Flag(static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD));
 	static Flags timedbuttonsBit = Flag(static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS));
 
-	if (m_Player->GetCharacterState() == Player::CHARACTER_STATE::WORKING)
-		return;
-
 	switch ((UI_TYPE)_flagIndex)
 	{
 	case UI_TYPE::TASK_NUMBER_SEQUNECE:

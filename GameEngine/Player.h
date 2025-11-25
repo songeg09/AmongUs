@@ -17,6 +17,8 @@ public:
 	{
 		IDLE,
 		RUN,
+		HIDE,
+		REVEAL,
 		DEAD,
 		END,
 	};
