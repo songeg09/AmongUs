@@ -24,14 +24,14 @@ void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallba
 
 	m_funcMapKeyCallback = _funcMapKeyCallback;
 
+	m_pWallCollider = CreateRectCollider(COLLISION_TAG::WALL_DETECTOR, true, Vector2(64, 32), Vector2(0, 45));
 	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
 	
 	m_pInteractionCollider = CreateCircleCollider(COLLISION_TAG::PLAYER_INTERACTION, true, 110.f, Vector2(0, 15));
 	m_pInteractionCollider->SetOnCollisionCallBack(std::bind(&Player::UpdateInteractableObject, this, std::placeholders::_1));
 	m_pInteractionCollider->SetEndCollisionCallBack(std::bind(&Player::ClearCurrentInteractable, this, std::placeholders::_1));
 
-	m_iTasksTotal = 5;
-	m_iTasksCompleted = 0;
+	Actor::SetMoveSpeed(300.0f);
 }
 
 void Player::Update()
@@ -42,6 +42,9 @@ void Player::Update()
 
 void Player::Input()
 {
+	if (m_eState == CHARACTER_STATE::DEAD)
+		return;
+
 	// 지도 눌렀는지 확인
 	CheckMapKey();
 
@@ -77,21 +80,20 @@ void Player::ClearCurrentInteractable(Collider* _pOther)
 {
 	if (m_pInteractableObject == dynamic_cast<Interactable*>(_pOther->GetTarget()))
 		m_pInteractableObject = nullptr;
-		
 }
 
 void Player::InitAnimation()
 {
-	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
+	AnimationData Idle(TEXTURE_TYPE::CHARACTER, Vector2(0, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::ONCE, 0.1f, ANCHOR::CENTER);
 	AnimationData Run(TEXTURE_TYPE::CHARACTER, Vector2(1, 0), Vector2(128, 128), 0, 8, ANIMATION_TYPE::LOOP, 0.5f, ANCHOR::CENTER);
-	AnimationData Ghost(TEXTURE_TYPE::CHARACTER, Vector2(0, 10), Vector2(128, 128), 0, 16, ANIMATION_TYPE::LOOP, 2.0f, ANCHOR::CENTER);
+	AnimationData Dead(TEXTURE_TYPE::CHARACTER, Vector2(9, 0), Vector2(128, 128), 0, 1, ANIMATION_TYPE::ONCE, 0.1f, ANCHOR::CENTER);
 
 	// 애니메이션 설정 == 여기를 나중에 데이터를 받아서 자동으로 하는 방향으로 바꿔야 됨
-	Actor::ResizeAnimation(ANIMATION::END);
-	Actor::InitAnimation(ANIMATION::IDLE, Idle);
-	Actor::InitAnimation(ANIMATION::RUN, Run);
-	Actor::InitAnimation(ANIMATION::GHOST, Ghost);
-	Actor::SetAnimation(ANIMATION::IDLE);
+	Actor::ResizeAnimation(static_cast<int>(ANIMATION::END));
+	Actor::InitAnimation(static_cast<int>(ANIMATION::IDLE), Idle);
+	Actor::InitAnimation(static_cast<int>(ANIMATION::RUN), Run);
+	Actor::InitAnimation(static_cast<int>(ANIMATION::DEAD), Dead);
+	Actor::SetAnimation(static_cast<int>(ANIMATION::IDLE));
 }
 
 void Player::CheckMapKey()
@@ -128,10 +130,10 @@ void Player::CheckMoveKeys()
 	if (m_eState == CHARACTER_STATE::NONE  && vec2MoveForce.isValid() == true)
 	{
 		Actor::Move(vec2MoveForce);
-		Actor::SetAnimation(ANIMATION::RUN);
+		Actor::SetAnimation(static_cast<int>(ANIMATION::RUN));
 	}
 	else
-		Actor::SetAnimation(ANIMATION::IDLE);
+		Actor::SetAnimation(static_cast<int>(ANIMATION::IDLE));
 }
 
 void Player::CheckEscapeKey()
@@ -140,9 +142,31 @@ void Player::CheckEscapeKey()
 		return;
 }
 
+void Player::Hide()
+{
+	if (m_eState == CHARACTER_STATE::HIDDEN)
+	{
+		m_eState = CHARACTER_STATE::NONE;
+		m_pHurtBoxCollider->SetEnable(true);
+	}
+	else
+	{
+		m_eState = CHARACTER_STATE::HIDDEN;
+		m_pHurtBoxCollider->SetEnable(false);
+	}
+}
+
+void Player::Die()
+{
+	Actor::SetAnimation(static_cast<int>(ANIMATION::DEAD));
+	m_eState = CHARACTER_STATE::DEAD;
+	m_pHurtBoxCollider->SetEnable(false);
+}
+
 void Player::UseInteractableObject()
 {
-	m_pInteractableObject->Interact(this);
+	if(m_pInteractableObject != nullptr)
+		m_pInteractableObject->Interact(this);
 }
 
 

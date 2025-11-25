@@ -4,13 +4,16 @@
 
 #include "InputManager.h"
 #include "CollisionManager.h"
+#include "SceneManager.h"
 
 #include "Texture.h"
 #include "TextureAtlas.h"
 
 #include "Player.h"
-#include "Monster.h"
+#include "Ghost.h"
 #include "GameObject.h"
+#include "Vent.h"
+#include "CircleZone.h"
 
 #include "MapUI.h"
 #include "PlayerStatusUI.h"
@@ -26,6 +29,7 @@ GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 	m_pBackGround = nullptr;
 	m_Player = nullptr;
 	m_UIFlags = 0;
+	m_GlobalSoundZone = nullptr;
 }
 
 GameScene::~GameScene()
@@ -47,19 +51,35 @@ void GameScene::Init()
 	);
 
 	// 1. 플레이어 생성 및 오브젝트 생성
-	Player* pPlayer = new Player;
+	m_Player = new Player;
 	Vector2 PlayerStart(m_pBackGround->GetWidth() / 2, m_pBackGround->GetHeight() / 2);
-	pPlayer->Init(PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
-	Scene::AddObject(pPlayer);
-	m_Player = pPlayer;
+	m_Player->Init(PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
+	Scene::AddObject(m_Player);
+
+
+	std::vector<Vector2> tmpWayPoints = { Vector2(500,500), Vector2(2000, 500), Vector2(5000, 3000) };
+	Vector2 Pos = m_Player->GetPosition();
+	Pos.m_fx += 1000.0f;
+	m_Ghost = new Ghost;
+	m_Ghost->Init(Pos, tmpWayPoints);
+	Scene::AddObject(m_Ghost);
+
+	m_GlobalSoundZone = new CircleZone;
+	m_GlobalSoundZone->Init(COLLISION_TAG::SOUND, 30.0f);
+	m_GlobalSoundZone->SetEnable(false);
+	Scene::AddObject(m_GlobalSoundZone);
 
 	// 2. 오브젝트 생성
+	Vent* vent = new Vent;
+	vent->Init({ 4433,1150 });
+	Scene::AddObject(vent);
+
 	GameObject* gameObject = new GameObject;
 	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
 	Scene::AddObject(gameObject);
 	m_setTasksLeft.insert(gameObject);
 
-	Vector2 Pos = m_Player->GetPosition();
+	
 	Pos.m_fx += 100;
 	Pos.m_fy += 500;
 	GameObject* gameObject2 = new GameObject;
@@ -76,7 +96,7 @@ void GameScene::Init()
 
 	// 3. 게임 모드 생성
 	m_GameMode = new GameMode;
-	m_GameMode->Init(this);
+	m_GameMode->Init(m_Player,this);
 
 	// 4. UI 생성
 	m_UIFlags |= Flag(static_cast<int>(UI_TYPE::HUD));
@@ -84,15 +104,26 @@ void GameScene::Init()
 	InitUI();
 
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::WALL_DETECTOR, COLLISION_TAG::WALL);
-	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_PLAYER_DETECTOR);
-	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_HURTBOX, COLLISION_TAG::MONSTER_ATTACK_RANGE);
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::PLAYER_INTERACTION, COLLISION_TAG::OBJECT_INTERACTION_DETECTOR);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::GHOST_SIGHT_SENSOR, COLLISION_TAG::PLAYER_HURTBOX);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::GHOST_CHASING_SENSOR, COLLISION_TAG::PLAYER_HURTBOX);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::GHOST_ATTACK_RANGE, COLLISION_TAG::PLAYER_HURTBOX);
+	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::GHOST_HEARING_SENSOR, COLLISION_TAG::SOUND);
 }
 
 void GameScene::Update()
 {
 	Scene::Update();
-	//m_GameMode->Update();
+	m_GameMode->Update();
+
+	if (m_GameMode->GetGameState() == GameMode::GAME_STATE::LOSE)
+		SceneManager::GetInstance()->SceneChange(SCENE_TYPE::TITLE);
+		
+	if (m_GameMode->GetGameState() == GameMode::GAME_STATE::WIN)
+		SceneManager::GetInstance()->SceneChange(SCENE_TYPE::TITLE);
+
+	if (m_GlobalSoundZone->GetEnbale() == true && Vector2::Distance(m_GlobalSoundZone->GetPosition(), m_Ghost->GetPosition()) < ConstValue::fGhostProximityRange)
+		m_GlobalSoundZone->SetEnable(false);
 }
 
 void GameScene::Render(HDC _memDC)
@@ -126,7 +157,7 @@ void GameScene::InitUI()
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
 		std::bind(&GameScene::OnTaskSuccess, this), 
-		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)),
+		std::bind(&GameScene::OnTaskFail, this),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
 	);
 	m_arrUIs[static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)] = Task1;
@@ -145,7 +176,7 @@ void GameScene::InitUI()
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
 		std::bind(&GameScene::OnTaskSuccess, this),
-		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)),
+		std::bind(&GameScene::OnTaskFail, this),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
 	);
 	m_arrUIs[static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)] = Task3;
@@ -222,5 +253,12 @@ void GameScene::OnTaskSuccess()
 {
 	m_Player->GetInteractableObject()->OnSuccess();
 	m_setTasksLeft.erase(m_Player->GetInteractableObject());
+	OpenUI(static_cast<int>(UI_TYPE::HUD));
+}
+
+void GameScene::OnTaskFail()
+{
+	m_GlobalSoundZone->SetEnable(true);
+	m_GlobalSoundZone->SetPosition(m_Player->GetInteractableObject()->GetPosition());
 	OpenUI(static_cast<int>(UI_TYPE::HUD));
 }

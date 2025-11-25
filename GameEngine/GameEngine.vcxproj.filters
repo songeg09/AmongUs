@@ -125,17 +125,8 @@
     <Filter Include="Engine\04. Object\Actor\Character">
       <UniqueIdentifier>{4fa3d97a-6d62-438c-807b-de5165b69a07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\Actor\Character\Crew">
-      <UniqueIdentifier>{6e9cf1fa-64ae-4e2f-a80c-1d7967b85ad1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\Actor\Character\Imposter">
-      <UniqueIdentifier>{0dc7d97e-5f06-4d1f-82f0-d88f68379ff0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\04. Object\Actor\Character\Player">
       <UniqueIdentifier>{d6d73cfd-508c-48db-a746-9f61ec312c5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\Actor\Character\Monster">
-      <UniqueIdentifier>{2fdd91b4-107b-42dd-87fe-7b6fe493ce12}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\04. Object\GameObject">
       <UniqueIdentifier>{cb1375c0-e460-4806-b7f8-36b2037c8c74}</UniqueIdentifier>
@@ -202,6 +193,12 @@
     </Filter>
     <Filter Include="Engine\14. Utility">
       <UniqueIdentifier>{2450be60-5675-4e99-be62-4679892eb464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Actor\Character\Ghost">
+      <UniqueIdentifier>{e3fdb4aa-a6a7-433f-91d6-373ddfa463e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Vent">
+      <UniqueIdentifier>{f3cfc575-e19d-4e81-aa3a-772c836bd624}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -326,17 +323,8 @@
     <ClInclude Include="Character.h">
       <Filter>Engine\04. Object\Actor\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Crew.h">
-      <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
-    </ClInclude>
-    <ClInclude Include="Imposter.h">
-      <Filter>Engine\04. Object\Actor\Character\Imposter</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Engine\04. Object\Actor\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Engine\04. Object\Actor\Character\Monster</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Engine\04. Object\GameObject</Filter>
@@ -400,6 +388,12 @@
     </ClInclude>
     <ClInclude Include="Easing.h">
       <Filter>Engine\14. Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Engine\04. Object\Actor\Character\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="Vent.h">
+      <Filter>Engine\04. Object\Vent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -516,17 +510,8 @@
     <ClCompile Include="Character.cpp">
       <Filter>Engine\04. Object\Actor\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Crew.cpp">
-      <Filter>Engine\04. Object\Actor\Character\Crew</Filter>
-    </ClCompile>
-    <ClCompile Include="Imposter.cpp">
-      <Filter>Engine\04. Object\Actor\Character\Imposter</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Engine\04. Object\Actor\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Engine\04. Object\Actor\Character\Monster</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine\04. Object\GameObject</Filter>
@@ -581,6 +566,12 @@
     </ClCompile>
     <ClCompile Include="TimingBar.cpp">
       <Filter>Engine\11. UIElement\TimingBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Engine\04. Object\Actor\Character\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="Vent.cpp">
+      <Filter>Engine\04. Object\Vent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

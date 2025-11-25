@@ -4,9 +4,11 @@
 #include "ResourceManager.h"
 
 class Player;
+class Ghost;
 class GameMode;
 class GameObject;
 class Interactable;
+class CircleZone;
 class GameScene : public Scene, public MinimapProvider
 {
 	enum class UI_TYPE
@@ -26,6 +28,9 @@ private:
 	Texture*				m_pBackGround;
 	Vector2					m_vec2BackGroundPosition;	
 	Player*					m_Player;
+	Ghost*					m_Ghost;
+
+	CircleZone*				m_GlobalSoundZone;
 
 	std::set<Interactable*>	m_setTasksLeft;
 
@@ -52,6 +57,7 @@ public:
 	const std::set<Interactable*>& GetGameObjects() const override { return m_setTasksLeft; }
 
 	void OnTaskSuccess();
+	void OnTaskFail();
 
 };
 

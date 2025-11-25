@@ -19,5 +19,14 @@ namespace ConstValue
 	static const std::wstring strSettingsTableFileName = L"Settings.txt";
 
 
+	// 오브젝트 사이즈
+	static const Vector2 vec2VentSize = { 20.0f, 15.0f };
+
 	static const float fMaxUploadTime = 10.0f;
+	
+	
+	static const float fGhostProximityRange = 20.0f;
+	static const float fGhostSearchTime = 5.0f;
+	static const float fGhostSearchRange = 400.0f;
+
 }

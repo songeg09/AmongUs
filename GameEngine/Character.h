@@ -5,10 +5,6 @@
 
 class Character abstract : public Actor 
 {	
-protected:
-	Collider* m_pWallCollider;
-	std::vector<Skill*> m_Skills;
-	
 public:
 	Character();
 	virtual ~Character();

@@ -25,13 +25,13 @@ void RectSkill::Create()
 			//SceneManager::GetInstance()->GetCurScene()->AddObject(m_pSkillObject, Skill::GetObjectGroup());
 		}
 
-		if (data->GetUseTarget() == true)
-			m_pSkillObject->Init(data->GetZoneIndex(), Skill::GetCaster());
-		else
-		{
+		//if (data->GetUseTarget() == true)
+		//	m_pSkillObject->Init(data->GetZoneIndex(), Skill::GetCaster());
+		//else
+		//{
 
-			m_pSkillObject->Init(data->GetZoneIndex());
-			m_pSkillObject->SetPosition(Skill::GetCaster()->GetPosition());
-		}
+		//	m_pSkillObject->Init(data->GetZoneIndex());
+		//	m_pSkillObject->SetPosition(Skill::GetCaster()->GetPosition());
+		//}
 	}
 }

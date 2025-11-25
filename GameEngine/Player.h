@@ -1,34 +1,33 @@
 #pragma once
 #include "Character.h"
+#include "Interactable.h"
 
-class Interactable;
-class Player : public Character
+class Player : public Character, public Interactable
 {
 public:
-	enum CHARACTER_STATE
+	enum class CHARACTER_STATE
 	{
 		NONE,
 		WORKING,
+		HIDDEN,
 		DEAD
 	};
 
-	enum ANIMATION
+	enum class ANIMATION
 	{
 		IDLE,
 		RUN,
-		GHOST,
+		DEAD,
 		END,
 	};
 
 private:
+	Collider*		m_pWallCollider;
 	Collider*		m_pHurtBoxCollider;
 	Collider*		m_pInteractionCollider;
 	CHARACTER_STATE m_eState;
 
 	Interactable*	m_pInteractableObject;
-
-	int				m_iTasksTotal;
-	int				m_iTasksCompleted;
 
 	std::function<void()> m_funcMapKeyCallback;
 
@@ -37,7 +36,7 @@ public:
 	~Player();
 
 	void Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback = nullptr);
-	virtual void Update() override;
+	void Update() override;
 	void Input();
 	
 	void UpdateInteractableObject(Collider* _pOther);
@@ -51,7 +50,11 @@ public:
 
 	void UseInteractableObject();
 
-	
+	void Interact(Character* _Interactor) override { Die(); }
+	Vector2 GetPosition() override { return Actor::GetPosition(); }
+	void OnSuccess() override {}
+
+	void Hide();
 
 private:
 	void CheckMapKey();
@@ -59,6 +62,7 @@ private:
 	void CheckMoveKeys();
 	void CheckEscapeKey();
 
+	void Die();
 
 
 
