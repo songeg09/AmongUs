@@ -8,6 +8,7 @@
 SceneManager::SceneManager() : m_arrScene{}
 {
 	m_eCurScene = SCENE_TYPE::END;
+	m_eRequestedScene = SCENE_TYPE::END;
 }
 SceneManager::~SceneManager()
 {
@@ -49,4 +50,18 @@ void SceneManager::SceneChange(SCENE_TYPE _eSceneType)
 	m_eCurScene = _eSceneType;
 	m_arrScene[static_cast<int>(m_eCurScene)]->Init();
 	Core::GetInstance()->CreateBackDC();
+}
+
+void SceneManager::RequestSceneChange(SCENE_TYPE _eSceneType)
+{
+	m_eRequestedScene = _eSceneType;
+}
+
+void SceneManager::ProcessSceneChange()
+{
+	if (m_eRequestedScene != SCENE_TYPE::END)
+	{
+		SceneChange(m_eRequestedScene);
+		m_eRequestedScene = SCENE_TYPE::END;
+	}
 }

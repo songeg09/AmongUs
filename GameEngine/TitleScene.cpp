@@ -12,13 +12,11 @@ TitleScene::TitleScene(std::wstring _strName)
 
 TitleScene::~TitleScene()
 {
-	for (UI* ui : m_arrUIs)
-		delete ui;
 }
 
 void TitleScene::Init()
 {
-	m_UIFlags = Flag(0);
+	Scene::Init();
 
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TITLE);
 	ConfigureRenderSurface(
@@ -26,12 +24,11 @@ void TitleScene::Init()
 		0
 	);
 
-	m_arrUIs.resize(UI_MODE::END);
+	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
 	TitleUI* titleUI = new TitleUI;
 	titleUI->Init();
-	titleUI->SetVisibility(true);
-
-	m_arrUIs[UI_MODE::TITLE] = titleUI;
+	m_arrUIs[static_cast<int>(UI_TYPE::TITLE)] = titleUI;
+	m_UIFlags = Flag(static_cast<int>(UI_TYPE::TITLE));
 }
 
 void TitleScene::Update()

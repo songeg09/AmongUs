@@ -33,6 +33,8 @@ void Core::Update()
 	InputManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
+
+	SceneManager::GetInstance()->ProcessSceneChange();
 }
 
 void Core::Render()
@@ -95,4 +97,11 @@ void Core::GameLoop()
 	Update();
 	Render();
 }
+
+void Core::Terminate()
+{
+	SendMessage(m_hWnd, WM_DESTROY, 0, 0);
+}
+
+
 

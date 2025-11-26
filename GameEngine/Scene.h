@@ -25,7 +25,7 @@ public:
 	virtual void Update();
 	void LateUpdate();
 	virtual void Render(HDC _memDC);
-	virtual void Init() = 0;
+	virtual void Init();
 	virtual void Release();
 
 	const std::vector<Collider*>& GetCollisionTagGroup(COLLISION_TAG _eCollsionTag) {return m_arrColliders[static_cast<int>(_eCollsionTag)]; }

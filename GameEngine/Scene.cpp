@@ -11,6 +11,7 @@ Scene::Scene(std::wstring _strName)
 {
 	m_strName = _strName;
 	m_UIFlags = 0;
+	m_PrevUIFlags = 0;
 }
 
 Scene::~Scene()
@@ -33,7 +34,16 @@ void Scene::Release()
 	}
 	m_arrUIs.clear();
 
+	//for (auto colliders : m_arrColliders)
+	//	colliders.clear();
+
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
+}
+
+void Scene::Init()
+{
+	m_UIFlags = 0;
+	m_PrevUIFlags = 0;
 }
 
 void Scene::ConfigureRenderSurface(Vector2 _vec2SceneSize, float _fGuardBandPx)

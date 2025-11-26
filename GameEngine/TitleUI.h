@@ -6,15 +6,13 @@ class TitleUI : public UI
 {
 private:
 	Button* m_btnStart;
-	Button* m_btnSetting;
-	Button* m_btnExit;
+	Button* m_btnEdit;
+	Button* m_btnQuit;
 
 public:
 	TitleUI();
 	~TitleUI();
 
 	void Init();
-
-	void OnClick();
 };
 

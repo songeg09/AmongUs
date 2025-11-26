@@ -17,6 +17,7 @@
 
 #include "MapUI.h"
 #include "PlayerStatusUI.h"
+#include "GameResultUI.h"
 #include "NumberSequenceTask.h"
 #include "DataUploadTask.h"
 #include "TimedButtonsTask.h"
@@ -30,20 +31,28 @@ GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 	m_Player = nullptr;
 	m_UIFlags = 0;
 	m_GlobalSoundZone = nullptr;
+	m_GameMode = nullptr;
 }
 
 GameScene::~GameScene()
 {
-	delete m_GameMode;
+}
+
+void GameScene::Release()
+{
+	if (m_GameMode != nullptr)
+		delete m_GameMode;
+
+	Scene::Release();
 }
 
 void GameScene::Init()
 {
-	srand(time(NULL));
+	Scene::Init();
 
 	// 배경화면 설정
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::BACKGROUND);
-	
+
 	// Scene 크기 설정
 	ConfigureRenderSurface(
 		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
@@ -55,7 +64,6 @@ void GameScene::Init()
 	Vector2 PlayerStart(m_pBackGround->GetWidth() / 2, m_pBackGround->GetHeight() / 2);
 	m_Player->Init(PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
 	Scene::AddObject(m_Player);
-
 
 	std::vector<Vector2> tmpWayPoints = { Vector2(500,500), Vector2(2000, 500), Vector2(5000, 3000) };
 	Vector2 Pos = m_Player->GetPosition();
@@ -71,15 +79,14 @@ void GameScene::Init()
 
 	// 2. 오브젝트 생성
 	Vent* vent = new Vent;
-	vent->Init({ 4433,1150 });
+	vent->Init(m_Player->GetPosition());
 	Scene::AddObject(vent);
 
-	GameObject* gameObject = new GameObject;
-	gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
-	Scene::AddObject(gameObject);
-	m_setTasksLeft.insert(gameObject);
+	//GameObject* gameObject = new GameObject;
+	//gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
+	//Scene::AddObject(gameObject);
+	//m_setTasksLeft.insert(gameObject);
 
-	
 	Pos.m_fx += 100;
 	Pos.m_fy += 500;
 	GameObject* gameObject2 = new GameObject;
@@ -96,11 +103,10 @@ void GameScene::Init()
 
 	// 3. 게임 모드 생성
 	m_GameMode = new GameMode;
-	m_GameMode->Init(m_Player,this);
+	m_GameMode->Init(m_Player, this);
 
 	// 4. UI 생성
-	m_UIFlags |= Flag(static_cast<int>(UI_TYPE::HUD));
-	m_PrevUIFlags = m_UIFlags;
+	m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD));
 	InitUI();
 
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::WALL_DETECTOR, COLLISION_TAG::WALL);
@@ -111,16 +117,14 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::GHOST_HEARING_SENSOR, COLLISION_TAG::SOUND);
 }
 
+
 void GameScene::Update()
 {
 	Scene::Update();
 	m_GameMode->Update();
 
-	if (m_GameMode->GetGameState() == GameMode::GAME_STATE::LOSE)
-		SceneManager::GetInstance()->SceneChange(SCENE_TYPE::TITLE);
-		
-	if (m_GameMode->GetGameState() == GameMode::GAME_STATE::WIN)
-		SceneManager::GetInstance()->SceneChange(SCENE_TYPE::TITLE);
+	if (m_GameMode->GetGameState() != GameMode::GAME_STATE::PLAYING)
+		OpenUI(static_cast<int>(UI_TYPE::RESULT));
 
 	if (m_GlobalSoundZone->GetEnbale() == true && Vector2::Distance(m_GlobalSoundZone->GetPosition(), m_Ghost->GetPosition()) < ConstValue::fGhostProximityRange)
 		m_GlobalSoundZone->SetEnable(false);
@@ -150,6 +154,14 @@ void GameScene::InitUI()
 	MapUI* mapUI = new MapUI;
 	mapUI->Init(dynamic_cast<MinimapProvider*>(this), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
 	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
+
+	GameResultUI* resultUI = new GameResultUI;
+	resultUI->Init(
+		m_GameMode, 
+		nullptr, 
+		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::TITLE)
+	);
+	m_arrUIs[static_cast<int>(UI_TYPE::RESULT)] = resultUI;
 
 	// Task UI 생성
 	NumberSequenceTask* Task1 = new NumberSequenceTask;
@@ -213,6 +225,10 @@ void GameScene::OpenUI(int _flagIndex)
 
 	case UI_TYPE::MAP:
 		m_UIFlags = ((m_UIFlags ^ mapBit) & mapBit) |  Flag(static_cast<int>(UI_TYPE::HUD));
+		break;
+
+	case UI_TYPE::RESULT:
+		m_UIFlags = Flag(static_cast<int>(UI_TYPE::RESULT));
 		break;
 
 	default:

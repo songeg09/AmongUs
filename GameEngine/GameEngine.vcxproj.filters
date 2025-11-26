@@ -200,6 +200,9 @@
     <Filter Include="Engine\04. Object\Vent">
       <UniqueIdentifier>{f3cfc575-e19d-4e81-aa3a-772c836bd624}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\10. UI\GameResultUI">
+      <UniqueIdentifier>{7cada089-b9d8-4c22-ae78-fa79ec4496f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -395,6 +398,9 @@
     <ClInclude Include="Vent.h">
       <Filter>Engine\04. Object\Vent</Filter>
     </ClInclude>
+    <ClInclude Include="GameResultUI.h">
+      <Filter>Engine\10. UI\GameResultUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -572,6 +578,9 @@
     </ClCompile>
     <ClCompile Include="Vent.cpp">
       <Filter>Engine\04. Object\Vent</Filter>
+    </ClCompile>
+    <ClCompile Include="GameResultUI.cpp">
+      <Filter>Engine\10. UI\GameResultUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

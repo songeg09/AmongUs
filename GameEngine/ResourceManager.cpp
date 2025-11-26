@@ -36,6 +36,11 @@ std::wstring ResourceManager::GetTextureFileName(TEXTURE_TYPE _eTextureType)
 	case TEXTURE_TYPE::BTN_MAP:									return L"btn_map.bmp";
 	case TEXTURE_TYPE::BTN_SETTING:								return L"btn_setting.bmp";
 	case TEXTURE_TYPE::BTN_X:									return L"btn_x.bmp";
+	case TEXTURE_TYPE::BTN_PLAYAGAIN:							return L"btn_playagain.bmp";
+	case TEXTURE_TYPE::BTN_QUIT:								return L"btn_quit.bmp";
+	case TEXTURE_TYPE::WIN:										return L"win.bmp";
+	case TEXTURE_TYPE::LOSE:									return L"lose.bmp";
+
 	case TEXTURE_TYPE::PROGRESSBAR_FRAME:						return L"progressbar_frame.bmp";
 	case TEXTURE_TYPE::PROGRESSBAR:								return L"progressbar.bmp";
 	case TEXTURE_TYPE::MAP:										return L"map.bmp";

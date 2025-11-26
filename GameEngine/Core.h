@@ -17,5 +17,6 @@ public:
 	HWND GethWnd() { return m_hWnd; }
 	HDC GetMainDC() { return m_hDC; }
 	HDC GetBackDC() { return m_hBackDC; }
+	void Terminate();
 };
 

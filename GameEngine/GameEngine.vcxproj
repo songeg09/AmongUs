@@ -153,6 +153,7 @@
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameResource.h" />
+    <ClInclude Include="GameResultUI.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GDIManager.h" />
     <ClInclude Include="Ghost.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameResource.cpp" />
+    <ClCompile Include="GameResultUI.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GDIManager.cpp" />
     <ClCompile Include="Ghost.cpp" />

@@ -36,8 +36,8 @@ void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallba
 
 void Player::Update()
 {
-	Character::Update();
 	Input();
+	Character::Update();
 }
 
 
@@ -50,7 +50,8 @@ void Player::Input()
 	CheckMapKey();
 
 	// 이동 키 확인
-	CheckMoveKeys();
+	if(m_eState == CHARACTER_STATE::NONE)
+		CheckMoveKeys();
 
 	// 인터랙트 키 확인
 	CheckInteractKey();
@@ -99,15 +100,11 @@ void Player::InitAnimation()
 	Actor::InitAnimation(static_cast<int>(ANIMATION::REVEAL), Reveal);
 	Actor::InitAnimation(static_cast<int>(ANIMATION::DEAD), Dead);
 
-	SetAnimationEvent(static_cast<int>(ANIMATION::HIDE), 3, 
-		[this]() {
-			m_eState = CHARACTER_STATE::HIDDEN; 
-			m_pHurtBoxCollider->SetEnable(false);
-		});
+	SetAnimationEvent(static_cast<int>(ANIMATION::HIDE), 3, [this]() { m_pHurtBoxCollider->SetEnable(false); });
 	SetAnimationEvent(static_cast<int>(ANIMATION::REVEAL), 3, 
 		[this]() {
-			m_eState = CHARACTER_STATE::NONE; 
-			m_pHurtBoxCollider->SetEnable(true);
+			m_pHurtBoxCollider->SetEnable(true); 
+			m_eState = CHARACTER_STATE::NONE;
 		});
 
 	Actor::SetAnimation(static_cast<int>(ANIMATION::IDLE));
@@ -143,7 +140,7 @@ void Player::CheckMoveKeys()
 	if (InputManager::GetInstance()->GetKeyState('S') == KEY_STATE::PRESS)
 		vec2MoveForce.m_fy += 1.0f;
 
-	if (m_eState == CHARACTER_STATE::NONE  && vec2MoveForce.isValid() == true)
+	if (vec2MoveForce.isValid() == true)
 	{
 		Actor::Move(vec2MoveForce);
 		Actor::SetAnimation(static_cast<int>(ANIMATION::RUN));
@@ -160,14 +157,13 @@ void Player::CheckEscapeKey()
 
 void Player::Hide()
 {
-	if (m_eState == CHARACTER_STATE::HIDDEN)
+	if (m_eState != CHARACTER_STATE::HIDDEN)
 	{
+		m_eState = CHARACTER_STATE::HIDDEN;
 		SetAnimation(static_cast<int>(ANIMATION::HIDE));
-	}
+	}	
 	else
-	{
 		SetAnimation(static_cast<int>(ANIMATION::REVEAL));
-	}
 }
 
 void Player::Die()

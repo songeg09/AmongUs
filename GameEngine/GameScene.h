@@ -16,6 +16,7 @@ class GameScene : public Scene, public MinimapProvider
 		START,
 		HUD = START,
 		MAP,
+		RESULT,
 		TASK_NUMBER_SEQUNECE,
 		TASK_DATA_UPLOAD,
 		TASK_TIMED_BUTTONS,
@@ -41,11 +42,11 @@ public:
 	~GameScene();
 	
 	virtual void Init() override;
+	void Release() override;
 	virtual void Update() override;
 	virtual void Render(HDC _memDC) override;
 	
 	void InitUI();
-
 
 	Vector2 GetViewPortTopLeftInScene() override;
 	Vector2 GetBackBufferTopLeftInScene() override;

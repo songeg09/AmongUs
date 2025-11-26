@@ -28,5 +28,4 @@ void Vent::Interact(Character* _Interactor)
 		player->SetPosition(GetPosition());
 		player->Hide();
 	}
-	
 }

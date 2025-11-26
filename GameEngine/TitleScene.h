@@ -5,7 +5,7 @@ class Texture;
 class UI;
 class TitleScene : public Scene
 {
-	enum UI_MODE
+	enum class UI_TYPE
 	{
 		TITLE,
 		END
