@@ -20,10 +20,11 @@ namespace ConstValue
 
 
 	// 오브젝트 사이즈
-	static const Vector2 vec2VentSize = { 20.0f, 15.0f };
+	static const Vector2 vec2VentSize = { 87.0f, 66.0f };
+	static const Vector2 vec2TaskSize = { 50.0f, 50.0f };
+	static const Vector2 vec2WayPointSize = { 30.0f, 30.0f };
 
 	static const float fMaxUploadTime = 10.0f;
-	
 	
 	static const float fGhostProximityRange = 20.0f;
 	static const float fGhostSearchTime = 5.0f;

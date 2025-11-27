@@ -32,12 +32,20 @@ std::wstring ResourceManager::GetTextureFileName(TEXTURE_TYPE _eTextureType)
 	case TEXTURE_TYPE::CHARACTER_ICON:							return L"character_icon.bmp";
 	case TEXTURE_TYPE::OBJECT_ICON:								return L"object_icon.bmp";
 	case TEXTURE_TYPE::BTN_START:								return L"btn_start.bmp";
+	case TEXTURE_TYPE::BTN_EDIT:								return L"btn_edit.bmp";
 	case TEXTURE_TYPE::BTN_USE:									return L"btn_use.bmp";
 	case TEXTURE_TYPE::BTN_MAP:									return L"btn_map.bmp";
 	case TEXTURE_TYPE::BTN_SETTING:								return L"btn_setting.bmp";
 	case TEXTURE_TYPE::BTN_X:									return L"btn_x.bmp";
 	case TEXTURE_TYPE::BTN_PLAYAGAIN:							return L"btn_playagain.bmp";
 	case TEXTURE_TYPE::BTN_QUIT:								return L"btn_quit.bmp";
+	case TEXTURE_TYPE::BTN_PLAYER_START:						return L"\\Editor\\btn_playerstart.bmp";
+	case TEXTURE_TYPE::BTN_WAY_POINTS:							return L"\\Editor\\btn_waypoints.bmp";
+	case TEXTURE_TYPE::BTN_WALL_VERTICES:						return L"\\Editor\\btn_wallvertices.bmp";
+	case TEXTURE_TYPE::BTN_DATA_UPLOAD:							return L"\\Editor\\btn_dataupload.bmp";
+	case TEXTURE_TYPE::BTN_TIMED_BUTTONS:						return L"\\Editor\\btn_timedbuttons.bmp";
+	case TEXTURE_TYPE::BTN_NUMBER_SEQUENCE:						return L"\\Editor\\btn_numbersequence.bmp";
+
 	case TEXTURE_TYPE::WIN:										return L"win.bmp";
 	case TEXTURE_TYPE::LOSE:									return L"lose.bmp";
 

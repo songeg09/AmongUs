@@ -203,6 +203,15 @@
     <Filter Include="Engine\10. UI\GameResultUI">
       <UniqueIdentifier>{7cada089-b9d8-4c22-ae78-fa79ec4496f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06. Scene\EditorScene">
+      <UniqueIdentifier>{2fa42210-1159-4542-9675-2fb179892c70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorUI">
+      <UniqueIdentifier>{c62fbf76-ac13-4c1c-bbd8-22dffd8282d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. UI\EditorUI">
+      <UniqueIdentifier>{4b86cbc9-3708-4c36-9dae-d55c47bbbbcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -401,6 +410,12 @@
     <ClInclude Include="GameResultUI.h">
       <Filter>Engine\10. UI\GameResultUI</Filter>
     </ClInclude>
+    <ClInclude Include="EditorScene.h">
+      <Filter>Engine\06. Scene\EditorScene</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorUI.h">
+      <Filter>Engine\10. UI\EditorUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEngine.rc">
@@ -581,6 +596,12 @@
     </ClCompile>
     <ClCompile Include="GameResultUI.cpp">
       <Filter>Engine\10. UI\GameResultUI</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorScene.cpp">
+      <Filter>Engine\06. Scene\EditorScene</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorUI.cpp">
+      <Filter>Engine\10. UI\EditorUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

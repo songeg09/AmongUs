@@ -30,6 +30,7 @@ GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
 	m_pBackGround = nullptr;
 	m_Player = nullptr;
+	m_Ghost = nullptr;
 	m_UIFlags = 0;
 	m_GlobalSoundZone = nullptr;
 	m_GameMode = nullptr;
@@ -156,7 +157,6 @@ void GameScene::InitUI()
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MENU))
 	);
-	playerUI->SetVisibility(true);
 	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = playerUI;
 
 	MapUI* mapUI = new MapUI;

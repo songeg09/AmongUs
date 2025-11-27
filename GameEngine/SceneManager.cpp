@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "GameScene.h"
 #include "TitleScene.h"
+#include "EditorScene.h"
 #include "TimerManager.h"
 
 SceneManager::SceneManager() : m_arrScene{}
@@ -26,6 +27,7 @@ void SceneManager::Init()
 {
 	m_arrScene[static_cast<int>(SCENE_TYPE::TITLE)] = new TitleScene(L"Title");
 	m_arrScene[static_cast<int>(SCENE_TYPE::GAME)] = new GameScene(L"Game");
+	m_arrScene[static_cast<int>(SCENE_TYPE::EDITOR)] = new EditorScene(L"Editor");
 	SceneChange(SCENE_TYPE::TITLE);
 }
 

@@ -4,6 +4,7 @@ enum class SCENE_TYPE
 {
 	TITLE,
 	GAME,
+	EDITOR,
 	END,
 };
 

@@ -148,6 +148,8 @@
     <ClInclude Include="DataUploadTask.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Easing.h" />
+    <ClInclude Include="EditorScene.h" />
+    <ClInclude Include="EditorUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameMode.h" />
@@ -213,6 +215,8 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="DataUploadTask.cpp" />
+    <ClCompile Include="EditorScene.cpp" />
+    <ClCompile Include="EditorUI.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GameObject.cpp" />

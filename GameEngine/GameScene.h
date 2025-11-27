@@ -36,16 +36,14 @@ private:
 
 	std::set<Interactable*>	m_setTasksLeft;
 
-	float					m_fTotalTaskProgress;
-
 public:
 	GameScene(std::wstring _strName);
 	~GameScene();
 	
-	virtual void Init() override;
+	void Init() override;
 	void Release() override;
-	virtual void Update() override;
-	virtual void Render(HDC _memDC) override;
+	void Update() override;
+	void Render(HDC _memDC) override;
 	
 	void InitUI();
 
