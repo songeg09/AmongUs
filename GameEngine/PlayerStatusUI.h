@@ -20,7 +20,7 @@ public:
 	PlayerStatusUI();
 	~PlayerStatusUI();
 
-	void Init(GameMode* _GameMode, Player* _Player, std::function<void()> _mapBtnCallback);
+	void Init(GameMode* _GameMode, Player* _Player, std::function<void()> _funcMapBtnCallback, std::function<void()> _funcMenuBtnCallback);
 	void Update() override;
 	void Render(HDC _memDC) override;
 

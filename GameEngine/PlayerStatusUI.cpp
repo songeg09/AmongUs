@@ -17,7 +17,7 @@ PlayerStatusUI::~PlayerStatusUI()
 {
 }
 
-void PlayerStatusUI::Init(GameMode* _GameMode, Player* _Player, std::function<void()> _mapBtnCallback)
+void PlayerStatusUI::Init(GameMode* _GameMode, Player* _Player, std::function<void()> _funcMapBtnCallback, std::function<void()> _funcMenuBtnCallback)
 {
 	UI::Init();
 
@@ -29,11 +29,11 @@ void PlayerStatusUI::Init(GameMode* _GameMode, Player* _Player, std::function<vo
 	m_arrUIElemetns.push_back(m_btnUse);
 
 	m_btnMap = new Button;
-	m_btnMap->Init(TEXTURE_TYPE::BTN_MAP, Vector2(0.95, 0.07), UIElement::ANCHOR::CENTER, _mapBtnCallback);
+	m_btnMap->Init(TEXTURE_TYPE::BTN_MAP, Vector2(0.95, 0.07), UIElement::ANCHOR::CENTER, _funcMapBtnCallback);
 	m_arrUIElemetns.push_back(m_btnMap);
 
 	m_btnSetting = new Button;
-	m_btnSetting->Init(TEXTURE_TYPE::BTN_SETTING, Vector2(0.95, 0.17), UIElement::ANCHOR::CENTER);
+	m_btnSetting->Init(TEXTURE_TYPE::BTN_SETTING, Vector2(0.95, 0.17), UIElement::ANCHOR::CENTER, _funcMenuBtnCallback);
 	m_arrUIElemetns.push_back(m_btnSetting);
 
 	m_progressbarTasks = new ProgressBar();
@@ -62,6 +62,4 @@ void PlayerStatusUI::Update()
 void PlayerStatusUI::Render(HDC _memDC)
 {
 	UI::Render(_memDC);
-
-	
 }

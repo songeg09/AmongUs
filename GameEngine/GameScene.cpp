@@ -15,6 +15,7 @@
 #include "Vent.h"
 #include "CircleZone.h"
 
+#include "MenuUI.h"
 #include "MapUI.h"
 #include "PlayerStatusUI.h"
 #include "GameResultUI.h"
@@ -42,6 +43,7 @@ void GameScene::Release()
 {
 	if (m_GameMode != nullptr)
 		delete m_GameMode;
+	m_GameMode = nullptr;
 
 	Scene::Release();
 }
@@ -117,7 +119,6 @@ void GameScene::Init()
 	CollisionManager::GetInstance()->RegistCollisionGroup(COLLISION_TAG::GHOST_HEARING_SENSOR, COLLISION_TAG::SOUND);
 }
 
-
 void GameScene::Update()
 {
 	Scene::Update();
@@ -128,6 +129,7 @@ void GameScene::Update()
 
 	if (m_GlobalSoundZone->GetEnbale() == true && Vector2::Distance(m_GlobalSoundZone->GetPosition(), m_Ghost->GetPosition()) < ConstValue::fGhostProximityRange)
 		m_GlobalSoundZone->SetEnable(false);
+
 }
 
 void GameScene::Render(HDC _memDC)
@@ -141,13 +143,19 @@ void GameScene::Render(HDC _memDC)
 	Scene::Render(_memDC);
 }
 
+
 void GameScene::InitUI()
 {
 	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
 
 	// UI z축 순서에 맞게 생성 필요!
 	PlayerStatusUI* playerUI = new PlayerStatusUI;
-	playerUI->Init(m_GameMode, m_Player, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
+	playerUI->Init(
+		m_GameMode, 
+		m_Player, 
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)),
+		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MENU))
+	);
 	playerUI->SetVisibility(true);
 	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = playerUI;
 
@@ -155,10 +163,17 @@ void GameScene::InitUI()
 	mapUI->Init(dynamic_cast<MinimapProvider*>(this), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
 	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
 
+	MenuUI* menuUI = new MenuUI;
+	menuUI->Init(
+		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::GAME),
+		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::TITLE)
+	);
+	m_arrUIs[static_cast<int>(UI_TYPE::MENU)] = menuUI;
+
 	GameResultUI* resultUI = new GameResultUI;
 	resultUI->Init(
-		m_GameMode, 
-		nullptr, 
+		m_GameMode,
+		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::GAME),
 		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::TITLE)
 	);
 	m_arrUIs[static_cast<int>(UI_TYPE::RESULT)] = resultUI;
@@ -216,11 +231,16 @@ Vector2 GameScene::GetBackBufferTopLeftInScene()
 void GameScene::OpenUI(int _flagIndex)
 {
 	static Flags mapBit = Flag(static_cast<int>(UI_TYPE::MAP));
+	static Flags menuBit = Flag(static_cast<int>(UI_TYPE::MENU));
 
 	switch (static_cast<UI_TYPE>(_flagIndex))
 	{
 	case UI_TYPE::HUD:
 		m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD));
+		break;
+
+	case UI_TYPE::MENU:
+		m_UIFlags = ((m_UIFlags ^ menuBit) & menuBit) | Flag(static_cast<int>(UI_TYPE::HUD));
 		break;
 
 	case UI_TYPE::MAP:

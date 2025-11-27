@@ -12,13 +12,16 @@ Player::Player()
 	m_pInteractionCollider = nullptr;
 	m_pInteractableObject = nullptr;
 	m_eState = CHARACTER_STATE::NONE;
+
+	m_funcMapKeyCallback = nullptr;
+	m_funcMenuKeyCallback = nullptr;
 }
 
 Player::~Player()
 {
 }
 
-void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback)
+void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback, std::function<void()> _funcMenuKeyCallback)
 {
 	Character::Init(_vec2Position);
 
@@ -54,7 +57,8 @@ void Player::Input()
 		CheckMoveKeys();
 
 	// 인터랙트 키 확인
-	CheckInteractKey();
+	if(m_eState != CHARACTER_STATE::HIDING)
+		CheckInteractKey();
 
 	// ESC키 확인
 	CheckEscapeKey();
@@ -100,7 +104,11 @@ void Player::InitAnimation()
 	Actor::InitAnimation(static_cast<int>(ANIMATION::REVEAL), Reveal);
 	Actor::InitAnimation(static_cast<int>(ANIMATION::DEAD), Dead);
 
-	SetAnimationEvent(static_cast<int>(ANIMATION::HIDE), 3, [this]() { m_pHurtBoxCollider->SetEnable(false); });
+	SetAnimationEvent(static_cast<int>(ANIMATION::HIDE), 3, 
+		[this]() {
+			m_pHurtBoxCollider->SetEnable(false); 
+			m_eState = CHARACTER_STATE::HIDDEN;
+		});
 	SetAnimationEvent(static_cast<int>(ANIMATION::REVEAL), 3, 
 		[this]() {
 			m_pHurtBoxCollider->SetEnable(true); 
@@ -159,11 +167,15 @@ void Player::Hide()
 {
 	if (m_eState != CHARACTER_STATE::HIDDEN)
 	{
-		m_eState = CHARACTER_STATE::HIDDEN;
+		m_eState = CHARACTER_STATE::HIDING;
 		SetAnimation(static_cast<int>(ANIMATION::HIDE));
 	}	
 	else
+	{
+		m_eState = CHARACTER_STATE::HIDING;
 		SetAnimation(static_cast<int>(ANIMATION::REVEAL));
+	}
+		
 }
 
 void Player::Die()

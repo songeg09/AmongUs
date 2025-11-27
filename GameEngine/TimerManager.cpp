@@ -10,6 +10,7 @@ TimerManager::TimerManager()
 	m_iFPS = 0;
 	m_llFrequency = {};
 	m_llPrevCount = {};
+	m_bPause = false;
 }
 
 TimerManager::~TimerManager()
@@ -25,6 +26,7 @@ void TimerManager::Init()
 	QueryPerformanceCounter(&m_llPrevCount);
 
 	QueryPerformanceFrequency(&m_llFrequency);
+	m_bPause = false;
 }
 
 void TimerManager::Update()
@@ -32,7 +34,11 @@ void TimerManager::Update()
 	LARGE_INTEGER llCurCount;
 	QueryPerformanceCounter(&llCurCount);
 
-	m_dDeltaTime = (double)(llCurCount.QuadPart - m_llPrevCount.QuadPart) / (double)m_llFrequency.QuadPart;
+	if (m_bPause == false)
+		m_dDeltaTime = (double)(llCurCount.QuadPart - m_llPrevCount.QuadPart) / (double)m_llFrequency.QuadPart;
+	else
+		m_dDeltaTime = 0;
+
 	m_llPrevCount = llCurCount;
 
 	++m_iCallCount;

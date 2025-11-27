@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "GameScene.h"
 #include "TitleScene.h"
+#include "TimerManager.h"
 
 SceneManager::SceneManager() : m_arrScene{}
 {
@@ -50,6 +51,7 @@ void SceneManager::SceneChange(SCENE_TYPE _eSceneType)
 	m_eCurScene = _eSceneType;
 	m_arrScene[static_cast<int>(m_eCurScene)]->Init();
 	Core::GetInstance()->CreateBackDC();
+	TimerManager::GetInstance()->Resume();
 }
 
 void SceneManager::RequestSceneChange(SCENE_TYPE _eSceneType)

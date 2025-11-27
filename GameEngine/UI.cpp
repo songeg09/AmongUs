@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "UI.h"
 #include "UIElement.h"
+#include "MenuUI.h"
 
 UI::UI()
 {
@@ -17,6 +18,7 @@ UI::~UI()
 	}
 	m_arrUIElemetns.clear();
 }
+
 
 void UI::Init(std::function<void()> _funcOpenCallback, std::function<void()> _funcCloseCallback)
 {

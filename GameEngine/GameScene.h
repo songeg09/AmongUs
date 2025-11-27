@@ -16,6 +16,7 @@ class GameScene : public Scene, public MinimapProvider
 		START,
 		HUD = START,
 		MAP,
+		MENU,
 		RESULT,
 		TASK_NUMBER_SEQUNECE,
 		TASK_DATA_UPLOAD,

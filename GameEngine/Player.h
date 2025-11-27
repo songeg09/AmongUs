@@ -10,6 +10,7 @@ public:
 		NONE,
 		WORKING,
 		HIDDEN,
+		HIDING,
 		DEAD
 	};
 
@@ -32,12 +33,13 @@ private:
 	Interactable*	m_pInteractableObject;
 
 	std::function<void()> m_funcMapKeyCallback;
+	std::function<void()> m_funcMenuKeyCallback;
 
 public:
 	Player();
 	~Player();
 
-	void Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback = nullptr);
+	void Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback = nullptr, std::function<void()> _funcMenuKeyCallback = nullptr);
 	void Update() override;
 	void Input();
 	

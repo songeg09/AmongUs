@@ -29,12 +29,11 @@ Core::~Core()
 
 void Core::Update()
 {
+	SceneManager::GetInstance()->ProcessSceneChange();
 	TimerManager::GetInstance()->Update();
 	InputManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
-
-	SceneManager::GetInstance()->ProcessSceneChange();
 }
 
 void Core::Render()

@@ -34,8 +34,8 @@ void Scene::Release()
 	}
 	m_arrUIs.clear();
 
-	//for (auto colliders : m_arrColliders)
-	//	colliders.clear();
+	for (std::vector<Collider*>& colliders : m_arrColliders)
+		colliders.clear();
 
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
 }
