@@ -199,6 +199,7 @@
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="Vent.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="WallDetector.h" />
     <ClInclude Include="ZoneData.h" />
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +260,7 @@
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="Vent.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="WallDetector.cpp" />
     <ClCompile Include="ZoneData.cpp" />
   </ItemGroup>
   <ItemGroup>

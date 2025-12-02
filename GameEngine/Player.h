@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "Interactable.h"
 
+class WallDetector;
 class Player : public Character, public Interactable
 {
 public:
@@ -25,7 +26,8 @@ public:
 	};
 
 private:
-	Collider*		m_pWallCollider;
+	//Collider*		m_pWallCollider;
+	WallDetector*	m_pWallDetector;
 	Collider*		m_pHurtBoxCollider;
 	Collider*		m_pInteractionCollider;
 	CHARACTER_STATE m_eState;
@@ -41,6 +43,8 @@ public:
 
 	void Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback = nullptr, std::function<void()> _funcMenuKeyCallback = nullptr);
 	void Update() override;
+	void Render(HDC _memDC) override;
+
 	void Input();
 	
 	void UpdateInteractableObject(Collider* _pOther);

@@ -65,17 +65,11 @@
     <Filter Include="Engine\04. Object\Actor">
       <UniqueIdentifier>{f3aa19f6-9394-4124-8700-12c84926a94b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\09. Skill">
-      <UniqueIdentifier>{394d3efe-2b0f-408b-8ef7-41064a98dbe2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\05. Resource\Data">
       <UniqueIdentifier>{70ddc61b-40b7-4fbb-ad7a-4a5e5b0244b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\04. Object\SkillObject">
       <UniqueIdentifier>{a39004ff-eefa-4199-82e9-894374e00aa2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\09. Skill\CircleDamageSkill">
-      <UniqueIdentifier>{c5e3d384-6275-4e1f-adce-c9a63e18c06d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\05. Resource\Data\ZoneData">
       <UniqueIdentifier>{3a8e9a30-c209-48e3-99d4-331d1ea6d71e}</UniqueIdentifier>
@@ -101,9 +95,6 @@
     <Filter Include="Engine\04. Object\SkillObject\RectZone">
       <UniqueIdentifier>{b05c2344-f808-42fc-8620-92cf9682959c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\09. Skill\RectSkill">
-      <UniqueIdentifier>{7b76c51c-c172-4a1e-85e7-60a06980ad9c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\05. Resource\TextureAtlas">
       <UniqueIdentifier>{9a44f3a3-6210-480a-9fdd-22fe743f159c}</UniqueIdentifier>
     </Filter>
@@ -112,9 +103,6 @@
     </Filter>
     <Filter Include="Crew">
       <UniqueIdentifier>{503c5cec-6ed5-4193-9a63-d2e059b850f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\Wall">
-      <UniqueIdentifier>{cbef6d51-2917-4f98-b5f0-a3a910ae9e3e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\04. Object\Actor\Character">
       <UniqueIdentifier>{4fa3d97a-6d62-438c-807b-de5165b69a07}</UniqueIdentifier>
@@ -131,71 +119,11 @@
     <Filter Include="Engine\03. Manager\SettingsManager">
       <UniqueIdentifier>{8b2ff356-cd47-43fc-9607-7f0b9a0de018}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\11. UIElement">
-      <UniqueIdentifier>{c77b3e4b-a636-4c3e-97f6-3089a1b1403d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\11. UIElement\Button">
-      <UniqueIdentifier>{0a4c91b0-1a88-45cd-b250-3daeb1d68c6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI">
-      <UniqueIdentifier>{02bca386-3607-4de5-927e-2db819ebc0e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\TitleUI">
-      <UniqueIdentifier>{580d373d-2877-48bc-ae5d-1ae238f55ee5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\MapUI">
-      <UniqueIdentifier>{2ce256fb-207d-48f2-8521-879efd43feea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\11. UIElement\ProgressBar">
-      <UniqueIdentifier>{3fc0af65-58c1-4a82-b5b7-83dfde924769}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\MenuUI">
-      <UniqueIdentifier>{9b007213-81e1-4a49-b865-53748d8f7ffe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\12. GameMode">
-      <UniqueIdentifier>{f6325803-5453-4926-892e-012c50636229}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\TaskUI">
-      <UniqueIdentifier>{552dfc80-aaff-4e58-85f1-3ad51567ac81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\TaskUI\NumberSequenceTask">
-      <UniqueIdentifier>{0218cff6-2aae-48d3-b36d-6495a181bb0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\11. UIElement\Button\NumPadButton">
-      <UniqueIdentifier>{85d4309d-d110-4246-9a0b-4c8993bc0290}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\PlayerStatusUI">
-      <UniqueIdentifier>{7347e9d4-e93b-49a6-bf6f-baf5024f9dc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\TaskUI\DataUploadTask">
-      <UniqueIdentifier>{c8491947-096a-420b-abd4-56098ccdb62f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\13. Interface">
-      <UniqueIdentifier>{2dcc5d11-c78b-42e9-abbc-e485ace03fd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\13. Interface\Interactable">
-      <UniqueIdentifier>{3227c5c3-1bb6-4688-99b8-5e3cc7edcbf5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\13. Interface\MinimapProvider">
-      <UniqueIdentifier>{91ffad0f-9480-4cfe-b609-9a90cfa21979}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\TaskUI\TimedButtonsTask">
-      <UniqueIdentifier>{d986c7d7-0b91-49e3-89d7-d5f666e5b6fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\11. UIElement\TimingBar">
-      <UniqueIdentifier>{593b08dc-c687-4ceb-b5d6-d38387b04bdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\14. Utility">
-      <UniqueIdentifier>{2450be60-5675-4e99-be62-4679892eb464}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\04. Object\Actor\Character\Ghost">
       <UniqueIdentifier>{e3fdb4aa-a6a7-433f-91d6-373ddfa463e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\04. Object\Vent">
       <UniqueIdentifier>{f3cfc575-e19d-4e81-aa3a-772c836bd624}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\10. UI\GameResultUI">
-      <UniqueIdentifier>{7cada089-b9d8-4c22-ae78-fa79ec4496f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\06. Scene\EditorScene">
       <UniqueIdentifier>{2fa42210-1159-4542-9675-2fb179892c70}</UniqueIdentifier>
@@ -203,8 +131,86 @@
     <Filter Include="EditorUI">
       <UniqueIdentifier>{c62fbf76-ac13-4c1c-bbd8-22dffd8282d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\10. UI\EditorUI">
+    <Filter Include="Engine\09. Wall">
+      <UniqueIdentifier>{b2f57777-1f96-4a35-9bad-d1099329f41f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. Skill">
+      <UniqueIdentifier>{394d3efe-2b0f-408b-8ef7-41064a98dbe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. Skill\CircleDamageSkill">
+      <UniqueIdentifier>{c5e3d384-6275-4e1f-adce-c9a63e18c06d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10. Skill\RectSkill">
+      <UniqueIdentifier>{7b76c51c-c172-4a1e-85e7-60a06980ad9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI">
+      <UniqueIdentifier>{02bca386-3607-4de5-927e-2db819ebc0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\TitleUI">
+      <UniqueIdentifier>{580d373d-2877-48bc-ae5d-1ae238f55ee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\MapUI">
+      <UniqueIdentifier>{2ce256fb-207d-48f2-8521-879efd43feea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\MenuUI">
+      <UniqueIdentifier>{9b007213-81e1-4a49-b865-53748d8f7ffe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\TaskUI">
+      <UniqueIdentifier>{552dfc80-aaff-4e58-85f1-3ad51567ac81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\TaskUI\NumberSequenceTask">
+      <UniqueIdentifier>{0218cff6-2aae-48d3-b36d-6495a181bb0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\TaskUI\DataUploadTask">
+      <UniqueIdentifier>{c8491947-096a-420b-abd4-56098ccdb62f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\TaskUI\TimedButtonsTask">
+      <UniqueIdentifier>{d986c7d7-0b91-49e3-89d7-d5f666e5b6fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\PlayerStatusUI">
+      <UniqueIdentifier>{7347e9d4-e93b-49a6-bf6f-baf5024f9dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\GameResultUI">
+      <UniqueIdentifier>{7cada089-b9d8-4c22-ae78-fa79ec4496f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\11. UI\EditorUI">
       <UniqueIdentifier>{4b86cbc9-3708-4c36-9dae-d55c47bbbbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\12. UIElement">
+      <UniqueIdentifier>{c77b3e4b-a636-4c3e-97f6-3089a1b1403d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\12. UIElement\Button">
+      <UniqueIdentifier>{0a4c91b0-1a88-45cd-b250-3daeb1d68c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\12. UIElement\Button\NumPadButton">
+      <UniqueIdentifier>{85d4309d-d110-4246-9a0b-4c8993bc0290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\12. UIElement\ProgressBar">
+      <UniqueIdentifier>{3fc0af65-58c1-4a82-b5b7-83dfde924769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\12. UIElement\TimingBar">
+      <UniqueIdentifier>{593b08dc-c687-4ceb-b5d6-d38387b04bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\13. GameMode">
+      <UniqueIdentifier>{f6325803-5453-4926-892e-012c50636229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\14. Interface">
+      <UniqueIdentifier>{2dcc5d11-c78b-42e9-abbc-e485ace03fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\14. Interface\Interactable">
+      <UniqueIdentifier>{3227c5c3-1bb6-4688-99b8-5e3cc7edcbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\14. Interface\MinimapProvider">
+      <UniqueIdentifier>{91ffad0f-9480-4cfe-b609-9a90cfa21979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\15. Utility">
+      <UniqueIdentifier>{2450be60-5675-4e99-be62-4679892eb464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09. Wall\Wall">
+      <UniqueIdentifier>{db715581-373a-46d3-abfd-c10054877625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09. Wall\WallDetector">
+      <UniqueIdentifier>{c6edb009-30d1-4978-9403-b5039083f2a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -279,7 +285,7 @@
       <Filter>Engine\04. Object\Actor</Filter>
     </ClInclude>
     <ClInclude Include="Skill.h">
-      <Filter>Engine\09. Skill</Filter>
+      <Filter>Engine\10. Skill</Filter>
     </ClInclude>
     <ClInclude Include="CircleSkillData.h">
       <Filter>Engine\05. Resource\Data\SkillData\CircleSkillData</Filter>
@@ -297,10 +303,10 @@
       <Filter>Engine\04. Object\SkillObject\CircleZone</Filter>
     </ClInclude>
     <ClInclude Include="CircleDamageSkill.h">
-      <Filter>Engine\09. Skill\CircleDamageSkill</Filter>
+      <Filter>Engine\10. Skill\CircleDamageSkill</Filter>
     </ClInclude>
     <ClInclude Include="RectSkill.h">
-      <Filter>Engine\09. Skill\RectSkill</Filter>
+      <Filter>Engine\10. Skill\RectSkill</Filter>
     </ClInclude>
     <ClInclude Include="RectZone.h">
       <Filter>Engine\04. Object\SkillObject\RectZone</Filter>
@@ -323,9 +329,6 @@
     <ClInclude Include="AnimationData.h">
       <Filter>Engine\05. Resource\Data\AnimationData</Filter>
     </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Engine\04. Object\Wall</Filter>
-    </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Engine\04. Object\Actor\Character</Filter>
     </ClInclude>
@@ -336,7 +339,7 @@
       <Filter>Engine\04. Object\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Interactable.h">
-      <Filter>Engine\13. Interface\Interactable</Filter>
+      <Filter>Engine\14. Interface\Interactable</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>Engine\06. Scene\TitleScene</Filter>
@@ -345,55 +348,55 @@
       <Filter>Engine\03. Manager\SettingsManager</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>Engine\10. UI</Filter>
+      <Filter>Engine\11. UI</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
-      <Filter>Engine\11. UIElement\Button</Filter>
+      <Filter>Engine\12. UIElement\Button</Filter>
     </ClInclude>
     <ClInclude Include="TitleUI.h">
-      <Filter>Engine\10. UI\TitleUI</Filter>
+      <Filter>Engine\11. UI\TitleUI</Filter>
     </ClInclude>
     <ClInclude Include="UIElement.h">
-      <Filter>Engine\11. UIElement</Filter>
+      <Filter>Engine\12. UIElement</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStatusUI.h">
-      <Filter>Engine\10. UI\PlayerStatusUI</Filter>
+      <Filter>Engine\11. UI\PlayerStatusUI</Filter>
     </ClInclude>
     <ClInclude Include="MapUI.h">
-      <Filter>Engine\10. UI\MapUI</Filter>
+      <Filter>Engine\11. UI\MapUI</Filter>
     </ClInclude>
     <ClInclude Include="ProgressBar.h">
-      <Filter>Engine\11. UIElement\ProgressBar</Filter>
+      <Filter>Engine\12. UIElement\ProgressBar</Filter>
     </ClInclude>
     <ClInclude Include="GameMode.h">
-      <Filter>Engine\12. GameMode</Filter>
+      <Filter>Engine\13. GameMode</Filter>
     </ClInclude>
     <ClInclude Include="TaskUI.h">
-      <Filter>Engine\10. UI\TaskUI</Filter>
+      <Filter>Engine\11. UI\TaskUI</Filter>
     </ClInclude>
     <ClInclude Include="NumberSequenceTask.h">
-      <Filter>Engine\10. UI\TaskUI\NumberSequenceTask</Filter>
+      <Filter>Engine\11. UI\TaskUI\NumberSequenceTask</Filter>
     </ClInclude>
     <ClInclude Include="MenuUI.h">
-      <Filter>Engine\10. UI\MenuUI</Filter>
+      <Filter>Engine\11. UI\MenuUI</Filter>
     </ClInclude>
     <ClInclude Include="NumPadButton.h">
-      <Filter>Engine\11. UIElement\Button\NumPadButton</Filter>
+      <Filter>Engine\12. UIElement\Button\NumPadButton</Filter>
     </ClInclude>
     <ClInclude Include="DataUploadTask.h">
-      <Filter>Engine\10. UI\TaskUI\DataUploadTask</Filter>
+      <Filter>Engine\11. UI\TaskUI\DataUploadTask</Filter>
     </ClInclude>
     <ClInclude Include="MinimapProvider.h">
-      <Filter>Engine\13. Interface\MinimapProvider</Filter>
+      <Filter>Engine\14. Interface\MinimapProvider</Filter>
     </ClInclude>
     <ClInclude Include="TimedButtonsTask.h">
-      <Filter>Engine\10. UI\TaskUI\TimedButtonsTask</Filter>
+      <Filter>Engine\11. UI\TaskUI\TimedButtonsTask</Filter>
     </ClInclude>
     <ClInclude Include="TimingBar.h">
-      <Filter>Engine\11. UIElement\TimingBar</Filter>
+      <Filter>Engine\12. UIElement\TimingBar</Filter>
     </ClInclude>
     <ClInclude Include="Easing.h">
-      <Filter>Engine\14. Utility</Filter>
+      <Filter>Engine\15. Utility</Filter>
     </ClInclude>
     <ClInclude Include="Ghost.h">
       <Filter>Engine\04. Object\Actor\Character\Ghost</Filter>
@@ -402,16 +405,22 @@
       <Filter>Engine\04. Object\Vent</Filter>
     </ClInclude>
     <ClInclude Include="GameResultUI.h">
-      <Filter>Engine\10. UI\GameResultUI</Filter>
+      <Filter>Engine\11. UI\GameResultUI</Filter>
     </ClInclude>
     <ClInclude Include="EditorScene.h">
       <Filter>Engine\06. Scene\EditorScene</Filter>
     </ClInclude>
     <ClInclude Include="EditorUI.h">
-      <Filter>Engine\10. UI\EditorUI</Filter>
+      <Filter>Engine\11. UI\EditorUI</Filter>
     </ClInclude>
     <ClInclude Include="MapInfo.h">
-      <Filter>Engine\14. Utility</Filter>
+      <Filter>Engine\15. Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Engine\09. Wall\Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="WallDetector.h">
+      <Filter>Engine\09. Wall\WallDetector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -478,7 +487,7 @@
       <Filter>Engine\04. Object\Actor</Filter>
     </ClCompile>
     <ClCompile Include="Skill.cpp">
-      <Filter>Engine\09. Skill</Filter>
+      <Filter>Engine\10. Skill</Filter>
     </ClCompile>
     <ClCompile Include="Data.cpp">
       <Filter>Engine\05. Resource\Data</Filter>
@@ -496,10 +505,10 @@
       <Filter>Engine\04. Object\SkillObject\CircleZone</Filter>
     </ClCompile>
     <ClCompile Include="CircleDamageSkill.cpp">
-      <Filter>Engine\09. Skill\CircleDamageSkill</Filter>
+      <Filter>Engine\10. Skill\CircleDamageSkill</Filter>
     </ClCompile>
     <ClCompile Include="RectSkill.cpp">
-      <Filter>Engine\09. Skill\RectSkill</Filter>
+      <Filter>Engine\10. Skill\RectSkill</Filter>
     </ClCompile>
     <ClCompile Include="RecteZone.cpp">
       <Filter>Engine\04. Object\SkillObject\RectZone</Filter>
@@ -522,9 +531,6 @@
     <ClCompile Include="AnimationData.cpp">
       <Filter>Engine\05. Resource\Data\AnimationData</Filter>
     </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Engine\04. Object\Wall</Filter>
-    </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Engine\04. Object\Actor\Character</Filter>
     </ClCompile>
@@ -541,49 +547,49 @@
       <Filter>Engine\03. Manager\SettingsManager</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>Engine\10. UI</Filter>
+      <Filter>Engine\11. UI</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>Engine\11. UIElement\Button</Filter>
+      <Filter>Engine\12. UIElement\Button</Filter>
     </ClCompile>
     <ClCompile Include="TitleUI.cpp">
-      <Filter>Engine\10. UI\TitleUI</Filter>
+      <Filter>Engine\11. UI\TitleUI</Filter>
     </ClCompile>
     <ClCompile Include="UIElement.cpp">
-      <Filter>Engine\11. UIElement</Filter>
+      <Filter>Engine\12. UIElement</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStatusUI.cpp">
-      <Filter>Engine\10. UI\PlayerStatusUI</Filter>
+      <Filter>Engine\11. UI\PlayerStatusUI</Filter>
     </ClCompile>
     <ClCompile Include="MapUI.cpp">
-      <Filter>Engine\10. UI\MapUI</Filter>
+      <Filter>Engine\11. UI\MapUI</Filter>
     </ClCompile>
     <ClCompile Include="ProgressBar.cpp">
-      <Filter>Engine\11. UIElement\ProgressBar</Filter>
+      <Filter>Engine\12. UIElement\ProgressBar</Filter>
     </ClCompile>
     <ClCompile Include="MenuUI.cpp">
-      <Filter>Engine\10. UI\MenuUI</Filter>
+      <Filter>Engine\11. UI\MenuUI</Filter>
     </ClCompile>
     <ClCompile Include="GameMode.cpp">
-      <Filter>Engine\12. GameMode</Filter>
+      <Filter>Engine\13. GameMode</Filter>
     </ClCompile>
     <ClCompile Include="TaskUI.cpp">
-      <Filter>Engine\10. UI\TaskUI</Filter>
+      <Filter>Engine\11. UI\TaskUI</Filter>
     </ClCompile>
     <ClCompile Include="NumberSequenceTask.cpp">
-      <Filter>Engine\10. UI\TaskUI\NumberSequenceTask</Filter>
+      <Filter>Engine\11. UI\TaskUI\NumberSequenceTask</Filter>
     </ClCompile>
     <ClCompile Include="NumPadButton.cpp">
-      <Filter>Engine\11. UIElement\Button\NumPadButton</Filter>
+      <Filter>Engine\12. UIElement\Button\NumPadButton</Filter>
     </ClCompile>
     <ClCompile Include="DataUploadTask.cpp">
-      <Filter>Engine\10. UI\TaskUI\DataUploadTask</Filter>
+      <Filter>Engine\11. UI\TaskUI\DataUploadTask</Filter>
     </ClCompile>
     <ClCompile Include="TimedButtonsTask.cpp">
-      <Filter>Engine\10. UI\TaskUI\TimedButtonsTask</Filter>
+      <Filter>Engine\11. UI\TaskUI\TimedButtonsTask</Filter>
     </ClCompile>
     <ClCompile Include="TimingBar.cpp">
-      <Filter>Engine\11. UIElement\TimingBar</Filter>
+      <Filter>Engine\12. UIElement\TimingBar</Filter>
     </ClCompile>
     <ClCompile Include="Ghost.cpp">
       <Filter>Engine\04. Object\Actor\Character\Ghost</Filter>
@@ -592,13 +598,19 @@
       <Filter>Engine\04. Object\Vent</Filter>
     </ClCompile>
     <ClCompile Include="GameResultUI.cpp">
-      <Filter>Engine\10. UI\GameResultUI</Filter>
+      <Filter>Engine\11. UI\GameResultUI</Filter>
     </ClCompile>
     <ClCompile Include="EditorScene.cpp">
       <Filter>Engine\06. Scene\EditorScene</Filter>
     </ClCompile>
     <ClCompile Include="EditorUI.cpp">
-      <Filter>Engine\10. UI\EditorUI</Filter>
+      <Filter>Engine\11. UI\EditorUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Engine\09. Wall\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="WallDetector.cpp">
+      <Filter>Engine\09. Wall\WallDetector</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

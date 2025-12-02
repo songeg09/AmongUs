@@ -6,6 +6,9 @@
 #include "CollisionManager.h"
 #include "Collider.h"
 #include "UI.h"
+#include "Wall.h"
+#include "WallDetector.h"
+#include "GDIManager.h"
 
 Scene::Scene(std::wstring _strName)
 {
@@ -38,6 +41,18 @@ void Scene::Release()
 		colliders.clear();
 
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
+
+	for (Wall* wall : m_arrWalls)
+	{
+		delete wall;
+	}
+	m_arrWalls.clear();
+
+	for (WallDetector* wallDetector : m_arrWallDetectors)
+	{
+		delete wallDetector;
+	}
+	m_arrWallDetectors.clear();
 }
 
 void Scene::Init()
@@ -72,10 +87,29 @@ void Scene::AddCollider(Collider* _collider, COLLISION_TAG _eTag)
 	m_arrColliders[static_cast<int>(_eTag)].push_back(_collider);
 }
 
+void Scene::AddWall(Wall* _wall)
+{
+	m_arrWalls.push_back(_wall);
+}
+
+void Scene::AddWallDetector(WallDetector* _wallDetector)
+{
+	m_arrWallDetectors.push_back(_wallDetector);
+}
+
 void Scene::Update()
 {
 	for (int i = 0; i < m_arrObjects.size(); i++)
 		m_arrObjects[i]->Update();
+
+	for (WallDetector* detector : m_arrWallDetectors)
+		detector->Update();
+
+	for (Wall* wall : m_arrWalls)
+	{
+		for (WallDetector* detector : m_arrWallDetectors)
+			wall->ResolvePenetration(detector);
+	}
 
 	for (UI* ui : m_arrUIs)
 		ui->Update();
@@ -108,6 +142,9 @@ void Scene::Render(HDC _memDC)
 {
 	for (Object* object : m_arrObjects)
 		object->Render(_memDC);
+
+	for (Wall* wall : m_arrWalls)
+		wall->Render(_memDC);
 
 	for (UI* ui : m_arrUIs)
 		ui->Render(_memDC);

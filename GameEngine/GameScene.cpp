@@ -202,7 +202,7 @@ void GameScene::InstantiateObjects()
 		{
 			Wall* wall = new Wall;
 			wall->Init(mapInfo.m_arrAllWallVertices[i][j], mapInfo.m_arrAllWallVertices[i][j+1]);
-			Scene::AddObject(wall);
+			Scene::AddWall(wall);
 		}
 	}
 

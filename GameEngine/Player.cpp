@@ -5,6 +5,7 @@
 #include "Collider.h"
 #include "SceneManager.h"
 #include "GameScene.h"
+#include "WallDetector.h"
 
 Player::Player()
 {
@@ -27,7 +28,8 @@ void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallba
 
 	m_funcMapKeyCallback = _funcMapKeyCallback;
 
-	m_pWallCollider = CreateCircleCollider(COLLISION_TAG::WALL_DETECTOR, true, 5.0f, Vector2(0, 45));
+	m_pWallDetector = CreateWallDetector(Vector2(0, 45), 10.0f);
+	//m_pWallCollider = CreateCircleCollider(COLLISION_TAG::WALL_DETECTOR, true, 5.0f, Vector2(0, 45));
 	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
 	
 	m_pInteractionCollider = CreateCircleCollider(COLLISION_TAG::PLAYER_INTERACTION, true, 110.f, Vector2(0, 15));
@@ -41,6 +43,12 @@ void Player::Update()
 {
 	Input();
 	Character::Update();
+}
+
+void Player::Render(HDC _memDC)
+{
+	Character::Render(_memDC);
+	m_pWallDetector->Render(_memDC);
 }
 
 

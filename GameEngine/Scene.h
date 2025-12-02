@@ -3,6 +3,8 @@
 class Object;
 class Collider;
 class UI;
+class Wall;
+class WallDetector;
 class Scene
 {
 protected:
@@ -11,13 +13,15 @@ protected:
 									// 어색하게 그려지지 않게 도와주는 버퍼
 	float   m_fGuardBandPx;
 
-	std::vector<Object*>	m_arrObjects;
-	std::vector<Collider*>  m_arrColliders[static_cast<int>(COLLISION_TAG::END)];
-	std::wstring			m_strName;
+	std::vector<Object*>		m_arrObjects;
+	std::vector<Wall*>			m_arrWalls;
+	std::vector<WallDetector*>	m_arrWallDetectors;
+	std::vector<Collider*>		m_arrColliders[static_cast<int>(COLLISION_TAG::END)];
+	std::wstring				m_strName;
 
-	std::vector<UI*>		m_arrUIs;
-	Flags					m_UIFlags;
-	Flags					m_PrevUIFlags;
+	std::vector<UI*>			m_arrUIs;
+	Flags						m_UIFlags;
+	Flags						m_PrevUIFlags;
 
 public:
 	Scene(std::wstring _strName);
@@ -31,6 +35,8 @@ public:
 	const std::vector<Collider*>& GetCollisionTagGroup(COLLISION_TAG _eCollsionTag) {return m_arrColliders[static_cast<int>(_eCollsionTag)]; }
 	void AddObject(Object* _object);
 	void AddCollider(Collider* _collider, COLLISION_TAG _eTag);
+	void AddWall(Wall* _wall);
+	void AddWallDetector(WallDetector* _wallDetector);
 	inline void SetName(const std::wstring _strName) { m_strName = _strName; }
 
 

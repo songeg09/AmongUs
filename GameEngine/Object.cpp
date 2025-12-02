@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "WallDetector.h"
 
 Object::Object()
 {
@@ -57,15 +58,12 @@ Collider* Object::CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, floa
 	return collider;
 }
 
-Collider* Object::CreateLineCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vec2Start, Vector2 _vec2End)
+WallDetector* Object::CreateWallDetector(Vector2 _vec2Offset, float _fRadius)
 {
-	LineCollider* collider = new LineCollider;
-	collider->SetTarget(this);
-	collider->Init(_eEnabled, _vec2Start, _vec2End);
-	m_pColliderList.push_back(collider);
-
-	SceneManager::GetInstance()->GetCurScene()->AddCollider(collider, _eTag);
-	return collider;
+	WallDetector* detector = new WallDetector;
+	detector->Init(this, _vec2Offset, _fRadius);
+	SceneManager::GetInstance()->GetCurScene()->AddWallDetector(detector);
+	return detector;
 }
 
 void Object::ColliderRender(HDC _memDC)
