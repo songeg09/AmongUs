@@ -46,6 +46,7 @@ public:
 	void Render(HDC _memDC) override;
 	
 	void InitUI();
+	void InstantiateObjects();
 
 	Vector2 GetViewPortTopLeftInScene() override;
 	Vector2 GetBackBufferTopLeftInScene() override;

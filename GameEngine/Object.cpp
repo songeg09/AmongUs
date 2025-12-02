@@ -56,6 +56,17 @@ Collider* Object::CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, floa
 	return collider;
 }
 
+Collider* Object::CreateLineCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vec2Start, Vector2 _vec2End)
+{
+	LineCollider* collider = new LineCollider;
+	collider->SetTarget(this);
+	collider->Init(_eEnabled, _vec2Start, _vec2End);
+	m_pColliderList.push_back(collider);
+
+	SceneManager::GetInstance()->GetCurScene()->AddCollider(collider, _eTag);
+	return collider;
+}
+
 void Object::ColliderRender(HDC _memDC)
 {
 	for (Collider* collider : m_pColliderList)

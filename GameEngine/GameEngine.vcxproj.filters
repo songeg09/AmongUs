@@ -116,12 +116,6 @@
     <Filter Include="Engine\04. Object\Wall">
       <UniqueIdentifier>{cbef6d51-2917-4f98-b5f0-a3a910ae9e3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\Wall\RectWall">
-      <UniqueIdentifier>{a766ff9d-227d-49db-a372-0f9bec081e63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\Wall\CircleWall">
-      <UniqueIdentifier>{bc8239ef-7c41-4251-bcf6-645b8a679878}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\04. Object\Actor\Character">
       <UniqueIdentifier>{4fa3d97a-6d62-438c-807b-de5165b69a07}</UniqueIdentifier>
     </Filter>
@@ -415,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="EditorUI.h">
       <Filter>Engine\10. UI\EditorUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MapInfo.h">
+      <Filter>Engine\14. Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

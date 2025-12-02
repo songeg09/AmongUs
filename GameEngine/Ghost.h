@@ -38,7 +38,7 @@ public:
 	Ghost();
 	~Ghost();
 
-	void Init(Vector2 _vec2Position, std::vector<Vector2> _wayPoints);
+	void Init(std::vector<Vector2> _wayPoints);
 	void Update() override;
 
 	void InitAnimation() override;

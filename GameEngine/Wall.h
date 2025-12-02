@@ -4,16 +4,19 @@ class Collider;
 class Wall : public Object
 {
 private:
-	Collider* m_pWallCollider;
+	Vector2 m_vec2Start;
+	Vector2 m_vec2End;
+	Vector2 m_vec2Normal;
+	Vector2 m_vec2WallNormal;
 
 public:
 	Wall();
 	virtual ~Wall();
 
+	void Init(Vector2 _vec2Start, Vector2 _vec2End);
 	void Update() override;
-	void Render(HDC _memDC) override;
-	void Init(Vector2 _vec2Position);
-	virtual void ResolvePenetration(Collider* _pOther) = 0;
-
+	void ResolvePenetration(Collider* _other);
+	void ResolveRectangle(Collider* _other);
+	void ResolveCircle(Collider* _other);
 };
 

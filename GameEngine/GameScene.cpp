@@ -14,6 +14,7 @@
 #include "GameObject.h"
 #include "Vent.h"
 #include "CircleZone.h"
+#include "Wall.h"
 
 #include "MenuUI.h"
 #include "MapUI.h"
@@ -25,6 +26,7 @@
 
 #include "MinimapProvider.h"
 #include "Interactable.h"
+#include "MapInfo.h"
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
@@ -46,6 +48,8 @@ void GameScene::Release()
 		delete m_GameMode;
 	m_GameMode = nullptr;
 
+	m_setTasksLeft.clear();
+
 	Scene::Release();
 }
 
@@ -62,53 +66,13 @@ void GameScene::Init()
 		ConstValue::fGameSceneGaurdBandPx
 	);
 
-	// 1. 플레이어 생성 및 오브젝트 생성
-	m_Player = new Player;
-	Vector2 PlayerStart(m_pBackGround->GetWidth() / 2, m_pBackGround->GetHeight() / 2);
-	m_Player->Init(PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
-	Scene::AddObject(m_Player);
+	InstantiateObjects();
 
-	std::vector<Vector2> tmpWayPoints = { Vector2(500,500), Vector2(2000, 500), Vector2(5000, 3000) };
-	Vector2 Pos = m_Player->GetPosition();
-	Pos.m_fx += 1000.0f;
-	m_Ghost = new Ghost;
-	m_Ghost->Init(Pos, tmpWayPoints);
-	Scene::AddObject(m_Ghost);
-
-	m_GlobalSoundZone = new CircleZone;
-	m_GlobalSoundZone->Init(COLLISION_TAG::SOUND, 30.0f);
-	m_GlobalSoundZone->SetEnable(false);
-	Scene::AddObject(m_GlobalSoundZone);
-
-	// 2. 오브젝트 생성
-	Vent* vent = new Vent;
-	vent->Init(m_Player->GetPosition());
-	Scene::AddObject(vent);
-
-	//GameObject* gameObject = new GameObject;
-	//gameObject->Init(m_Player->GetPosition(), Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
-	//Scene::AddObject(gameObject);
-	//m_setTasksLeft.insert(gameObject);
-
-	Pos.m_fx += 100;
-	Pos.m_fy += 500;
-	GameObject* gameObject2 = new GameObject;
-	gameObject2->Init(Pos, Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)));
-	Scene::AddObject(gameObject2);
-	m_setTasksLeft.insert(gameObject2);
-
-	Pos.m_fx += 100;
-	Pos.m_fy += 500;
-	GameObject* gameObject3 = new GameObject;
-	gameObject3->Init(Pos, Vector2(10, 10), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)));
-	Scene::AddObject(gameObject3);
-	m_setTasksLeft.insert(gameObject3);
-
-	// 3. 게임 모드 생성
+	// 게임 모드 생성
 	m_GameMode = new GameMode;
 	m_GameMode->Init(m_Player, this);
 
-	// 4. UI 생성
+	// UI 생성
 	m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD));
 	InitUI();
 
@@ -207,6 +171,75 @@ void GameScene::InitUI()
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
 	);
 	m_arrUIs[static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)] = Task3;
+}
+
+void GameScene::InstantiateObjects()
+{
+	MapInfo mapInfo;
+	mapInfo.Load();
+
+	// Player
+	m_Player = new Player;
+	m_Player->Init(mapInfo.m_vec2PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
+	Scene::AddObject(m_Player);
+
+	// Ghost
+	m_Ghost = new Ghost;
+	m_Ghost->Init(mapInfo.m_arrWayPoints);
+	Scene::AddObject(m_Ghost);
+
+	m_GlobalSoundZone = new CircleZone;
+	m_GlobalSoundZone->Init(COLLISION_TAG::SOUND, 30.0f);
+	m_GlobalSoundZone->SetEnable(false);
+	Scene::AddObject(m_GlobalSoundZone);
+
+	// Wall
+	for (int i = 0; i < mapInfo.m_arrAllWallVertices.size(); ++i)
+	{
+		if (mapInfo.m_arrAllWallVertices[i].size() < 2)
+			continue;
+		for (int j = 0; j < mapInfo.m_arrAllWallVertices[i].size()-1; ++j)
+		{
+			Wall* wall = new Wall;
+			wall->Init(mapInfo.m_arrAllWallVertices[i][j], mapInfo.m_arrAllWallVertices[i][j+1]);
+			Scene::AddObject(wall);
+		}
+	}
+
+	// Vent
+	for (const Vector2& pos : mapInfo.m_arrVent)
+	{
+		Vent* vent = new Vent;
+		vent->Init(pos);
+		Scene::AddObject(vent);
+	}
+
+	// Number Sequnece
+	for (const Vector2& pos : mapInfo.m_arrNumberSequencePos)
+	{
+		GameObject* gameObject = new GameObject;
+		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
+		Scene::AddObject(gameObject);
+		m_setTasksLeft.insert(gameObject);
+	}
+
+	// Data Upload
+	for (const Vector2& pos : mapInfo.m_arrDataUploadPos)
+	{
+		GameObject* gameObject = new GameObject;
+		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)));
+		Scene::AddObject(gameObject);
+		m_setTasksLeft.insert(gameObject);
+	}
+
+	// Timed Buttons
+	for (const Vector2& pos : mapInfo.m_arrTimedButtonsPos)
+	{
+		GameObject* gameObject = new GameObject;
+		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)));
+		Scene::AddObject(gameObject);
+		m_setTasksLeft.insert(gameObject);
+	}
 }
 
 Vector2 GameScene::GetViewPortTopLeftInScene()

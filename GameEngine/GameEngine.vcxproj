@@ -159,6 +159,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GDIManager.h" />
     <ClInclude Include="Ghost.h" />
+    <ClInclude Include="MapInfo.h" />
     <ClInclude Include="MapUI.h" />
     <ClInclude Include="MenuUI.h" />
     <ClInclude Include="MinimapProvider.h" />

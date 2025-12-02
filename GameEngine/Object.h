@@ -20,6 +20,7 @@ public:
 
 	Collider* CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
 	Collider* CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	Collider* CreateLineCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vec2Start, Vector2 _vec2End);
 	void ColliderRender(HDC _memDC);
 	inline bool UseCollider() { return m_pColliderList.size() != 0; }
 

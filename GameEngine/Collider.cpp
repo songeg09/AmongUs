@@ -122,3 +122,33 @@ void CircleCollider::Render(HDC _memDC)
 	GDIManager::GetInstance()->ResetBrush(_memDC);
 	GDIManager::GetInstance()->ResetPen(_memDC);
 }
+
+
+void LineCollider::Init(bool _bEnabled, Vector2 _vec2Start, Vector2 _vec2End)
+{
+	Collider::Init(_bEnabled, Vector2(0,0));
+	Collider::SetType(COLLIDER_TYPE::LINE);
+	m_vec2Start = _vec2Start;
+	m_vec2End = _vec2End;
+}
+
+void LineCollider::Render(HDC _memDC)
+{
+	if (isEnable() == false)
+		return;
+
+	GDIManager::GetInstance()->SetBrush(_memDC, BRUSH_TYPE::HOLLOW);
+	if (GetCollisionCount() > 0)
+		GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::RED);
+	else
+	{
+		GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::BLUE);
+	}
+
+	Vector2 BackBufferTopLeftInScene = SceneManager::GetInstance()->GetCurScene()->GetBackBufferTopLeftInScene();
+	MoveToEx(_memDC, m_vec2Start.m_fx - BackBufferTopLeftInScene.m_fx, m_vec2Start.m_fy - BackBufferTopLeftInScene.m_fy, nullptr);
+	LineTo(_memDC, m_vec2End.m_fx - BackBufferTopLeftInScene.m_fx, m_vec2End.m_fy - BackBufferTopLeftInScene.m_fy);
+
+	GDIManager::GetInstance()->ResetBrush(_memDC);
+	GDIManager::GetInstance()->ResetPen(_memDC);
+}

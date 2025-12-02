@@ -41,10 +41,15 @@ std::wstring ResourceManager::GetTextureFileName(TEXTURE_TYPE _eTextureType)
 	case TEXTURE_TYPE::BTN_QUIT:								return L"btn_quit.bmp";
 	case TEXTURE_TYPE::BTN_PLAYER_START:						return L"\\Editor\\btn_playerstart.bmp";
 	case TEXTURE_TYPE::BTN_WAY_POINTS:							return L"\\Editor\\btn_waypoints.bmp";
+	case TEXTURE_TYPE::BTN_VENT:								return L"\\Editor\\btn_vent.bmp";
 	case TEXTURE_TYPE::BTN_WALL_VERTICES:						return L"\\Editor\\btn_wallvertices.bmp";
 	case TEXTURE_TYPE::BTN_DATA_UPLOAD:							return L"\\Editor\\btn_dataupload.bmp";
 	case TEXTURE_TYPE::BTN_TIMED_BUTTONS:						return L"\\Editor\\btn_timedbuttons.bmp";
 	case TEXTURE_TYPE::BTN_NUMBER_SEQUENCE:						return L"\\Editor\\btn_numbersequence.bmp";
+	case TEXTURE_TYPE::BTN_BACK_TO_TITLE:						return L"\\Editor\\btn_backtotitle.bmp";
+	case TEXTURE_TYPE::BTN_CLEAR_SELECTED:						return L"\\Editor\\btn_clearselected.bmp";
+	case TEXTURE_TYPE::BTN_SAVE:								return L"\\Editor\\btn_save.bmp";
+	case TEXTURE_TYPE::BTN_REMOVE_LAST:							return L"\\Editor\\btn_removelast.bmp";
 
 	case TEXTURE_TYPE::WIN:										return L"win.bmp";
 	case TEXTURE_TYPE::LOSE:									return L"lose.bmp";

@@ -18,11 +18,11 @@ Ghost::~Ghost()
 
 }
 
-void Ghost::Init(Vector2 _vec2Position, std::vector<Vector2> _wayPoints)
+void Ghost::Init(std::vector<Vector2> _wayPoints)
 {
-	Character::Init(_vec2Position);
 	m_arrWayPoints = _wayPoints;
 	m_iCurWayPoint = rand() % m_arrWayPoints.size();
+	Character::Init(_wayPoints[m_iCurWayPoint]);
 
 	m_pHearingCollider = CreateCircleCollider(COLLISION_TAG::GHOST_HEARING_SENSOR, true, 3000);
 	m_pHearingCollider->SetBeginCollisionCallBack(std::bind(&Ghost::ChangeState, this, CHARACTER_STATE::INVESTIGATE));
