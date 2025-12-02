@@ -27,7 +27,7 @@ void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallba
 
 	m_funcMapKeyCallback = _funcMapKeyCallback;
 
-	m_pWallCollider = CreateCircleCollider(COLLISION_TAG::WALL_DETECTOR, true, 10.0f, Vector2(0, 45));
+	m_pWallCollider = CreateCircleCollider(COLLISION_TAG::WALL_DETECTOR, true, 5.0f, Vector2(0, 45));
 	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
 	
 	m_pInteractionCollider = CreateCircleCollider(COLLISION_TAG::PLAYER_INTERACTION, true, 110.f, Vector2(0, 15));

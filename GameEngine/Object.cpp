@@ -31,6 +31,7 @@ void Object::Render(HDC _memDC)
 
 void Object::Init(Vector2 _vec2Position)
 {
+	m_vec2MoveVec = { 0,0 };
 	SetPosition(_vec2Position);
 }
 
