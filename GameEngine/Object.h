@@ -28,6 +28,7 @@ public:
 	const std::list<Collider*>& GetColliderList() { return m_pColliderList; }
 	void AddPosition(Vector2 _vec2Add) { 
 		m_vec2MoveVec = _vec2Add;
+		m_vec2MoveVec.Normalize();
 		m_vec2Position += _vec2Add; 
 	}
 	Vector2 GetMoveDirection() {return m_vec2MoveVec;}

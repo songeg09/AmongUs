@@ -93,12 +93,12 @@ void Wall::ResolveCircle(Collider* _other)
 
 	float dist = fabsf(A * colliderPos.m_fx + B * colliderPos.m_fy + C) / sqrtf(A * A + B * B);
 
-	Vector2 toStart = colliderPos - m_vec2Start;
-	Vector2 toEnd = colliderPos - m_vec2End;
-	float dot1 = Vector2::Dot(toStart, m_vec2Normal);
-	float dot2 = Vector2::Dot(toEnd, m_vec2Normal);
+	//Vector2 toStart = colliderPos - m_vec2Start;
+	//Vector2 toEnd = colliderPos - m_vec2End;
+	//float dot1 = Vector2::Dot(toStart, m_vec2Normal);
+	//float dot2 = Vector2::Dot(toEnd, m_vec2Normal);
 
-	if (dist < radius && dot1 * dot2 <= 0.0f)
+	if (dist < radius)
 	{
 		// 캐릭터 중심에서 벽의 시작점을 잇는 벡터
 		Vector2 centerToLineStart = colliderPos - m_vec2Start;
@@ -111,10 +111,10 @@ void Wall::ResolveCircle(Collider* _other)
 
 		// 만약 법선이 플레이어 중심 방향을 향하고 있다면 (벽의 바깥쪽을 향하지 않는다면), 뒤집는다.
 		// 이렇게 해야 wallNormal이 항상 "플레이어를 벽 밖으로 밀어낼 방향"을 가리킵니다.
-		if (dotProductWithNormal < 0.0f)
-		{
-			m_vec2WallNormal = m_vec2WallNormal * -1.0f;
-		}
+		//if (dotProductWithNormal < 0.0f)
+		//{
+		//	m_vec2WallNormal = m_vec2WallNormal * -1.0f;
+		//}
 
 		// 벽과 수직인 방향으로 튕겨나가는 양(침투 거리)
 		float penetration = radius - dist;
@@ -127,7 +127,8 @@ void Wall::ResolveCircle(Collider* _other)
 		Vector2 slideVec = MoveVec - m_vec2WallNormal * Dot;
 
 		// 새 위치 적용
-		_other->GetTarget()->SetPosition(NewActorPos + slideVec * 0.3f);
+		_other->GetTarget()->SetPosition(NewActorPos + slideVec * 0.1f);
+		_other->FinalUpdate();
 	}
 	
 }
