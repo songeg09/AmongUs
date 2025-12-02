@@ -14,7 +14,6 @@ private:
 	std::vector<Animation>	m_AnimationList[2];
 	int						m_iCurAnimation;
 	DIRECTION				m_eDirection;
-	bool					m_bMovable;
 	float					m_fMoveSpeed;
 	Vector2					m_vec2Force;
 	//ACTOR_TYPE m_eActorType;
@@ -22,14 +21,11 @@ private:
 public:
 	Actor();
 	virtual ~Actor();
-	inline void SetMovable(bool _bMovable) { m_bMovable = _bMovable; }
-	inline bool IsMovable() { return m_bMovable == true; }
-	inline void AddForce(Vector2 _vec2Force) { m_vec2Force += _vec2Force; }
-	inline void SetForce(Vector2 _vec2Force) { m_vec2Force = _vec2Force; }
-	inline void SetVelocity(Vector2 _vec2Force) { m_vec2Force = _vec2Force; }
-	inline void ResetForce() { m_vec2Force = {}; }
-	//inline void SetActorType(ACTOR_TYPE _eActorType) { m_eActorType = _eActorType; }
-	//inline ACTOR_TYPE GetActorType() { return m_eActorType; }
+	void AddForce(Vector2 _vec2Force) { m_vec2Force += _vec2Force; }
+	void SetForce(Vector2 _vec2Force) { m_vec2Force = _vec2Force; }
+	Vector2 GetForce() { return m_vec2Force; }
+	void SetVelocity(Vector2 _vec2Force) { m_vec2Force = _vec2Force; }
+	void ResetForce() { m_vec2Force = {}; }
 
 	void Update() override;
 	void Render(HDC _memDC) override;

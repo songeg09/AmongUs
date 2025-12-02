@@ -4,7 +4,6 @@
 
 Actor::Actor()
 {
-	m_bMovable = true;
 	m_iCurAnimation = -1;
 	m_eDirection = DIRECTION::RIGHT;
 	m_fMoveSpeed = 100.0f;
@@ -16,8 +15,6 @@ Actor::~Actor()
 
 void Actor::Move(Vector2 _vec2Force)
 {
-	if (m_bMovable == false)
-		return;
 	if (_vec2Force.isValid() == false)
 		return;
 

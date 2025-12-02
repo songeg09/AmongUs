@@ -67,8 +67,5 @@ private:
 	void CheckEscapeKey();
 
 	void Die();
-
-
-
 };
 
