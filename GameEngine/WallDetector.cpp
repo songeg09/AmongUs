@@ -25,16 +25,14 @@ void WallDetector::Render(HDC _memDC)
 
 	Vector2 BackBufferTopLeftInScene = SceneManager::GetInstance()->GetCurScene()->GetBackBufferTopLeftInScene();
 	Vector2 PosOnBackBuffer = m_vec2Position - BackBufferTopLeftInScene;
-	Ellipse(_memDC, 
-		PosOnBackBuffer.m_fx - m_fRadius / 2.0f, PosOnBackBuffer.m_fy - m_fRadius / 2.0f,
-		PosOnBackBuffer.m_fx + m_fRadius / 2.0f, PosOnBackBuffer.m_fy + m_fRadius / 2.0f
+	Ellipse(_memDC,
+		PosOnBackBuffer.m_fx - m_fRadius, PosOnBackBuffer.m_fy - m_fRadius,
+		PosOnBackBuffer.m_fx + m_fRadius, PosOnBackBuffer.m_fy + m_fRadius
 	);
 
 	GDIManager::GetInstance()->ResetBrush(_memDC);
 	GDIManager::GetInstance()->ResetPen(_memDC);
 }
-
-
 
 void WallDetector::ResolvePos(Vector2 _vec2ResolveVec)
 {

@@ -128,9 +128,16 @@ struct Vector2
 	void Normalize()
 	{
 		float length = Length();
-		assert(length != 0.0f);
-		m_fx /= length;
-		m_fy /= length;
+		if (length == 0.0f)
+		{
+			m_fx = 0.0f;
+			m_fy = 0.0f;
+		}
+		else
+		{
+			m_fx /= length;
+			m_fy /= length;
+		}
 	}
 	bool isValid()
 	{

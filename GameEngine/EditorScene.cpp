@@ -286,6 +286,8 @@ void EditorScene::RemoveLast()
 	case SELECTED::WALL_VERTICES:
 		if (!m_arrCurWallVertices.empty())
 			m_arrCurWallVertices.pop_back();
+		else if (!m_MapInfo.m_arrAllWallVertices.empty())
+			m_MapInfo.m_arrAllWallVertices.pop_back();
 		break;
 	case SELECTED::TIMED_BUTTONS:
 		if (!m_MapInfo.m_arrTimedButtonsPos.empty())
