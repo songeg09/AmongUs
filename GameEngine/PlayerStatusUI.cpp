@@ -17,7 +17,7 @@ PlayerStatusUI::~PlayerStatusUI()
 {
 }
 
-void PlayerStatusUI::Init(GameMode* _GameMode, Player* _Player, std::function<void()> _funcMapBtnCallback, std::function<void()> _funcMenuBtnCallback)
+void PlayerStatusUI::Init(std::shared_ptr<GameMode> _GameMode, std::shared_ptr<Player> _Player, std::function<void()> _funcMapBtnCallback, std::function<void()> _funcMenuBtnCallback)
 {
 	UI::Init();
 
@@ -25,7 +25,7 @@ void PlayerStatusUI::Init(GameMode* _GameMode, Player* _Player, std::function<vo
 	m_Player = _Player;
 
 	m_btnUse = std::make_shared<Button>();
-	m_btnUse->Init(TEXTURE_TYPE::BTN_USE, Vector2(0.95, 0.9), UIElement::ANCHOR::CENTER, std::bind(&Player::UseInteractableObject, m_Player));
+	m_btnUse->Init(TEXTURE_TYPE::BTN_USE, Vector2(0.95, 0.9), UIElement::ANCHOR::CENTER, std::bind(&Player::UseInteractableObject, m_Player.lock()));
 	m_arrUIElemetns.push_back(m_btnUse);
 
 	m_btnMap = std::make_shared<Button>();
@@ -46,15 +46,15 @@ void PlayerStatusUI::Update()
 	if (m_bVisibility == false)
 		return;
 
-	if (m_Player != nullptr)
+	if (m_Player.lock() != nullptr)
 	{
-		if (m_Player->GetInteractableObject() != nullptr)
+		if (m_Player.lock()->GetInteractableObject() != nullptr)
 			m_btnUse->SetActivate(true);
 		else
 			m_btnUse->SetActivate(false);
 	}
 
-	m_progressbarTasks->SetProgress(m_GameMode->GetProgress());
+	m_progressbarTasks->SetProgress(m_GameMode.lock()->GetProgress());
 
 	UI::Update();
 }

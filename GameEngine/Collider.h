@@ -6,7 +6,7 @@ enum class COLLIDER_TYPE
 };
 
 class Object;
-class Collider abstract
+class Collider abstract : public std::enable_shared_from_this<Collider>
 {
 private:
 	static unsigned int						s_uID;

@@ -10,19 +10,19 @@ Object::Object()
 {
 	m_vec2Position = {};
 	m_vec2Scale = {};
+
+	SceneManager::GetInstance()->GetCurScene()->RegistObject(shared_from_this());
 }
 
 Object::~Object()
 {
-	//for (Collider* collider : m_pColliderList)
-	//	delete collider;
-	//m_pColliderList.clear();
+	SceneManager::GetInstance()->GetCurScene()->UnregistObejct(shared_from_this());
 }
 
 void Object::LateUpdate()
 {
-	for (Collider* collider : m_pColliderList)
-		collider->FinalUpdate();
+	for (std::weak_ptr<Collider> collider : m_pColliderList)
+		collider.lock()->FinalUpdate();
 }
 
 void Object::Render(HDC _memDC)
@@ -36,37 +36,37 @@ void Object::Init(Vector2 _vec2Position)
 	SetPosition(_vec2Position);
 }
 
-std::unique_ptr<Collider>Object::CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset)
+std::shared_ptr<Collider>Object::CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset)
 {
-	std::unique_ptr<RectCollider> collider = std::make_unique<RectCollider>(_eTag);
-	collider->SetTarget(this);
+	std::shared_ptr<RectCollider> collider = std::make_shared<RectCollider>(_eTag);
+	collider->SetTarget(shared_from_this());
 	collider->Init(_eEnabled, _vecSize, _vecOffset);
-	m_pColliderList.push_back(collider.get());
+	m_pColliderList.push_back(collider);
 
 	return collider;
 }
 
-std::unique_ptr<Collider> Object::CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset)
+std::shared_ptr<Collider> Object::CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset)
 {
-	std::unique_ptr<CircleCollider> collider = std::make_unique<CircleCollider>(_eTag);
-	collider->SetTarget(this);
+	std::shared_ptr<CircleCollider> collider = std::make_shared<CircleCollider>(_eTag);
+	collider->SetTarget(shared_from_this());
 	collider->Init(_eEnabled, _fRadius, _vecOffset);
-	m_pColliderList.push_back(collider.get());
+	m_pColliderList.push_back(collider);
 
 	return collider;
 }
 
-std::unique_ptr<WallDetector> Object::CreateWallDetector(Object* _Owner, Vector2 _vec2Offset, float _fRadius)
+std::shared_ptr<WallDetector> Object::CreateWallDetector(Vector2 _vec2Offset, float _fRadius)
 {
-	std::unique_ptr<WallDetector> wallDetector = std::make_unique<WallDetector>();
-	wallDetector->Init(_Owner, Vector2(0, 40), 20.0f);
+	std::shared_ptr<WallDetector> wallDetector = std::make_shared<WallDetector>();
+	wallDetector->Init(shared_from_this(), Vector2(0, 40), 20.0f);
 	return wallDetector;
 }
 
 
 void Object::ColliderRender(HDC _memDC)
 {
-	for (Collider* collider : m_pColliderList)
-		collider->Render(_memDC);
+	for (std::weak_ptr<Collider> collider : m_pColliderList)
+		collider.lock()->Render(_memDC);
 }
 

@@ -12,7 +12,6 @@ EditorScene::EditorScene(std::wstring _strName)
 	:Scene(_strName)
 {
 	m_eCurSelected = SELECTED::PLAYER_START;
-	m_pBackGround = nullptr;
 	m_bUIClicked = false;
 }
 
@@ -27,7 +26,7 @@ void EditorScene::Init()
 	m_pBackGround = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::BACKGROUND);
 
 	ConfigureRenderSurface(
-		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
+		Vector2(m_pBackGround.lock()->GetWidth(), m_pBackGround.lock()->GetHeight()),
 		ConstValue::fGameSceneGaurdBandPx
 	);
 
@@ -52,7 +51,7 @@ void EditorScene::Init()
 
 	m_eCurSelected = SELECTED::PLAYER_START;
 	m_bUIClicked = false;
-	m_vec2CurPos = { (float)m_pBackGround->GetWidth() / 2.0f, (float)m_pBackGround->GetHeight() / 2.0f };
+	m_vec2CurPos = { (float)m_pBackGround.lock()->GetWidth() / 2.0f, (float)m_pBackGround.lock()->GetHeight() / 2.0f };
 
 	m_MapInfo.Load();
 }
@@ -75,7 +74,7 @@ void EditorScene::Render(HDC _memDC)
 {
 	Vector2 BackBufferTopLeftInScene = GetBackBufferTopLeftInScene();
 	BitBlt(_memDC, 0, 0, m_vec2BackBufferSize.m_fx, m_vec2BackBufferSize.m_fy,
-		m_pBackGround->GetDC(), BackBufferTopLeftInScene.m_fx, BackBufferTopLeftInScene.m_fy, SRCCOPY);
+		m_pBackGround.lock()->GetDC(), BackBufferTopLeftInScene.m_fx, BackBufferTopLeftInScene.m_fy, SRCCOPY);
 	DrawObjects(_memDC);
 	PrintSelected(_memDC);
 	Scene::Render(_memDC);

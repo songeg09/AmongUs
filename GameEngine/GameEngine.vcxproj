@@ -137,7 +137,6 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CircleSkillData.h" />
-    <ClInclude Include="CircleZone.h" />
     <ClInclude Include="CircleZoneData.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -179,7 +178,6 @@
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RectSkillData.h" />
-    <ClInclude Include="RectZone.h" />
     <ClInclude Include="RectZoneData.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -187,7 +185,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SkillData.h" />
-    <ClInclude Include="SkillObject.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
@@ -205,7 +202,6 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CircleSkillData.cpp" />
-    <ClCompile Include="CircleZone.cpp" />
     <ClCompile Include="CircleZoneData.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -239,14 +235,12 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="RectSkillData.cpp" />
-    <ClCompile Include="RecteZone.cpp" />
     <ClCompile Include="RectZoneData.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SkillData.cpp" />
-    <ClCompile Include="SkillObject.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
     <ClCompile Include="TimerManager.cpp" />

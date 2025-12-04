@@ -19,12 +19,12 @@ Collider::Collider(COLLISION_TAG _eTag)
 	m_EndCollisioncallBack = nullptr;
 	m_eColliderType = COLLIDER_TYPE::RECTANGLE;
 
-	CollisionManager::GetInstance()->RegistCollider(this);
+	CollisionManager::GetInstance()->RegistCollider(shared_from_this());
 }
 
 Collider::~Collider()
 {
-	CollisionManager::GetInstance()->ReleaseCollider(this);
+	CollisionManager::GetInstance()->UnregistCollider(shared_from_this());
 }
 
 void Collider::Init(bool _bEnabled, Vector2 _vecOffset)
@@ -56,7 +56,7 @@ void Collider::EndCollision(Collider* _pOther)
 
 void Collider::FinalUpdate()
 {
-	Vector2 vecObjectPosition = m_pTarget->GetPosition();
+	Vector2 vecObjectPosition = m_pTarget.lock()->GetPosition();
 	m_vecPosition = vecObjectPosition + m_vecOffset;
 }
 

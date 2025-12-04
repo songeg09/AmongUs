@@ -3,13 +3,13 @@
 
 class Collider;
 class WallDetector;
-class Object
+class Object : public std::enable_shared_from_this<Object>
 {
 private:
-	Vector2					m_vec2Position;
-	Vector2					m_vec2MoveVec;
-	Vector2					m_vec2Scale;
-	std::list<Collider*>	m_pColliderList;
+	Vector2								m_vec2Position;
+	Vector2								m_vec2MoveVec;
+	Vector2								m_vec2Scale;
+	std::list<std::weak_ptr<Collider>>	m_pColliderList;
 
 public:
 	Object();
@@ -20,14 +20,13 @@ public:
 	virtual void Render(HDC _memDC);
 	virtual void Init(Vector2 _vec2Position);
 
-	std::unique_ptr<Collider> CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
-	std::unique_ptr<Collider> CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
-	std::unique_ptr<WallDetector> CreateWallDetector(Object* _Owner, Vector2 _vec2Offset, float _fRadius);
+	std::shared_ptr<Collider> CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	std::shared_ptr<Collider> CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	std::shared_ptr<WallDetector> CreateWallDetector(Vector2 _vec2Offset, float _fRadius);
 
 	void ColliderRender(HDC _memDC);
 	bool UseCollider() { return m_pColliderList.size() != 0; }
 
-	const std::list<Collider*>& GetColliderList() { return m_pColliderList; }
 	void AddPosition(Vector2 _vec2Add) { 
 		m_vec2MoveVec = _vec2Add;
 		m_vec2MoveVec.Normalize();

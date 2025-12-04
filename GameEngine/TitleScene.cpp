@@ -7,7 +7,6 @@
 TitleScene::TitleScene(std::wstring _strName)
 	:Scene(_strName)
 {
-	m_pBackGround = nullptr;
 }
 
 TitleScene::~TitleScene()

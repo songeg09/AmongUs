@@ -20,10 +20,10 @@ public:
 	};
 
 private:
-	std::unique_ptr<Collider>			m_pHearingCollider;
-	std::unique_ptr<Collider>			m_pSightCollider;
-	std::unique_ptr<Collider>			m_pChasingCollider;
-	std::unique_ptr<Collider>			m_pAttackRangeCollider;
+	std::shared_ptr<Collider>			m_pHearingCollider;
+	std::shared_ptr<Collider>			m_pSightCollider;
+	std::shared_ptr<Collider>			m_pChasingCollider;
+	std::shared_ptr<Collider>			m_pAttackRangeCollider;
 
 	CHARACTER_STATE						m_eState;
 

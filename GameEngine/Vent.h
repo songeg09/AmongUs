@@ -5,7 +5,7 @@
 class Vent : public Object, public Interactable
 {
 private:
-	std::unique_ptr<Collider> m_pInteractRange;
+	std::shared_ptr<Collider> m_pInteractRange;
 
 public:
 	Vent();

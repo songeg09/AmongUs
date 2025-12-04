@@ -68,9 +68,6 @@
     <Filter Include="Engine\05. Resource\Data">
       <UniqueIdentifier>{70ddc61b-40b7-4fbb-ad7a-4a5e5b0244b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\SkillObject">
-      <UniqueIdentifier>{a39004ff-eefa-4199-82e9-894374e00aa2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\05. Resource\Data\ZoneData">
       <UniqueIdentifier>{3a8e9a30-c209-48e3-99d4-331d1ea6d71e}</UniqueIdentifier>
     </Filter>
@@ -88,12 +85,6 @@
     </Filter>
     <Filter Include="Engine\05. Resource\Data\SkillData\RectSkillData">
       <UniqueIdentifier>{d0e96244-3d34-4cb1-9d68-7e93089afc9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\SkillObject\CircleZone">
-      <UniqueIdentifier>{f0ec8e59-4500-4528-a088-3b2b53dbe35b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. Object\SkillObject\RectZone">
-      <UniqueIdentifier>{b05c2344-f808-42fc-8620-92cf9682959c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\05. Resource\TextureAtlas">
       <UniqueIdentifier>{9a44f3a3-6210-480a-9fdd-22fe743f159c}</UniqueIdentifier>
@@ -275,15 +266,6 @@
     <ClInclude Include="CircleZoneData.h">
       <Filter>Engine\05. Resource\Data\ZoneData\CircleZoneData</Filter>
     </ClInclude>
-    <ClInclude Include="SkillObject.h">
-      <Filter>Engine\04. Object\SkillObject</Filter>
-    </ClInclude>
-    <ClInclude Include="CircleZone.h">
-      <Filter>Engine\04. Object\SkillObject\CircleZone</Filter>
-    </ClInclude>
-    <ClInclude Include="RectZone.h">
-      <Filter>Engine\04. Object\SkillObject\RectZone</Filter>
-    </ClInclude>
     <ClInclude Include="RectZoneData.h">
       <Filter>Engine\05. Resource\Data\ZoneData\RectZoneData</Filter>
     </ClInclude>
@@ -464,15 +446,6 @@
     </ClCompile>
     <ClCompile Include="CircleZoneData.cpp">
       <Filter>Engine\05. Resource\Data\ZoneData\CircleZoneData</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillObject.cpp">
-      <Filter>Engine\04. Object\SkillObject</Filter>
-    </ClCompile>
-    <ClCompile Include="CircleZone.cpp">
-      <Filter>Engine\04. Object\SkillObject\CircleZone</Filter>
-    </ClCompile>
-    <ClCompile Include="RecteZone.cpp">
-      <Filter>Engine\04. Object\SkillObject\RectZone</Filter>
     </ClCompile>
     <ClCompile Include="RectZoneData.cpp">
       <Filter>Engine\05. Resource\Data\ZoneData\RectZoneData</Filter>

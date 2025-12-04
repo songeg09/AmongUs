@@ -29,7 +29,7 @@ void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallba
 
 	m_funcMapKeyCallback = _funcMapKeyCallback;
 
-	m_pWallDetector = CreateWallDetector(this, Vector2(0, 40), 20.0f);
+	m_pWallDetector = CreateWallDetector(Vector2(0, 40), 20.0f);
 	
 	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
 

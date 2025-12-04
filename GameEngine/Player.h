@@ -28,9 +28,9 @@ public:
 	};
 
 private:
-	std::unique_ptr<WallDetector>	m_pWallDetector;
-	std::unique_ptr<Collider>		m_pHurtBoxCollider;
-	std::unique_ptr<Collider>		m_pInteractionCollider;
+	std::shared_ptr<WallDetector>	m_pWallDetector;
+	std::shared_ptr<Collider>		m_pHurtBoxCollider;
+	std::shared_ptr<Collider>		m_pInteractionCollider;
 	CHARACTER_STATE					m_eState;
 
 	Interactable*					m_pInteractableObject;

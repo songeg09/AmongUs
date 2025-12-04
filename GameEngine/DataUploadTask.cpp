@@ -3,7 +3,6 @@
 
 #include "ResourceManager.h"
 #include "TimerManager.h"
-
 #include "Button.h"
 #include "ProgressBar.h"
 

@@ -6,8 +6,6 @@
 #include "TimerManager.h"
 #include "Core.h"
 #include "Collider.h"
-#include "CircleDamageSkill.h"
-#include "SwordBeam.h"
 
 Character::Character()
 {

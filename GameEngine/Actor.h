@@ -16,7 +16,6 @@ private:
 	DIRECTION				m_eDirection;
 	float					m_fMoveSpeed;
 	Vector2					m_vec2Force;
-	//ACTOR_TYPE m_eActorType;
 
 public:
 	Actor();

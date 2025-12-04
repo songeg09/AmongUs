@@ -5,7 +5,7 @@
 class GameObject : public Object, public Interactable
 {
 protected:
-	std::unique_ptr<Collider>		m_pInteractRange;
+	std::shared_ptr<Collider>		m_pInteractRange;
 	std::function<void()>			m_funcInteractCallback;
 
 public:

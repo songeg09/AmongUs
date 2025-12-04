@@ -46,15 +46,19 @@ void CollisionManager::RegistCollisionGroup(COLLISION_TAG _eFirst, COLLISION_TAG
 	m_CollisionGroupList[static_cast<int>(_eFirst)][static_cast<int>(_eSecond)] = true;
 }
 
-void CollisionManager::RegistCollider(Collider* _collider)
+void CollisionManager::RegistCollider(std::shared_ptr<Collider> _collider)
 {
-	m_setColliders[static_cast<int>(_collider->GetTag())].insert(_collider);
+	m_arrColliders[static_cast<int>(_collider->GetTag())].push_back(_collider);
 }
 
-void CollisionManager::ReleaseCollider(Collider* _collider)
+void CollisionManager::UnregistCollider(std::shared_ptr<Collider> _collider)
 {
-	if (m_setColliders[static_cast<int>(_collider->GetTag())].find(_collider) != m_setColliders[static_cast<int>(_collider->GetTag())].end())
-		m_setColliders[static_cast<int>(_collider->GetTag())].erase(_collider);
+	std::vector<std::weak_ptr<Collider>>::iterator iter = std::find(m_arrColliders[static_cast<int>(_collider->GetTag())].begin(), m_arrColliders[static_cast<int>(_collider->GetTag())].end(), _collider);
+	if (iter != m_arrColliders[static_cast<int>(_collider->GetTag())].end())
+	{
+		*iter = m_arrColliders[static_cast<int>(_collider->GetTag())].back();
+		m_arrColliders[static_cast<int>(_collider->GetTag())].pop_back();
+	}
 }
 
 bool CollisionManager::IsCollision(Collider* _pFirst, Collider* _pSecond)
@@ -159,17 +163,17 @@ void CollisionManager::ReleaseCollisionGroup()
 
 void CollisionManager::CollisionCheckGroup(COLLISION_TAG _eFirst, COLLISION_TAG _eSecond)
 {
-	const std::set<Collider*>& FirstGroup = m_setColliders[static_cast<int>(_eFirst)];
-	const std::set<Collider*>& SecondGroup = m_setColliders[static_cast<int>(_eSecond)];
+	const std::vector<std::weak_ptr<Collider>>& FirstGroup = m_arrColliders[static_cast<int>(_eFirst)];
+	const std::vector<std::weak_ptr<Collider>>& SecondGroup = m_arrColliders[static_cast<int>(_eSecond)];
 
-	for (Collider* first: FirstGroup)
+	for (std::weak_ptr<Collider> first: FirstGroup)
 	{
-		for (Collider* second : SecondGroup)
+		for (std::weak_ptr<Collider> second : SecondGroup)
 		{
-			if (first == second)
+			if (first.lock() == second.lock())
 				continue;
 
-			CollisionCheck(first, second);
+			CollisionCheck(first.lock().get(), second.lock().get());
 		}
 	}
 }

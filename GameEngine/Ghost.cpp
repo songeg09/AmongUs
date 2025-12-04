@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Ghost.h"
-#include "CircleZone.h"
 #include "Collider.h"
 #include "SceneManager.h"
 #include "TimerManager.h"

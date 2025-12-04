@@ -15,7 +15,6 @@ UI::~UI()
 
 }
 
-
 void UI::Init(std::function<void()> _funcOpenCallback, std::function<void()> _funcCloseCallback)
 {
 	m_funcOpenCallback = _funcOpenCallback;

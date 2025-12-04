@@ -8,8 +8,7 @@ class Ghost;
 class GameMode;
 class GameObject;
 class Interactable;
-class CircleZone;
-class GameScene : public Scene, public MinimapProvider
+class GameScene : public Scene, public MinimapProvider, public std::enable_shared_from_this<GameScene>
 {
 	enum class UI_TYPE
 	{
@@ -25,16 +24,14 @@ class GameScene : public Scene, public MinimapProvider
 	};
 
 private:
-	GameMode*				m_GameMode;
+	std::shared_ptr<GameMode>					m_GameMode;
+	std::weak_ptr<Texture>						m_pBackGround;
+	std::shared_ptr<Player>						m_Player;
+	std::shared_ptr<Ghost>						m_Ghost;
+	std::vector<std::shared_ptr<GameObject>>	m_arrGameObjects;
+	std::vector<std::shared_ptr<Vent>>			m_arrVents;;
 
-	Texture*				m_pBackGround;
-	Vector2					m_vec2BackGroundPosition;	
-	Player*					m_Player;
-	Ghost*					m_Ghost;
-
-	CircleZone*				m_GlobalSoundZone;
-
-	std::set<Interactable*>	m_setTasksLeft;
+	std::set<Interactable*>						m_setTasksLeft;
 
 public:
 	GameScene(std::wstring _strName);

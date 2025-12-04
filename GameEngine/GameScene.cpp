@@ -13,7 +13,6 @@
 #include "Ghost.h"
 #include "GameObject.h"
 #include "Vent.h"
-#include "CircleZone.h"
 #include "Wall.h"
 
 #include "MenuUI.h"
@@ -30,12 +29,7 @@
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
 {
-	m_pBackGround = nullptr;
-	m_Player = nullptr;
-	m_Ghost = nullptr;
 	m_UIFlags = 0;
-	m_GlobalSoundZone = nullptr;
-	m_GameMode = nullptr;
 }
 
 GameScene::~GameScene()
@@ -44,13 +38,15 @@ GameScene::~GameScene()
 
 void GameScene::Release()
 {
-	if (m_GameMode != nullptr)
-		delete m_GameMode;
+	Scene::Release();
+
 	m_GameMode = nullptr;
+	m_Player = nullptr;
+	m_Ghost = nullptr;
+	m_arrGameObjects.clear();
+	m_arrVents.clear();
 
 	m_setTasksLeft.clear();
-
-	Scene::Release();
 }
 
 void GameScene::Init()
@@ -62,15 +58,15 @@ void GameScene::Init()
 
 	// Scene 크기 설정
 	ConfigureRenderSurface(
-		Vector2(m_pBackGround->GetWidth(), m_pBackGround->GetHeight()),
+		Vector2(m_pBackGround.lock()->GetWidth(), m_pBackGround.lock()->GetHeight()),
 		ConstValue::fGameSceneGaurdBandPx
 	);
 
 	InstantiateObjects();
 
 	// 게임 모드 생성
-	m_GameMode = new GameMode;
-	m_GameMode->Init(m_Player, this);
+	m_GameMode = std::make_shared<GameMode>();
+	m_GameMode->Init(m_Player, shared_from_this());
 
 	// UI 생성
 	m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD));
@@ -91,10 +87,6 @@ void GameScene::Update()
 
 	if (m_GameMode->GetGameState() != GameMode::GAME_STATE::PLAYING)
 		OpenUI(static_cast<int>(UI_TYPE::RESULT));
-
-	if (m_GlobalSoundZone->GetEnbale() == true && Vector2::Distance(m_GlobalSoundZone->GetPosition(), m_Ghost->GetPosition()) < ConstValue::fGhostProximityRange)
-		m_GlobalSoundZone->SetEnable(false);
-
 }
 
 void GameScene::Render(HDC _memDC)
@@ -102,7 +94,7 @@ void GameScene::Render(HDC _memDC)
 	// 1. 배경 그리기
 	Vector2 BackBufferTopLeftInScene = GetBackBufferTopLeftInScene();
 	BitBlt(_memDC, 0, 0, m_vec2BackBufferSize.m_fx, m_vec2BackBufferSize.m_fy,
-		m_pBackGround->GetDC(), BackBufferTopLeftInScene.m_fx, BackBufferTopLeftInScene.m_fy, SRCCOPY);
+		m_pBackGround.lock()->GetDC(), BackBufferTopLeftInScene.m_fx, BackBufferTopLeftInScene.m_fy, SRCCOPY);
 
 	// 2. 오브젝트 그리기 및 UI 그리기
 	Scene::Render(_memDC);
@@ -124,7 +116,7 @@ void GameScene::InitUI()
 	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = std::move(playerUI);
 
 	std::unique_ptr<MapUI> mapUI = std::make_unique<MapUI>();
-	mapUI->Init(dynamic_cast<MinimapProvider*>(this), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
+	mapUI->Init(shared_from_this(), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
 	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = std::move(mapUI);
 
 	std::unique_ptr<MenuUI> menuUI = std::make_unique<MenuUI>();
@@ -179,19 +171,17 @@ void GameScene::InstantiateObjects()
 	mapInfo.Load();
 
 	// Player
-	m_Player = new Player;
+	m_Player = std::make_shared<Player>();
 	m_Player->Init(mapInfo.m_vec2PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
-	Scene::AddObject(m_Player);
 
 	// Ghost
-	m_Ghost = new Ghost;
+	m_Ghost = std::make_shared<Ghost>();
 	m_Ghost->Init(mapInfo.m_arrWayPoints);
-	Scene::AddObject(m_Ghost);
 
-	m_GlobalSoundZone = new CircleZone;
-	m_GlobalSoundZone->Init(COLLISION_TAG::SOUND, 30.0f);
-	m_GlobalSoundZone->SetEnable(false);
-	Scene::AddObject(m_GlobalSoundZone);
+	//m_GlobalSoundZone = new CircleZone;
+	//m_GlobalSoundZone->Init(COLLISION_TAG::SOUND, 30.0f);
+	//m_GlobalSoundZone->SetEnable(false);
+	//Scene::AddObject(m_GlobalSoundZone);
 
 	// Wall
 	for (int i = 0; i < mapInfo.m_arrAllWallVertices.size(); ++i)
@@ -203,38 +193,40 @@ void GameScene::InstantiateObjects()
 	}
 
 	// Vent
+	m_arrVents.reserve(mapInfo.m_arrVent.size());
 	for (const Vector2& pos : mapInfo.m_arrVent)
 	{
-		Vent* vent = new Vent;
+		std::shared_ptr<Vent> vent = std::make_shared<Vent>();
 		vent->Init(pos);
-		Scene::AddObject(vent);
+		m_arrVents.push_back(vent);
 	}
 
 	// Number Sequnece
+	m_arrGameObjects.reserve(mapInfo.m_arrNumberSequencePos.size() + mapInfo.m_arrDataUploadPos.size() + mapInfo.m_arrTimedButtonsPos.size());
 	for (const Vector2& pos : mapInfo.m_arrNumberSequencePos)
 	{
-		GameObject* gameObject = new GameObject;
+		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
-		Scene::AddObject(gameObject);
-		m_setTasksLeft.insert(gameObject);
+		m_setTasksLeft.insert(gameObject.get());
+		m_arrGameObjects.push_back(gameObject);
 	}
 
 	// Data Upload
 	for (const Vector2& pos : mapInfo.m_arrDataUploadPos)
 	{
-		GameObject* gameObject = new GameObject;
+		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)));
-		Scene::AddObject(gameObject);
-		m_setTasksLeft.insert(gameObject);
+		m_setTasksLeft.insert(gameObject.get());
+		m_arrGameObjects.push_back(gameObject);
 	}
 
 	// Timed Buttons
 	for (const Vector2& pos : mapInfo.m_arrTimedButtonsPos)
 	{
-		GameObject* gameObject = new GameObject;
+		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)));
-		Scene::AddObject(gameObject);
-		m_setTasksLeft.insert(gameObject);
+		m_setTasksLeft.insert(gameObject.get());
+		m_arrGameObjects.push_back(gameObject);
 	}
 }
 
@@ -320,7 +312,7 @@ void GameScene::OnTaskSuccess()
 
 void GameScene::OnTaskFail()
 {
-	m_GlobalSoundZone->SetEnable(true);
-	m_GlobalSoundZone->SetPosition(m_Player->GetInteractableObject()->GetPosition());
+	//m_GlobalSoundZone->SetEnable(true);
+	//m_GlobalSoundZone->SetPosition(m_Player->GetInteractableObject()->GetPosition());
 	OpenUI(static_cast<int>(UI_TYPE::HUD));
 }

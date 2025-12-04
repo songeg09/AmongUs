@@ -23,7 +23,7 @@ class EditorScene : public Scene
 	};
 
 private:
-	Texture*							m_pBackGround;
+	std::weak_ptr<Texture>				m_pBackGround;
 
 	MapInfo								m_MapInfo;
 	std::vector<Vector2>				m_arrCurWallVertices;
