@@ -2,16 +2,12 @@
 #include "NumberSequenceTask.h"
 #include "ResourceManager.h"
 #include "Button.h"
-#include "NumPadButton.h"
 #include "SceneManager.h"
 #include "Texture.h"
 
 NumberSequenceTask::NumberSequenceTask()
 {
-	for (int i = 0; i < 10; ++i)
-		m_arrNumPadBtns[i] = nullptr;
-	m_btnClose = nullptr;
-	m_pFrame = nullptr;
+	m_NextBtnIndex = 0;
 }
 
 NumberSequenceTask::~NumberSequenceTask()
@@ -20,13 +16,27 @@ NumberSequenceTask::~NumberSequenceTask()
 
 void NumberSequenceTask::Init(std::function<void()> _funcOpenCallback, std::function<void()> _funcCloseCallback, std::function<void()> _SuccessCallback, std::function<void()> _FailCallback, std::function<void()> _BtnCloseCallback)
 {
-	TaskUI::Init(TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_FRAME, _funcOpenCallback, _funcCloseCallback, _SuccessCallback, _FailCallback, _BtnCloseCallback);
+	TaskUI::Init(
+		TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_FRAME, 
+		_funcOpenCallback, 
+		_funcCloseCallback, 
+		_SuccessCallback, 
+		_FailCallback, 
+		_BtnCloseCallback
+	);
 
 	Texture* NumPad = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_NUMBER_START);
-	m_NumPadSize = Vector2(NumPad->GetWidth(), NumPad->GetHeight());
-	m_NumPadStartPosInBackBuffer = m_vec2FrameStartPosInBackBuffer;
+	Vector2 m_NumPadSize = Vector2(NumPad->GetWidth(), NumPad->GetHeight());
+	m_NumPadSize.m_fx /= ConstValue::vec2BaseWindowSize.m_fx;
+	m_NumPadSize.m_fy /= ConstValue::vec2BaseWindowSize.m_fy;
+
+	Vector2 m_NumPadStartPosInBackBuffer = m_vec2FrameStartPosInBackBuffer;
 	m_NumPadStartPosInBackBuffer.m_fx += 40;
 	m_NumPadStartPosInBackBuffer.m_fy += 40;
+	m_NumPadStartPosInBackBuffer.m_fx -= ConstValue::fGameSceneGaurdBandPx;
+	m_NumPadStartPosInBackBuffer.m_fy -= ConstValue::fGameSceneGaurdBandPx;
+	m_NumPadStartPosInBackBuffer.m_fx /= ConstValue::vec2BaseWindowSize.m_fx;
+	m_NumPadStartPosInBackBuffer.m_fy /= ConstValue::vec2BaseWindowSize.m_fy;
 
 	int btnIndex = 0;
 	Vector2 vec2NumPadPos;
@@ -38,14 +48,14 @@ void NumberSequenceTask::Init(std::function<void()> _funcOpenCallback, std::func
 			vec2NumPadPos.m_fx = m_NumPadStartPosInBackBuffer.m_fx + m_NumPadSize.m_fx * j;
 			vec2NumPadPos.m_fy = m_NumPadStartPosInBackBuffer.m_fy + m_NumPadSize.m_fy * i;
 
-			m_arrNumPadBtns[btnIndex] = new NumPadButton;
+			m_arrNumPadBtns[btnIndex] = std::make_unique<Button>();
 			m_arrNumPadBtns[btnIndex]->Init(
 				(TEXTURE_TYPE)(btnIndex + TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_NUMBER_START),
 				vec2NumPadPos,
 				UIElement::ANCHOR::TOP_LEFT,
-				std::bind(&Button::SetActivate, m_arrNumPadBtns[btnIndex], false)
+				std::bind(&Button::SetActivate, m_arrNumPadBtns[btnIndex].get(), false)
 			);
-			m_arrUIElemetns.push_back(m_arrNumPadBtns[btnIndex]);
+			m_arrUIElemetns.push_back(m_arrNumPadBtns[btnIndex].get());
 		}
 	}
 	Reset();
@@ -56,7 +66,7 @@ void NumberSequenceTask::Reset()
 	m_eTaskStatus = TASK_STATUS::PLAYING;
 	m_NextBtnIndex = 0;
 
-	for (NumPadButton* numPadBtn : m_arrNumPadBtns)
+	for (std::unique_ptr<Button>& numPadBtn : m_arrNumPadBtns)
 	{
 		numPadBtn->SetActivate(true);
 	}
@@ -66,15 +76,15 @@ void NumberSequenceTask::Reset()
 	{
 		a = rand() % 10;
 		b = rand() % 10;
-		Swap(m_arrNumPadBtns[a], m_arrNumPadBtns[b]);
+		Swap(m_arrNumPadBtns[a].get(), m_arrNumPadBtns[b].get());
 	}
 }
 
-void NumberSequenceTask::Swap(NumPadButton* btn1, NumPadButton* btn2)
+void NumberSequenceTask::Swap(Button* btn1, Button* btn2)
 {
-	Vector2 temp = btn1->GetAbsoluteStartPos();
-	btn1->SetAbsoluteStartpos(btn2->GetAbsoluteStartPos());
-	btn2->SetAbsoluteStartpos(temp);
+	Vector2 temp = btn1->GetRelativePos();
+	btn1->SetRelativePos(btn2->GetRelativePos());
+	btn2->SetRelativePos(temp);
 
 	btn1->SetBtnArea();
 	btn2->SetBtnArea();
@@ -89,7 +99,7 @@ void NumberSequenceTask::CheckWinStatus()
 	}
 	
 	int NumOfDeactivatedButtons = 0;
-	for (NumPadButton* btn : m_arrNumPadBtns)
+	for (std::unique_ptr<Button>& btn : m_arrNumPadBtns)
 	{
 		if (!btn->IsActivate())
 			NumOfDeactivatedButtons++;

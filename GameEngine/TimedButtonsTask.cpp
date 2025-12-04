@@ -4,16 +4,9 @@
 #include "Button.h"
 #include "ProgressBar.h"
 #include "TimingBar.h"
-#include "Easing.h"
 
 TimedButtonsTask::TimedButtonsTask()
 {
-	for (Button* btn : m_btnButtons)
-		btn = nullptr;
-	for (ProgressBar* pgbar : m_ProgressBars)
-		pgbar = nullptr;
-	for (TimingBar* tbar : m_TimingBars)
-		tbar = nullptr;
 }
 
 TimedButtonsTask::~TimedButtonsTask()
@@ -40,26 +33,26 @@ void TimedButtonsTask::Init(
 	float y_gap = 0.21;
 	for (int i = 0; i < 3; ++i)
 	{
-		m_btnButtons[i] = new Button;
+		m_btnButtons[i] = std::make_unique<Button>();
 		m_btnButtons[i]->Init(
 			TEXTURE_TYPE::TASK_TIMED_BUTTONS_BUTTON, 
 			Vector2(0.62, 0.34 + y_gap * i), 
 			UIElement::ANCHOR::CENTER,
 			[this, i]() {m_TimingBars[i]->Stop(); }
 		);
-		UI::m_arrUIElemetns.push_back(m_btnButtons[i]);
+		UI::m_arrUIElemetns.push_back(m_btnButtons[i].get());
 
-		m_ProgressBars[i] = new ProgressBar;
+		m_ProgressBars[i] = std::make_unique<ProgressBar>();
 		m_ProgressBars[i]->Init(
 			TEXTURE_TYPE::TASK_TIMED_BUTTONS_PROGRESSBAR_FRAME,
 			TEXTURE_TYPE::TASK_TIMED_BUTTONS_PROGRESSBAR,
 			Vector2(0.62, 0.29 + y_gap * i),
 			UIElement::ANCHOR::CENTER
 		);
-		UI::m_arrUIElemetns.push_back(m_ProgressBars[i]);
+		UI::m_arrUIElemetns.push_back(m_ProgressBars[i].get());
 
 
-		m_TimingBars[i] = new TimingBar;
+		m_TimingBars[i] = std::make_unique<TimingBar>();
 		if (i < 2)
 		{
 			m_TimingBars[i]->Init(
@@ -86,7 +79,7 @@ void TimedButtonsTask::Init(
 				[this]() {m_eTaskStatus = TASK_STATUS::FAIL; }
 			);
 		}
-		UI::m_arrUIElemetns.push_back(m_TimingBars[i]);
+		UI::m_arrUIElemetns.push_back(m_TimingBars[i].get());
 	}
 }
 
@@ -119,9 +112,4 @@ void TimedButtonsTask::CheckWinStatus()
 {
 }
 
-void TimedButtonsTask::Open()
-{
-	Reset();
-	UI::Open();
-}
 

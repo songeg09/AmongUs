@@ -136,7 +136,6 @@
     <ClInclude Include="AnimationData.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Character.h" />
-    <ClInclude Include="CircleDamageSkill.h" />
     <ClInclude Include="CircleSkillData.h" />
     <ClInclude Include="CircleZone.h" />
     <ClInclude Include="CircleZoneData.h" />
@@ -164,7 +163,6 @@
     <ClInclude Include="MenuUI.h" />
     <ClInclude Include="MinimapProvider.h" />
     <ClInclude Include="NumberSequenceTask.h" />
-    <ClInclude Include="NumPadButton.h" />
     <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="TaskUI.h" />
@@ -180,7 +178,6 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="RectSkill.h" />
     <ClInclude Include="RectSkillData.h" />
     <ClInclude Include="RectZone.h" />
     <ClInclude Include="RectZoneData.h" />
@@ -189,7 +186,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillObject.h" />
     <ClInclude Include="struct.h" />
@@ -208,7 +204,6 @@
     <ClCompile Include="AnimationData.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="CircleDamageSkill.cpp" />
     <ClCompile Include="CircleSkillData.cpp" />
     <ClCompile Include="CircleZone.cpp" />
     <ClCompile Include="CircleZoneData.cpp" />
@@ -230,7 +225,6 @@
     <ClCompile Include="MapUI.cpp" />
     <ClCompile Include="MenuUI.cpp" />
     <ClCompile Include="NumberSequenceTask.cpp" />
-    <ClCompile Include="NumPadButton.cpp" />
     <ClCompile Include="PlayerStatusUI.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="TaskUI.cpp" />
@@ -244,7 +238,6 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PathManager.cpp" />
-    <ClCompile Include="RectSkill.cpp" />
     <ClCompile Include="RectSkillData.cpp" />
     <ClCompile Include="RecteZone.cpp" />
     <ClCompile Include="RectZoneData.cpp" />
@@ -252,7 +245,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillData.cpp" />
     <ClCompile Include="SkillObject.cpp" />
     <ClCompile Include="Texture.cpp" />

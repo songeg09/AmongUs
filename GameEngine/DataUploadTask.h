@@ -7,11 +7,11 @@ class ProgressBar;
 class DataUploadTask : public TaskUI
 {
 private:
-	Button*			m_btnUpload;
-	ProgressBar*	m_ProgressBar;
-	float			m_fTimePassed;
-	float			m_fUploadTime;
-	bool			m_bUploadStarted;
+	std::unique_ptr<Button>			m_btnUpload;
+	std::unique_ptr<ProgressBar>	m_ProgressBar;
+	float							m_fTimePassed;
+	float							m_fUploadTime;
+	bool							m_bUploadStarted;
 
 public:
 	DataUploadTask();
@@ -28,6 +28,5 @@ public:
 	void Reset() override;
 	void CheckWinStatus() override;
 	void StartUpload();
-	float Easeout(float _ftime);
 };
 

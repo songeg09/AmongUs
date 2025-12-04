@@ -33,6 +33,7 @@ void Ghost::Init(std::vector<Vector2> _wayPoints)
 
 	m_pSightCollider = CreateCircleCollider(COLLISION_TAG::GHOST_SIGHT_SENSOR, true, 400);
 	m_pSightCollider->SetBeginCollisionCallBack(std::bind(&Ghost::ChangeState, this, CHARACTER_STATE::CHASE));
+	
 	m_pChasingCollider = CreateCircleCollider(COLLISION_TAG::GHOST_CHASING_SENSOR, true, 900);
 	m_pChasingCollider->SetOnCollisionCallBack(
 		[this](Collider* _Other) {MoveTo(_Other->GetPosition()); }

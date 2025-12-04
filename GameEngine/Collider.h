@@ -3,7 +3,6 @@ enum class COLLIDER_TYPE
 {
 	RECTANGLE,
 	CIRCLE,
-	LINE,
 };
 
 class Object;
@@ -72,17 +71,4 @@ public:
 	void Render(HDC _memDC) override;
 	void SetSize(float _fRadius) { m_fRadius = _fRadius; }
 	float GetSize() { return m_fRadius; }
-};
-
-class LineCollider : public Collider
-{
-private:
-	Vector2 m_vec2Start;
-	Vector2 m_vec2End;
-
-public:
-	void Init(bool _bEnabled, Vector2 _vec2Start, Vector2 _vec2End);
-	void Render(HDC _memDC) override;
-	Vector2 GetStart() { return m_vec2Start; }
-	Vector2 GetEnd() { return m_vec2End; }
 };

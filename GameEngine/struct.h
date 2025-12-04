@@ -7,7 +7,6 @@ struct Rect
 	float bottom;
 };
 
-
 struct Vector2
 {
 
@@ -95,36 +94,6 @@ struct Vector2
 	{
 		return _first.m_fx * _second.m_fx + _first.m_fy * _second.m_fy;
 	}
-
-	static int CCW(Vector2 v1, Vector2 v2, Vector2 v3)
-	{
-		float result = (v2.m_fx - v1.m_fx) * (v3.m_fy - v1.m_fy) -
-			(v2.m_fy - v1.m_fy) * (v3.m_fx - v1.m_fx);
-
-		if (result > 0.0f)
-			return 1;
-		else if (result == 0.0f)
-			return 0;
-		else 
-			return -1;
-	}
-
-	static bool IsLineIntersect(Vector2 A, Vector2 B, Vector2 C, Vector2 D)
-	{
-		int ab = CCW(A, B, C) * CCW(A, B, D);
-		int cd = CCW(C, D, A) * CCW(C, D, B);
-
-		if (ab == 0 && cd == 0)
-		{
-			if (A > B) std::swap(A, B);
-			if (C > D) std::swap(C, D);
-
-			return A <= D && C <= B;
-		}
-
-		return (ab <= 0 && cd <= 0);
-	}
-
 	void Normalize()
 	{
 		float length = Length();

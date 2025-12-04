@@ -52,34 +52,15 @@ bool CollisionManager::IsCollision(Collider* _pFirst, Collider* _pSecond)
 	{
 		if (_pFirst->GetType() == COLLIDER_TYPE::RECTANGLE)
 			return IsCollision(static_cast<RectCollider*>(_pFirst), static_cast<RectCollider*>(_pSecond));
-		else if (_pFirst->GetType() == COLLIDER_TYPE::CIRCLE)
+		else 
 			return IsCollision(static_cast<CircleCollider*>(_pFirst), static_cast<CircleCollider*>(_pSecond));
-		else
-			return IsCollision(static_cast<LineCollider*>(_pFirst), static_cast<LineCollider*>(_pSecond));
 	}
 	else
 	{
 		if (_pFirst->GetType() == COLLIDER_TYPE::RECTANGLE)
-		{
-			if (_pSecond->GetType() == COLLIDER_TYPE::CIRCLE)
-				return IsCollision(static_cast<RectCollider*>(_pFirst), static_cast<CircleCollider*>(_pSecond));
-			else
-				return IsCollision(static_cast<RectCollider*>(_pFirst), static_cast<LineCollider*>(_pSecond));
-		}
-		else if (_pFirst->GetType() == COLLIDER_TYPE::CIRCLE)
-		{
-			if (_pSecond->GetType() == COLLIDER_TYPE::RECTANGLE)
-				return IsCollision(static_cast<CircleCollider*>(_pFirst), static_cast<RectCollider*>(_pSecond));
-			else
-				return IsCollision(static_cast<CircleCollider*>(_pFirst), static_cast<LineCollider*>(_pSecond));
-		}
+			return IsCollision(static_cast<RectCollider*>(_pFirst), static_cast<CircleCollider*>(_pSecond));
 		else
-		{
-			if (_pSecond->GetType() == COLLIDER_TYPE::RECTANGLE)
-				return IsCollision(static_cast<LineCollider*>(_pFirst), static_cast<RectCollider*>(_pSecond));
-			else
-				return IsCollision(static_cast<LineCollider*>(_pFirst), static_cast<CircleCollider*>(_pSecond));
-		}
+			return IsCollision(static_cast<CircleCollider*>(_pFirst), static_cast<RectCollider*>(_pSecond));
 	}
 }
 
@@ -153,61 +134,6 @@ bool CollisionManager::IsCollision(RectCollider* _pRect, CircleCollider* _pCircl
 		else if ((vecCirclePosition - vecRightBottom).Length() <= _pCircle->GetSize())
 			return true;
 	}
-	return false;
-}
-
-bool CollisionManager::IsCollision(LineCollider* _pFirst, LineCollider* _pSecond)
-{
-	return Vector2::IsLineIntersect(
-		_pFirst->GetStart(), _pFirst->GetEnd(),
-		_pSecond->GetStart(), _pSecond->GetEnd()
-	);
-}
-
-bool CollisionManager::IsCollision(LineCollider* _pLine, CircleCollider* _pCircle)
-{
-	Vector2 lineVec = _pLine->GetEnd() - _pLine->GetStart();
-	Vector2 toCircle = _pCircle->GetPosition() - _pLine->GetStart();
-
-	float lineVecLength = lineVec.Length();
-
-	// 엣지 케이스 라인의 길이가 0인 경우
-	if (lineVecLength == 0.0f)
-		return toCircle.Length() <= _pCircle->GetSize();
-
-	float t = Vector2::Dot(toCircle, lineVec) / (lineVecLength * lineVecLength);
-	t = std::clamp(t, 0.0f, 1.0f);
-
-	Vector2 closestPoint = _pLine->GetStart() + (lineVec * t);
-	Vector2 distVec = _pCircle->GetPosition() - closestPoint;
-
-	return distVec.Length() <= _pCircle->GetSize();
-}
-
-bool CollisionManager::IsCollision(LineCollider* _pLine, RectCollider* _pRect)
-{
-	Vector2 RectPos = _pRect->GetPosition();
-	float halfW = _pRect->GetSize().m_fx / 2.0f;
-	float halfH = _pRect->GetSize().m_fy / 2.0f;
-
-	float left = RectPos.m_fx - halfW;
-	float top = RectPos.m_fy - halfH;
-	float right = RectPos.m_fx + halfW;
-	float bottom = RectPos.m_fy + halfH;
-	
-	Vector2 LineStart = _pLine->GetStart();
-	Vector2 LineEnd = _pLine->GetEnd();
-	Vector2 LeftTop(left, top);
-	Vector2 LeftBottom(left, bottom);
-	Vector2 RightTop(right, top);
-	Vector2 RigthBottom(right, bottom);
-
-	if (Vector2::IsLineIntersect(LeftTop, LeftBottom, LineStart, LineEnd) ||
-		Vector2::IsLineIntersect(LeftTop, RightTop, LineStart, LineEnd) ||
-		Vector2::IsLineIntersect(LeftBottom, RigthBottom, LineStart, LineEnd) ||
-		Vector2::IsLineIntersect(RightTop, RigthBottom, LineStart, LineEnd))
-		return true;
-
 	return false;
 }
 

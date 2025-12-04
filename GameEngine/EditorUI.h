@@ -5,18 +5,18 @@ class Button;
 class EditorUI : public UI
 {
 private:
-	Button*		m_btnPlayerStart;
-	Button*		m_btnWayPoints;
-	Button*		m_btnWallVertices;
-	Button*		m_btnVent;
-	Button*		m_btnDataUpload;
-	Button*		m_btnTimedButtons;
-	Button*		m_btnNumberSequence;
+	std::unique_ptr<Button>		m_btnPlayerStart;
+	std::unique_ptr<Button>		m_btnWayPoints;
+	std::unique_ptr<Button>		m_btnWallVertices;
+	std::unique_ptr<Button>		m_btnVent;
+	std::unique_ptr<Button>		m_btnDataUpload;
+	std::unique_ptr<Button>		m_btnTimedButtons;
+	std::unique_ptr<Button>		m_btnNumberSequence;
 
-	Button*		m_btnBacktoTitle;
-	Button*		m_btnSave;
-	Button*		m_btnRemoveLast;
-	Button*		m_btnClearSelected;
+	std::unique_ptr<Button>		m_btnBacktoTitle;
+	std::unique_ptr<Button>		m_btnSave;
+	std::unique_ptr<Button>		m_btnRemoveLast;
+	std::unique_ptr<Button>		m_btnClearSelected;
 
 public:
 	EditorUI();

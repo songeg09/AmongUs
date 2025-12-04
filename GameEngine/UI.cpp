@@ -12,11 +12,7 @@ UI::UI()
 
 UI::~UI()
 {
-	for (UIElement* element : m_arrUIElemetns)
-	{
-		delete element;
-	}
-	m_arrUIElemetns.clear();
+
 }
 
 

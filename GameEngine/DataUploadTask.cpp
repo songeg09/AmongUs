@@ -10,7 +10,9 @@
 
 DataUploadTask::DataUploadTask()
 {
-	m_btnUpload = nullptr;
+	m_fTimePassed = 0.0f;
+	m_fUploadTime = 0.0f;
+	m_bUploadStarted = false;
 }
 
 DataUploadTask::~DataUploadTask()
@@ -28,7 +30,7 @@ void DataUploadTask::Init(std::function<void()> _funcOpenCallback, std::function
 		_funcBtnCloseCallback
 	);
 
-	m_btnUpload = new Button;
+	m_btnUpload = std::make_unique<Button>();
 	m_btnUpload->Init(
 		TEXTURE_TYPE::TASK_DATA_UPLOAD_BTN, 
 		Vector2(0.5, 0.6), 
@@ -36,16 +38,16 @@ void DataUploadTask::Init(std::function<void()> _funcOpenCallback, std::function
 		[this]() { StartUpload(); },
 		true
 	);
-	m_arrUIElemetns.push_back(m_btnUpload);
+	m_arrUIElemetns.push_back(m_btnUpload.get());
 
-	m_ProgressBar = new ProgressBar();
+	m_ProgressBar = std::make_unique<ProgressBar>();
 	m_ProgressBar->Init(
 		TEXTURE_TYPE::TASK_DATA_UPLOAD_PROGRESSBAR_FRAME,
 		TEXTURE_TYPE::TASK_DATA_UPLOAD_PROGRESSBAR,
 		Vector2(0.5, 0.6),
 		UIElement::ANCHOR::CENTER
 	);
-	m_arrUIElemetns.push_back(m_ProgressBar);
+	m_arrUIElemetns.push_back(m_ProgressBar.get());
 
 	Reset();
 }
@@ -59,7 +61,7 @@ void DataUploadTask::Update()
 	if (m_bUploadStarted == true)
 	{
 		m_fTimePassed += TimerManager::GetInstance()->GetfDeltaTime();
-		m_ProgressBar->SetProgress(Easeout(m_fTimePassed / m_fUploadTime));
+		m_ProgressBar->SetProgress(easing::Easeout(m_fTimePassed / m_fUploadTime));
 	}
 	TaskUI::Update();
 }
@@ -89,8 +91,4 @@ void DataUploadTask::StartUpload()
 	m_btnUpload->SetVisibility(false);
 }
 
-float DataUploadTask::Easeout(float _ftime)
-{
-	_ftime = std::clamp(_ftime, 0.f, 1.f);
-	return 1.f - powf(1.f - _ftime, 3.f);
-}
+

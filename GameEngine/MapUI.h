@@ -8,15 +8,15 @@ class MinimapProvider;
 class MapUI : public UI
 {
 private:
-	MinimapProvider*	m_minimapProvider;
-	Button*				m_btnClose;
+	MinimapProvider*					m_minimapProvider;
+	std::unique_ptr<Button>				m_btnClose;
 
-	Texture*			m_pMap;
-	Texture*			m_pPlayerIcon;
-	Texture*			m_pObjectIcon;
+	Texture*							m_pMap;
+	Texture*							m_pPlayerIcon;
+	Texture*							m_pObjectIcon;
 
-	Vector2				m_vec2MapStartPosInBackBuffer;
-	Vector2				m_vec2Ratio;
+	Vector2								m_vec2MapStartPosInBackBuffer;
+	Vector2								m_vec2Ratio;
 	
 public:
 	MapUI();

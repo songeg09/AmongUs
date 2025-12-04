@@ -8,13 +8,13 @@ class GameMode;
 class PlayerStatusUI : public UI
 {
 private:
-	GameMode*		m_GameMode;
-	Player*			m_Player;
+	GameMode*						m_GameMode;
+	Player*							m_Player;
 
-	Button*			m_btnUse;
-	Button*			m_btnMap;
-	Button*			m_btnSetting;
-	ProgressBar*	m_progressbarTasks;
+	std::unique_ptr<Button>			m_btnUse;
+	std::unique_ptr<Button>			m_btnMap;
+	std::unique_ptr<Button>			m_btnSetting;
+	std::unique_ptr<ProgressBar>	m_progressbarTasks;
 
 public:
 	PlayerStatusUI();

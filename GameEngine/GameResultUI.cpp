@@ -23,13 +23,13 @@ void GameResultUI::Init(GameMode* _GameMode, std::function<void()> _funcPlayAgai
 	UI::Init();
 	m_GameMode = _GameMode;
 
-	m_btnPlayAgain = new Button;
+	m_btnPlayAgain = std::make_unique<Button>();
 	m_btnPlayAgain->Init(TEXTURE_TYPE::BTN_PLAYAGAIN,Vector2(0.4,0.7),UIElement::ANCHOR::CENTER, _funcPlayAgainCallback);
-	m_arrUIElemetns.push_back(m_btnPlayAgain);
+	m_arrUIElemetns.push_back(m_btnPlayAgain.get());
 
-	m_btnQuit = new Button;
+	m_btnQuit = std::make_unique<Button>();
 	m_btnQuit->Init(TEXTURE_TYPE::BTN_QUIT, Vector2(0.6, 0.7), UIElement::ANCHOR::CENTER, _funcQuitCallback);
-	m_arrUIElemetns.push_back(m_btnQuit);
+	m_arrUIElemetns.push_back(m_btnQuit.get());
 	
 }
 

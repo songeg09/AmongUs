@@ -4,11 +4,11 @@ class UIElement;
 class UI abstract
 {
 protected:
-	bool					m_bVisibility;
-	std::vector<UIElement*> m_arrUIElemetns;
+	bool									m_bVisibility;
+	std::vector<UIElement*>					m_arrUIElemetns;
 
-	std::function<void()>	m_funcOpenCallback;
-	std::function<void()>	m_funcCloseCallback;
+	std::function<void()>					m_funcOpenCallback;
+	std::function<void()>					m_funcCloseCallback;
 
 public:
 	UI();

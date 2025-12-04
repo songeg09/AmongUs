@@ -38,9 +38,9 @@ void MapUI::Init(MinimapProvider* _minimapProvider, std::function<void()> _Close
 
 	m_vec2Ratio = Vector2((float)m_pMap->GetWidth() / (float)RealMap->GetWidth(), (float)m_pMap->GetHeight() / (float)RealMap->GetHeight());
 
-	m_btnClose = new Button;
+	m_btnClose = std::make_unique<Button>();
 	m_btnClose->Init(TEXTURE_TYPE::BTN_X, Vector2(0.15, 0.15), UIElement::ANCHOR::CENTER, _CloseBtnCallback);
-	m_arrUIElemetns.push_back(m_btnClose);
+	m_arrUIElemetns.push_back(m_btnClose.get());
 }
 
 void MapUI::Render(HDC _memDC)

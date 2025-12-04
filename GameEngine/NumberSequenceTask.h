@@ -2,19 +2,13 @@
 #include "TaskUI.h"
 
 class Texture;
-class NumPadButton;
 class Button;
 class NumberSequenceTask : public TaskUI
 {
 private:
-	Texture*			m_pFrame;
+	std::unique_ptr<Button>				m_arrNumPadBtns[10];
+	int									m_NextBtnIndex;
 
-	NumPadButton*		m_arrNumPadBtns[10];
-
-	Vector2				m_NumPadSize;
-	Vector2				m_NumPadStartPosInBackBuffer;
-
-	int					m_NextBtnIndex;
 public:
 	NumberSequenceTask();
 	~NumberSequenceTask();
@@ -31,6 +25,6 @@ public:
 	void CheckWinStatus() override;
 
 private:
-	void Swap(NumPadButton* btn1, NumPadButton* btn2);
+	void Swap(Button* btn1, Button* btn2);
 };
 

@@ -20,7 +20,8 @@
 #include<fstream>
 #include <stdlib.h>
 #include <crtdbg.h>
-#include <algorithm>
 #include"define.h"
 #include"struct.h"
 #include"const.h"
+#include"Easing.h"
+//#include <algorithm>

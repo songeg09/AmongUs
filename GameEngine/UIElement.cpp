@@ -16,19 +16,17 @@ UIElement::~UIElement()
 void UIElement::Init(TEXTURE_TYPE _eTextureType, Vector2 _vec2RelativePosition, ANCHOR _eAnchor)
 {
 	m_pImage = ResourceManager::GetInstance()->LoadTexture(_eTextureType);
-	m_vec2RelativePosition = _vec2RelativePosition;
 	m_eAnchor = _eAnchor;
-
-	m_vecAbsoluteStartPos = GetAbsoluteStartPos(m_eAnchor);
+	SetRelativePos(_vec2RelativePosition);
 }
 
-Vector2 UIElement::GetAbsoluteStartPos(ANCHOR _eAnchor)
+Vector2 UIElement::GetAbsoluteStartPos()
 {
 	Vector2 vec2AbsoluteStartPos = SceneManager::GetInstance()->GetCurScene()->GetViewportTopLeftInBackBuffer();
 	vec2AbsoluteStartPos.m_fx += m_vec2RelativePosition.m_fx * ConstValue::vec2BaseWindowSize.m_fx;
 	vec2AbsoluteStartPos.m_fy += m_vec2RelativePosition.m_fy * ConstValue::vec2BaseWindowSize.m_fy;
 
-	switch (_eAnchor)
+	switch (m_eAnchor)
 	{
 	case TOP_LEFT:
 		break;

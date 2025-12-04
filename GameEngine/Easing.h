@@ -1,8 +1,9 @@
 #pragma once
+#include <algorithm>
 
 namespace easing
 {
-	float EaseOutBounce(float x)
+	inline float EaseOutBounce(float x)
 	{
 		const float n1 = 7.5625f;
 		const float d1 = 2.75f;
@@ -28,7 +29,7 @@ namespace easing
 		}
 	}
 
-	float EaseInBounce(float x)
+	inline float EaseInBounce(float x)
 	{
 		if (x < 0.5f)
 		{
@@ -40,7 +41,7 @@ namespace easing
 		}
 	}
 
-	float EaseInOutBounce(float x)
+	inline float EaseInOutBounce(float x)
 	{
 		if (x < 0.5f)
 		{
@@ -50,6 +51,12 @@ namespace easing
 		{
 			return (1.0f + EaseOutBounce(2.0f * x - 1.0f)) * 0.5f;
 		}
+	}
+
+	inline float Easeout(float _ftime)
+	{
+		_ftime = std::clamp(_ftime, 0.f, 1.f);
+		return 1.f - powf(1.f - _ftime, 3.f);
 	}
 }
 

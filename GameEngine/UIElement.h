@@ -32,7 +32,14 @@ public:
 
 	void SetVisibility(bool _bVisibility) { m_bVisibility = _bVisibility; }
 
+	Vector2 GetRelativePos() { return m_vec2RelativePosition; }
+	void SetRelativePos(Vector2 _vec2RelativePosition) 
+	{ 
+		m_vec2RelativePosition = _vec2RelativePosition;
+		m_vecAbsoluteStartPos = GetAbsoluteStartPos();
+	}
+
 private:
-	Vector2 GetAbsoluteStartPos(ANCHOR _eAnchor);
+	Vector2 GetAbsoluteStartPos();
 };
 

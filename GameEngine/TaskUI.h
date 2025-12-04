@@ -14,14 +14,14 @@ protected:
 		SUCCESS
 	};
 
-	std::function<void()>	m_funcSuccessCallback;
-	std::function<void()>	m_funcFailCallback;
+	std::function<void()>					m_funcSuccessCallback;
+	std::function<void()>					m_funcFailCallback;
 
-	TASK_STATUS				m_eTaskStatus;
+	TASK_STATUS								m_eTaskStatus;
 
-	Vector2					m_vec2FrameStartPosInBackBuffer;
-	Texture*				m_pFrame;
-	Button*					m_btnClose;
+	Vector2									m_vec2FrameStartPosInBackBuffer;
+	Texture*								m_pFrame;
+	std::unique_ptr<Button>					m_btnClose;
 
 public:
 	TaskUI();

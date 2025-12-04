@@ -34,9 +34,9 @@ void TaskUI::Init(TEXTURE_TYPE _textureTypeFrame, std::function<void()> _funcOpe
 	RelativePos.m_fy /= ConstValue::vec2BaseWindowSize.m_fy;
 	RelativePos.m_fx -= 0.06;
 
-	m_btnClose = new Button;
+	m_btnClose = std::make_unique<Button>();
 	m_btnClose->Init(TEXTURE_TYPE::BTN_X, RelativePos, UIElement::ANCHOR::TOP_LEFT, _funcBtnCloseCallback, true);
-	m_arrUIElemetns.push_back(m_btnClose);
+	m_arrUIElemetns.push_back(m_btnClose.get());
 }
 
 void TaskUI::Update()

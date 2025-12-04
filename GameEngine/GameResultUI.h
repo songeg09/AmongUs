@@ -7,15 +7,13 @@ class Texture;
 class GameResultUI : public UI
 {
 private:
-	GameMode*				m_GameMode;
+	GameMode*								m_GameMode;
+	Texture*								m_pCurResult;
 
-	Texture*				m_pCurResult;
+	std::unique_ptr<Button>					m_btnPlayAgain;
+	std::unique_ptr<Button>					m_btnQuit;
 
-	Button*					m_btnPlayAgain;
-	Button*					m_btnQuit;
-
-	Vector2					m_vec2ResultTextureStartPos;
-
+	Vector2									m_vec2ResultTextureStartPos;
 
 public:
 	GameResultUI();
