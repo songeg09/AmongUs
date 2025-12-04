@@ -5,19 +5,19 @@ class Texuture;
 class TimingBar	: public UIElement
 {
 protected:
-	Texture*				m_pTimingCursor;
+	std::weak_ptr<Texture>		m_pTimingCursor;
 
-	float					m_fCycleTime;
-	float					m_fElapsedTime;
-	float					m_fRatio = 0;
+	float						m_fCycleTime;
+	float						m_fElapsedTime;
+	float						m_fRatio = 0;
 
-	bool					m_bPlaying;
+	bool						m_bPlaying;
 
-	std::function<void()>	m_funcOnSuccessCallback;
-	std::function<void()>	m_funcOnFailCallback;
+	std::function<void()>		m_funcOnSuccessCallback;
+	std::function<void()>		m_funcOnFailCallback;
 
-	Vector2					m_vec2InitialCursorPos;
-	Vector2					m_vec2CursorPos;
+	Vector2						m_vec2InitialCursorPos;
+	Vector2						m_vec2CursorPos;
 
 public:
 	TimingBar();

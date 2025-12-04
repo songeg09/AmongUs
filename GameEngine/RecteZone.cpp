@@ -18,24 +18,24 @@ void RectZone::Init(COLLISION_TAG _eTag, Vector2 _Size, Object* _pTarget)
 {
 	SkillObject::Init(_pTarget);
 
-	m_pCollider = static_cast<RectCollider*>(CreateRectCollider(_eTag, true, _Size));
-	m_pCollider->SetBeginCollisionCallBack(
-		[this](Collider* _pOther)
-		{
-			Object* actor = _pOther->GetTarget();
-			if (actor != nullptr)
-				m_TargetList.push_back(actor);
-		}
-	);
-	m_pCollider->SetEndCollisionCallBack(
-		[this](Collider* _pOther)
-		{
-			Object* actor = _pOther->GetTarget();
-			if (actor != nullptr)
-				m_TargetList.remove(actor);
-		}
-	);
-	SetEnable(true);
+	//m_pCollider = static_cast<RectCollider*>(CreateRectCollider(_eTag, true, _Size));
+	//m_pCollider->SetBeginCollisionCallBack(
+	//	[this](Collider* _pOther)
+	//	{
+	//		Object* actor = _pOther->GetTarget();
+	//		if (actor != nullptr)
+	//			m_TargetList.push_back(actor);
+	//	}
+	//);
+	//m_pCollider->SetEndCollisionCallBack(
+	//	[this](Collider* _pOther)
+	//	{
+	//		Object* actor = _pOther->GetTarget();
+	//		if (actor != nullptr)
+	//			m_TargetList.remove(actor);
+	//	}
+	//);
+	//SetEnable(true);
 
 }
 

@@ -11,10 +11,10 @@ private:
 	GameMode*						m_GameMode;
 	Player*							m_Player;
 
-	std::unique_ptr<Button>			m_btnUse;
-	std::unique_ptr<Button>			m_btnMap;
-	std::unique_ptr<Button>			m_btnSetting;
-	std::unique_ptr<ProgressBar>	m_progressbarTasks;
+	std::shared_ptr<Button>			m_btnUse;
+	std::shared_ptr<Button>			m_btnMap;
+	std::shared_ptr<Button>			m_btnSetting;
+	std::shared_ptr<ProgressBar>	m_progressbarTasks;
 
 public:
 	PlayerStatusUI();

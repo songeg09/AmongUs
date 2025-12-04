@@ -18,24 +18,24 @@ void CircleZone::Init(COLLISION_TAG _eTag, float _fRadius, Object* _pTarget)
 {
 	SkillObject::Init(_pTarget);
 
-	m_pCollider = static_cast<CircleCollider*>(CreateCircleCollider(_eTag, true, _fRadius));
-	m_pCollider->SetBeginCollisionCallBack(
-		[this](Collider* _pOther)
-		{
-			Object* actor = _pOther->GetTarget();
-			if (actor != nullptr)
-				m_TargetList.push_back(actor);
-		}
-	);
-	m_pCollider->SetEndCollisionCallBack(
-		[this](Collider* _pOther)
-		{
-			Object* actor = _pOther->GetTarget();
-			if (actor != nullptr)
-				m_TargetList.remove(actor);
-		}
-	);
-	SetEnable(true);
+	//m_pCollider = static_cast<CircleCollider*>(CreateCircleCollider(_eTag, true, _fRadius));
+	//m_pCollider->SetBeginCollisionCallBack(
+	//	[this](Collider* _pOther)
+	//	{
+	//		Object* actor = _pOther->GetTarget();
+	//		if (actor != nullptr)
+	//			m_TargetList.push_back(actor);
+	//	}
+	//);
+	//m_pCollider->SetEndCollisionCallBack(
+	//	[this](Collider* _pOther)
+	//	{
+	//		Object* actor = _pOther->GetTarget();
+	//		if (actor != nullptr)
+	//			m_TargetList.remove(actor);
+	//	}
+	//);
+	//SetEnable(true);
 }
 
 void CircleZone::Update()

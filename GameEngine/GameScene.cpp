@@ -114,36 +114,36 @@ void GameScene::InitUI()
 	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
 
 	// UI z축 순서에 맞게 생성 필요!
-	PlayerStatusUI* playerUI = new PlayerStatusUI;
+	std::unique_ptr<PlayerStatusUI> playerUI = std::make_unique<PlayerStatusUI>();
 	playerUI->Init(
 		m_GameMode, 
 		m_Player, 
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MENU))
 	);
-	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = playerUI;
+	m_arrUIs[static_cast<int>(UI_TYPE::HUD)] = std::move(playerUI);
 
-	MapUI* mapUI = new MapUI;
+	std::unique_ptr<MapUI> mapUI = std::make_unique<MapUI>();
 	mapUI->Init(dynamic_cast<MinimapProvider*>(this), std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD)));
-	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = mapUI;
+	m_arrUIs[static_cast<int>(UI_TYPE::MAP)] = std::move(mapUI);
 
-	MenuUI* menuUI = new MenuUI;
+	std::unique_ptr<MenuUI> menuUI = std::make_unique<MenuUI>();
 	menuUI->Init(
 		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::GAME),
 		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::TITLE)
 	);
-	m_arrUIs[static_cast<int>(UI_TYPE::MENU)] = menuUI;
+	m_arrUIs[static_cast<int>(UI_TYPE::MENU)] = std::move(menuUI);
 
-	GameResultUI* resultUI = new GameResultUI;
+	std::unique_ptr<GameResultUI> resultUI = std::make_unique<GameResultUI>();
 	resultUI->Init(
 		m_GameMode,
 		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::GAME),
 		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::TITLE)
 	);
-	m_arrUIs[static_cast<int>(UI_TYPE::RESULT)] = resultUI;
+	m_arrUIs[static_cast<int>(UI_TYPE::RESULT)] = std::move(resultUI);
 
 	// Task UI 생성
-	NumberSequenceTask* Task1 = new NumberSequenceTask;
+	std::unique_ptr<NumberSequenceTask> Task1 = std::make_unique<NumberSequenceTask>();
 	Task1->Init(
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
@@ -151,18 +151,18 @@ void GameScene::InitUI()
 		std::bind(&GameScene::OnTaskFail, this),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
 	);
-	m_arrUIs[static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)] = Task1;
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)] = std::move(Task1);
 
-	DataUploadTask* Task2 = new DataUploadTask;
+	std::unique_ptr<DataUploadTask> Task2 = std::make_unique<DataUploadTask>();
 	Task2->Init(
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
 		std::bind(&GameScene::OnTaskSuccess, this),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
 	);
-	m_arrUIs[static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)] = Task2;
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)] = std::move(Task2);
 
-	TimedButtonsTask* Task3 = new TimedButtonsTask;
+	std::unique_ptr<TimedButtonsTask> Task3 = std::make_unique<TimedButtonsTask>();
 	Task3->Init(
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
 		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
@@ -170,7 +170,7 @@ void GameScene::InitUI()
 		std::bind(&GameScene::OnTaskFail, this),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
 	);
-	m_arrUIs[static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)] = Task3;
+	m_arrUIs[static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)] = std::move(Task3);
 }
 
 void GameScene::InstantiateObjects()
@@ -199,11 +199,7 @@ void GameScene::InstantiateObjects()
 		if (mapInfo.m_arrAllWallVertices[i].size() < 2)
 			continue;
 		for (int j = 0; j < mapInfo.m_arrAllWallVertices[i].size()-1; ++j)
-		{
-			Wall* wall = new Wall;
-			wall->Init(mapInfo.m_arrAllWallVertices[i][j], mapInfo.m_arrAllWallVertices[i][j+1]);
-			Scene::AddWall(wall);
-		}
+			CreateWall(mapInfo.m_arrAllWallVertices[i][j], mapInfo.m_arrAllWallVertices[i][j + 1]);
 	}
 
 	// Vent

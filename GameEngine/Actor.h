@@ -45,5 +45,6 @@ protected:
 	
 	void Move(Vector2 _vec2Force);
 	void ResizeAnimation(int _iSize);
+
 };
 

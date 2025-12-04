@@ -14,9 +14,9 @@ Object::Object()
 
 Object::~Object()
 {
-	for (Collider* collider : m_pColliderList)
-		delete collider;
-	m_pColliderList.clear();
+	//for (Collider* collider : m_pColliderList)
+	//	delete collider;
+	//m_pColliderList.clear();
 }
 
 void Object::LateUpdate()
@@ -36,35 +36,33 @@ void Object::Init(Vector2 _vec2Position)
 	SetPosition(_vec2Position);
 }
 
-Collider* Object::CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset)
+std::unique_ptr<Collider>Object::CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset)
 {
-	RectCollider* collider = new RectCollider;
+	std::unique_ptr<RectCollider> collider = std::make_unique<RectCollider>(_eTag);
 	collider->SetTarget(this);
 	collider->Init(_eEnabled, _vecSize, _vecOffset);
-	m_pColliderList.push_back(collider);
+	m_pColliderList.push_back(collider.get());
 
-	SceneManager::GetInstance()->GetCurScene()->AddCollider(collider, _eTag);
 	return collider;
 }
 
-Collider* Object::CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset)
+std::unique_ptr<Collider> Object::CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset)
 {
-	CircleCollider* collider = new CircleCollider;
+	std::unique_ptr<CircleCollider> collider = std::make_unique<CircleCollider>(_eTag);
 	collider->SetTarget(this);
 	collider->Init(_eEnabled, _fRadius, _vecOffset);
-	m_pColliderList.push_back(collider);
+	m_pColliderList.push_back(collider.get());
 
-	SceneManager::GetInstance()->GetCurScene()->AddCollider(collider, _eTag);
 	return collider;
 }
 
-WallDetector* Object::CreateWallDetector(Vector2 _vec2Offset, float _fRadius)
+std::unique_ptr<WallDetector> Object::CreateWallDetector(Object* _Owner, Vector2 _vec2Offset, float _fRadius)
 {
-	WallDetector* detector = new WallDetector;
-	detector->Init(this, _vec2Offset, _fRadius);
-	SceneManager::GetInstance()->GetCurScene()->AddWallDetector(detector);
-	return detector;
+	std::unique_ptr<WallDetector> wallDetector = std::make_unique<WallDetector>();
+	wallDetector->Init(_Owner, Vector2(0, 40), 20.0f);
+	return wallDetector;
 }
+
 
 void Object::ColliderRender(HDC _memDC)
 {

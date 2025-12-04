@@ -33,7 +33,7 @@ void EditorScene::Init()
 
 	// UI »ý¼º
 	m_arrUIs.resize(static_cast<int>(UI_TYPE::END));
-	EditorUI* editorUI = new EditorUI;
+	std::unique_ptr<EditorUI> editorUI = std::make_unique<EditorUI>();
 	editorUI->Init(
 		std::bind(&EditorScene::ChangeSelected, this, SELECTED::PLAYER_START),
 		std::bind(&EditorScene::ChangeSelected, this, SELECTED::WAY_POINTS),
@@ -47,7 +47,7 @@ void EditorScene::Init()
 		std::bind(&EditorScene::RemoveLast, this),
 		std::bind(&EditorScene::ClearSelected, this)
 	);
-	m_arrUIs[static_cast<int>(UI_TYPE::EDITOR)] = editorUI;
+	m_arrUIs[static_cast<int>(UI_TYPE::EDITOR)] = std::move(editorUI);
 	m_UIFlags = Flag(static_cast<int>(UI_TYPE::EDITOR));
 
 	m_eCurSelected = SELECTED::PLAYER_START;

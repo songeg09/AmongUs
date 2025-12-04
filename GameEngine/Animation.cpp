@@ -60,8 +60,8 @@ void Animation::Update()
 
 void Animation::Render(HDC _memDC, Vector2 _vec2Position)
 {
-	int iWidth = m_vecList[m_iCurIndex].m_pTextureAtlas->GetWidth();
-	int iHeight = m_vecList[m_iCurIndex].m_pTextureAtlas->GetHeight();
+	int iWidth = m_vecList[m_iCurIndex].m_pTextureAtlas.lock()->GetWidth();
+	int iHeight = m_vecList[m_iCurIndex].m_pTextureAtlas.lock()->GetHeight();
 	switch (m_eAnchor)
 	{
 	case ANCHOR::CENTER:
@@ -85,9 +85,9 @@ void Animation::Render(HDC _memDC, Vector2 _vec2Position)
 	_vec2Position.m_fy -= BackBuffertTopLeftInScene.m_fy;
 
 	TransparentBlt(_memDC, _vec2Position.m_fx, _vec2Position.m_fy, iWidth, iHeight,
-		m_vecList[m_iCurIndex].m_pTextureAtlas->GetDC(),
-		m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fx,
-		m_vecList[m_iCurIndex].m_pTextureAtlas->GetAtlasPosition().m_fy,
+		m_vecList[m_iCurIndex].m_pTextureAtlas.lock()->GetDC(),
+		m_vecList[m_iCurIndex].m_pTextureAtlas.lock()->GetAtlasPosition().m_fx,
+		m_vecList[m_iCurIndex].m_pTextureAtlas.lock()->GetAtlasPosition().m_fy,
 		iWidth, iHeight, RGB(255, 0, 255));
 }
 

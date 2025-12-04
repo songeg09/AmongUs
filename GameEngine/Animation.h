@@ -4,8 +4,8 @@ class TextureAtlas;
 
 struct AnimNode
 {
-	TextureAtlas* m_pTextureAtlas;
-	std::function<void()> m_callBack;
+	std::weak_ptr<TextureAtlas> m_pTextureAtlas;
+	std::function<void()>		m_callBack;
 };
 
 enum class ANIMATION_TYPE

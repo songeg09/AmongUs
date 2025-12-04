@@ -7,8 +7,8 @@ class ProgressBar;
 class DataUploadTask : public TaskUI
 {
 private:
-	std::unique_ptr<Button>			m_btnUpload;
-	std::unique_ptr<ProgressBar>	m_ProgressBar;
+	std::shared_ptr<Button>			m_btnUpload;
+	std::shared_ptr<ProgressBar>	m_ProgressBar;
 	float							m_fTimePassed;
 	float							m_fUploadTime;
 	bool							m_bUploadStarted;

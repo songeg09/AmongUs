@@ -7,9 +7,9 @@ class TimingBar;
 class TimedButtonsTask : public TaskUI
 {
 private:
-	std::unique_ptr<Button>			m_btnButtons[3];
-	std::unique_ptr<ProgressBar>	m_ProgressBars[3];
-	std::unique_ptr<TimingBar>		m_TimingBars[3];
+	std::shared_ptr<Button>			m_btnButtons[3];
+	std::shared_ptr<ProgressBar>	m_ProgressBars[3];
+	std::shared_ptr<TimingBar>		m_TimingBars[3];
 	
 public:
 	TimedButtonsTask();

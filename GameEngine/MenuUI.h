@@ -5,8 +5,8 @@ class Button;
 class MenuUI : public UI
 {
 private:
-	std::unique_ptr<Button> m_btnPlayAgain;
-	std::unique_ptr<Button> m_btnQuit;
+	std::shared_ptr<Button> m_btnPlayAgain;
+	std::shared_ptr<Button> m_btnQuit;
 	
 public:
 	MenuUI();

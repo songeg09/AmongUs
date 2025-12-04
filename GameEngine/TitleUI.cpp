@@ -18,9 +18,9 @@ TitleUI::~TitleUI()
 
 void TitleUI::Init()
 {
-	m_btnStart = std::make_unique<Button>();
-	m_btnEdit = std::make_unique<Button>();
-	m_btnQuit = std::make_unique<Button>();
+	m_btnStart = std::make_shared<Button>();
+	m_btnEdit = std::make_shared<Button>();
+	m_btnQuit = std::make_shared<Button>();
 
 	m_btnStart->Init(TEXTURE_TYPE::BTN_START, Vector2(0.4f,0.6f), UIElement::ANCHOR::CENTER, 
 		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::GAME)
@@ -32,7 +32,7 @@ void TitleUI::Init()
 		std::bind(&SceneManager::RequestSceneChange, SceneManager::GetInstance(), SCENE_TYPE::EDITOR)
 	);
 
-	m_arrUIElemetns.push_back(m_btnStart.get());
-	m_arrUIElemetns.push_back(m_btnEdit.get());
-	m_arrUIElemetns.push_back(m_btnQuit.get());
+	m_arrUIElemetns.push_back(m_btnStart);
+	m_arrUIElemetns.push_back(m_btnEdit);
+	m_arrUIElemetns.push_back(m_btnQuit);
 }

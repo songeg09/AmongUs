@@ -30,7 +30,7 @@ void DataUploadTask::Init(std::function<void()> _funcOpenCallback, std::function
 		_funcBtnCloseCallback
 	);
 
-	m_btnUpload = std::make_unique<Button>();
+	m_btnUpload = std::make_shared<Button>();
 	m_btnUpload->Init(
 		TEXTURE_TYPE::TASK_DATA_UPLOAD_BTN, 
 		Vector2(0.5, 0.6), 
@@ -38,16 +38,16 @@ void DataUploadTask::Init(std::function<void()> _funcOpenCallback, std::function
 		[this]() { StartUpload(); },
 		true
 	);
-	m_arrUIElemetns.push_back(m_btnUpload.get());
+	m_arrUIElemetns.push_back(m_btnUpload);
 
-	m_ProgressBar = std::make_unique<ProgressBar>();
+	m_ProgressBar = std::make_shared<ProgressBar>();
 	m_ProgressBar->Init(
 		TEXTURE_TYPE::TASK_DATA_UPLOAD_PROGRESSBAR_FRAME,
 		TEXTURE_TYPE::TASK_DATA_UPLOAD_PROGRESSBAR,
 		Vector2(0.5, 0.6),
 		UIElement::ANCHOR::CENTER
 	);
-	m_arrUIElemetns.push_back(m_ProgressBar.get());
+	m_arrUIElemetns.push_back(m_ProgressBar);
 
 	Reset();
 }

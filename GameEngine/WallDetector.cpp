@@ -4,18 +4,28 @@
 #include "SceneManager.h"
 #include "GDIManager.h"
 
-void WallDetector::Init(Object* _pOwner, Vector2 _vec2Offset, float _fRadius)
+WallDetector::WallDetector()
+{
+	SceneManager::GetInstance()->GetCurScene()->RegisterWallDetector(this);
+}
+
+WallDetector::~WallDetector()
+{
+	SceneManager::GetInstance()->GetCurScene()->ReleaseWallDetector(this);
+}
+
+void WallDetector::Init(std::shared_ptr<Object> _pOwner, Vector2 _vec2Offset, float _fRadius)
 {
 	m_pOwner = _pOwner;
 	m_vec2Offset = _vec2Offset;
-	m_vec2Position = m_pOwner->GetPosition();
+	m_vec2Position = m_pOwner.lock()->GetPosition();
 	m_vec2Position += m_vec2Offset;
 	m_fRadius = _fRadius;
 }
 
 void WallDetector::Update()
 {
-	m_vec2Position = m_pOwner->GetPosition() + m_vec2Offset;
+	m_vec2Position = m_pOwner.lock()->GetPosition() + m_vec2Offset;
 }
 
 void WallDetector::Render(HDC _memDC)
@@ -36,6 +46,6 @@ void WallDetector::Render(HDC _memDC)
 
 void WallDetector::ResolvePos(Vector2 _vec2ResolveVec)
 {
-	m_pOwner->AddPosition(_vec2ResolveVec);
+	m_pOwner.lock()->AddPosition(_vec2ResolveVec);
 	m_vec2Position = m_vec2Position + _vec2ResolveVec;
 }

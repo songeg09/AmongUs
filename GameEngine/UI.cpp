@@ -27,10 +27,8 @@ void UI::Update()
 	if (m_bVisibility == false)
 		return;
 
-	for (UIElement* element : m_arrUIElemetns)
-	{
-		element->Update();
-	}
+	for (std::weak_ptr<UIElement> element : m_arrUIElemetns)
+		element.lock()->Update();
 }
 
 void UI::Render(HDC _memDC)
@@ -38,10 +36,8 @@ void UI::Render(HDC _memDC)
 	if (m_bVisibility == false)
 		return;
 
-	for (UIElement* element : m_arrUIElemetns)
-	{
-		element->Render(_memDC);
-	}
+	for (std::weak_ptr<UIElement> element : m_arrUIElemetns)
+		element.lock()->Render(_memDC);
 }
 
 void UI::Open()

@@ -20,8 +20,8 @@ protected:
 	TASK_STATUS								m_eTaskStatus;
 
 	Vector2									m_vec2FrameStartPosInBackBuffer;
-	Texture*								m_pFrame;
-	std::unique_ptr<Button>					m_btnClose;
+	std::weak_ptr<Texture>					m_pFrame;
+	std::shared_ptr<Button>					m_btnClose;
 
 public:
 	TaskUI();

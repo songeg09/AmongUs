@@ -24,21 +24,21 @@ void PlayerStatusUI::Init(GameMode* _GameMode, Player* _Player, std::function<vo
 	m_GameMode = _GameMode;
 	m_Player = _Player;
 
-	m_btnUse = std::make_unique<Button>();
+	m_btnUse = std::make_shared<Button>();
 	m_btnUse->Init(TEXTURE_TYPE::BTN_USE, Vector2(0.95, 0.9), UIElement::ANCHOR::CENTER, std::bind(&Player::UseInteractableObject, m_Player));
-	m_arrUIElemetns.push_back(m_btnUse.get());
+	m_arrUIElemetns.push_back(m_btnUse);
 
-	m_btnMap = std::make_unique<Button>();
+	m_btnMap = std::make_shared<Button>();
 	m_btnMap->Init(TEXTURE_TYPE::BTN_MAP, Vector2(0.95, 0.07), UIElement::ANCHOR::CENTER, _funcMapBtnCallback);
-	m_arrUIElemetns.push_back(m_btnMap.get());
+	m_arrUIElemetns.push_back(m_btnMap);
 
-	m_btnSetting = std::make_unique<Button>();
+	m_btnSetting = std::make_shared<Button>();
 	m_btnSetting->Init(TEXTURE_TYPE::BTN_SETTING, Vector2(0.95, 0.17), UIElement::ANCHOR::CENTER, _funcMenuBtnCallback);
-	m_arrUIElemetns.push_back(m_btnSetting.get());
+	m_arrUIElemetns.push_back(m_btnSetting);
 
-	m_progressbarTasks = std::make_unique<ProgressBar>();
+	m_progressbarTasks = std::make_shared<ProgressBar>();
 	m_progressbarTasks->Init(TEXTURE_TYPE::PROGRESSBAR_FRAME, TEXTURE_TYPE::PROGRESSBAR, Vector2(0.01, 0.01), UIElement::ANCHOR::TOP_LEFT);
-	m_arrUIElemetns.push_back(m_progressbarTasks.get());
+	m_arrUIElemetns.push_back(m_progressbarTasks);
 }
 
 void PlayerStatusUI::Update()

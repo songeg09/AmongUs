@@ -24,35 +24,11 @@ Scene::~Scene()
 
 void Scene::Release()
 {
-
-	for (Object* object : m_arrObjects)
-	{
-		delete object;
-	}
-	m_arrObjects.clear();
-
-	for (UI* ui : m_arrUIs)
-	{
-		delete ui;
-	}
-	m_arrUIs.clear();
-
-	for (std::vector<Collider*>& colliders : m_arrColliders)
-		colliders.clear();
-
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
 
-	for (Wall* wall : m_arrWalls)
-	{
-		delete wall;
-	}
-	m_arrWalls.clear();
-
-	for (WallDetector* wallDetector : m_arrWallDetectors)
-	{
-		delete wallDetector;
-	}
-	m_arrWallDetectors.clear();
+	m_listObjects.clear();;
+	m_arrUIs.clear();
+	m_listWalls.clear();
 }
 
 void Scene::Init()
@@ -79,39 +55,42 @@ void Scene::OpenUI(int _flagIndex)
 
 void Scene::AddObject(Object* _object)
 {
-	m_arrObjects.push_back(_object);
+	m_listObjects.push_back(_object);
 }
 
-void Scene::AddCollider(Collider* _collider, COLLISION_TAG _eTag)
+void Scene::CreateWall(Vector2 _vec2Start, Vector2 _vec2End)
 {
-	m_arrColliders[static_cast<int>(_eTag)].push_back(_collider);
+	std::unique_ptr<Wall> wall = std::make_unique<Wall>();
+	wall->Init(_vec2Start, _vec2End);
+	m_listWalls.push_back(std::move(wall));
 }
 
-void Scene::AddWall(Wall* _wall)
+void Scene::RegisterWallDetector(WallDetector* _wallDetector)
 {
-	m_arrWalls.push_back(_wall);
+	m_setWallDetectors.insert(_wallDetector);
 }
 
-void Scene::AddWallDetector(WallDetector* _wallDetector)
+void Scene::ReleaseWallDetector(WallDetector* _wallDetector)
 {
-	m_arrWallDetectors.push_back(_wallDetector);
+	if (m_setWallDetectors.find(_wallDetector) != m_setWallDetectors.end())
+		m_setWallDetectors.erase(_wallDetector);
 }
 
 void Scene::Update()
 {
-	for (int i = 0; i < m_arrObjects.size(); i++)
-		m_arrObjects[i]->Update();
+	for (Object* object: m_listObjects)
+		object->Update();
 
-	for (WallDetector* detector : m_arrWallDetectors)
+	for (WallDetector* detector : m_setWallDetectors)
 		detector->Update();
 
-	for (Wall* wall : m_arrWalls)
+	for (std::unique_ptr<Wall>& wall : m_listWalls)
 	{
-		for (WallDetector* detector : m_arrWallDetectors)
+		for (WallDetector* detector : m_setWallDetectors)
 			wall->ResolvePenetration(detector);
 	}
 
-	for (UI* ui : m_arrUIs)
+	for (std::unique_ptr<UI>& ui : m_arrUIs)
 		ui->Update();
 
 	UpdateUIVisibility();
@@ -134,18 +113,18 @@ void Scene::UpdateUIVisibility()
 
 void Scene::LateUpdate()
 {
-	for (int i = 0; i < m_arrObjects.size(); i++)
-		m_arrObjects[i]->LateUpdate();
+	for (Object* object : m_listObjects)
+		object->LateUpdate();
 }
 
 void Scene::Render(HDC _memDC)
 {
-	for (Object* object : m_arrObjects)
+	for (Object* object : m_listObjects)
 		object->Render(_memDC);
 
-	for (Wall* wall : m_arrWalls)
+	for (std::unique_ptr<Wall>& wall : m_listWalls)
 		wall->Render(_memDC);
 
-	for (UI* ui : m_arrUIs)
+	for (std::unique_ptr<UI>& ui : m_arrUIs)
 		ui->Render(_memDC);
 }

@@ -3,6 +3,8 @@
 #include "Interactable.h"
 
 class WallDetector;
+class RectCollider;
+class CircleCollider;
 class Player : public Character, public Interactable
 {
 public:
@@ -26,16 +28,15 @@ public:
 	};
 
 private:
-	//Collider*		m_pWallCollider;
-	WallDetector*	m_pWallDetector;
-	Collider*		m_pHurtBoxCollider;
-	Collider*		m_pInteractionCollider;
-	CHARACTER_STATE m_eState;
+	std::unique_ptr<WallDetector>	m_pWallDetector;
+	std::unique_ptr<Collider>		m_pHurtBoxCollider;
+	std::unique_ptr<Collider>		m_pInteractionCollider;
+	CHARACTER_STATE					m_eState;
 
-	Interactable*	m_pInteractableObject;
+	Interactable*					m_pInteractableObject;
 
-	std::function<void()> m_funcMapKeyCallback;
-	std::function<void()> m_funcMenuKeyCallback;
+	std::function<void()>			m_funcMapKeyCallback;
+	std::function<void()>			m_funcMenuKeyCallback;
 
 public:
 	Player();

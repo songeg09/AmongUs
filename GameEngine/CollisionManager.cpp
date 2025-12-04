@@ -46,6 +46,17 @@ void CollisionManager::RegistCollisionGroup(COLLISION_TAG _eFirst, COLLISION_TAG
 	m_CollisionGroupList[static_cast<int>(_eFirst)][static_cast<int>(_eSecond)] = true;
 }
 
+void CollisionManager::RegistCollider(Collider* _collider)
+{
+	m_setColliders[static_cast<int>(_collider->GetTag())].insert(_collider);
+}
+
+void CollisionManager::ReleaseCollider(Collider* _collider)
+{
+	if (m_setColliders[static_cast<int>(_collider->GetTag())].find(_collider) != m_setColliders[static_cast<int>(_collider->GetTag())].end())
+		m_setColliders[static_cast<int>(_collider->GetTag())].erase(_collider);
+}
+
 bool CollisionManager::IsCollision(Collider* _pFirst, Collider* _pSecond)
 {
 	if (_pFirst->GetType() == _pSecond->GetType())
@@ -148,63 +159,56 @@ void CollisionManager::ReleaseCollisionGroup()
 
 void CollisionManager::CollisionCheckGroup(COLLISION_TAG _eFirst, COLLISION_TAG _eSecond)
 {
-	Scene* CurScene = SceneManager::GetInstance()->GetCurScene();
-	const std::vector<Collider*>& FirstGroup = CurScene->GetCollisionTagGroup(_eFirst);
-	const std::vector<Collider*>& SecondGroup = CurScene->GetCollisionTagGroup(_eSecond);
+	const std::set<Collider*>& FirstGroup = m_setColliders[static_cast<int>(_eFirst)];
+	const std::set<Collider*>& SecondGroup = m_setColliders[static_cast<int>(_eSecond)];
 
-	for (int i = 0; i < FirstGroup.size(); ++i)
+	for (Collider* first: FirstGroup)
 	{
-		for (int j = 0; j < SecondGroup.size(); ++j)
+		for (Collider* second : SecondGroup)
 		{
-			if (FirstGroup[i] == SecondGroup[j])
+			if (first == second)
 				continue;
 
-			CollisionCheck(FirstGroup, SecondGroup);
+			CollisionCheck(first, second);
 		}
 	}
 }
 
-void CollisionManager::CollisionCheck(const std::vector<Collider*>& _pFirst, const std::vector<Collider*>& _pSecond)
+void CollisionManager::CollisionCheck(Collider* _pFirst, Collider* _pSecond)
 {
-	for (Collider* first : _pFirst)
+	Collider_ID ID;
+	ID.iFirst_ID = _pFirst->GetID();
+	ID.iSecond_ID = _pSecond->GetID();
+
+	std::map<unsigned long long, bool>::iterator iter = m_PrevCollision.find(ID.ID);
+
+	if (iter == m_PrevCollision.end())
 	{
-		for (Collider* second : _pSecond)
+		m_PrevCollision.insert(std::make_pair(ID.ID, false));
+		iter = m_PrevCollision.find(ID.ID);
+	}
+
+	if (IsCollision(_pFirst, _pSecond) == true)
+	{
+		if (iter->second == true)
 		{
-			Collider_ID ID;
-			ID.iFirst_ID = first->GetID();
-			ID.iSecond_ID = second->GetID();
-
-			std::map<unsigned long long, bool>::iterator iter = m_PrevCollision.find(ID.ID);
-
-			if (iter == m_PrevCollision.end())
-			{
-				m_PrevCollision.insert(std::make_pair(ID.ID, false));
-				iter = m_PrevCollision.find(ID.ID);
-			}
-
-			if (IsCollision(first, second) == true)
-			{
-				if (iter->second == true)
-				{
-					first->OnCollision(second);
-					second->OnCollision(first);
-				}
-				else
-				{
-					first->BeginCollision(second);
-					second->BeginCollision(first);
-					iter->second = true;
-				}
-			}
-			else
-			{
-				if (iter->second == true)
-				{
-					first->EndCollision(second);
-					second->EndCollision(first);
-					iter->second = false;
-				}
-			}
+			_pFirst->OnCollision(_pSecond);
+			_pSecond->OnCollision(_pFirst);
+		}
+		else
+		{
+			_pFirst->BeginCollision(_pSecond);
+			_pSecond->BeginCollision(_pFirst);
+			iter->second = true;
+		}
+	}
+	else
+	{
+		if (iter->second == true)
+		{
+			_pFirst->EndCollision(_pSecond);
+			_pSecond->EndCollision(_pFirst);
+			iter->second = false;
 		}
 	}
 }

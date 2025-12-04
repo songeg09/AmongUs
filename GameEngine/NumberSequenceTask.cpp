@@ -25,7 +25,7 @@ void NumberSequenceTask::Init(std::function<void()> _funcOpenCallback, std::func
 		_BtnCloseCallback
 	);
 
-	Texture* NumPad = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_NUMBER_START);
+	Texture* NumPad = ResourceManager::GetInstance()->LoadTexture(TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_NUMBER_START).get();
 	Vector2 m_NumPadSize = Vector2(NumPad->GetWidth(), NumPad->GetHeight());
 	m_NumPadSize.m_fx /= ConstValue::vec2BaseWindowSize.m_fx;
 	m_NumPadSize.m_fy /= ConstValue::vec2BaseWindowSize.m_fy;
@@ -48,14 +48,14 @@ void NumberSequenceTask::Init(std::function<void()> _funcOpenCallback, std::func
 			vec2NumPadPos.m_fx = m_NumPadStartPosInBackBuffer.m_fx + m_NumPadSize.m_fx * j;
 			vec2NumPadPos.m_fy = m_NumPadStartPosInBackBuffer.m_fy + m_NumPadSize.m_fy * i;
 
-			m_arrNumPadBtns[btnIndex] = std::make_unique<Button>();
+			m_arrNumPadBtns[btnIndex] = std::make_shared<Button>();
 			m_arrNumPadBtns[btnIndex]->Init(
 				(TEXTURE_TYPE)(btnIndex + TEXTURE_TYPE::TASK_NUMBER_SEQUENCE_NUMBER_START),
 				vec2NumPadPos,
 				UIElement::ANCHOR::TOP_LEFT,
 				std::bind(&Button::SetActivate, m_arrNumPadBtns[btnIndex].get(), false)
 			);
-			m_arrUIElemetns.push_back(m_arrNumPadBtns[btnIndex].get());
+			m_arrUIElemetns.push_back(m_arrNumPadBtns[btnIndex]);
 		}
 	}
 	Reset();
@@ -66,10 +66,8 @@ void NumberSequenceTask::Reset()
 	m_eTaskStatus = TASK_STATUS::PLAYING;
 	m_NextBtnIndex = 0;
 
-	for (std::unique_ptr<Button>& numPadBtn : m_arrNumPadBtns)
-	{
+	for (std::shared_ptr<Button>& numPadBtn : m_arrNumPadBtns)
 		numPadBtn->SetActivate(true);
-	}
 
 	int a, b;
 	for (int i = 0; i < 20; ++i)
@@ -99,7 +97,7 @@ void NumberSequenceTask::CheckWinStatus()
 	}
 	
 	int NumOfDeactivatedButtons = 0;
-	for (std::unique_ptr<Button>& btn : m_arrNumPadBtns)
+	for (std::shared_ptr<Button>& btn : m_arrNumPadBtns)
 	{
 		if (!btn->IsActivate())
 			NumOfDeactivatedButtons++;

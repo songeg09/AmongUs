@@ -24,17 +24,17 @@ EditorUI::~EditorUI()
 
 void EditorUI::Init(std::function<void()> _funcPlayerStartBtnCallback, std::function<void()> _funcWayPointsBtnCallBack, std::function<void()> _funcWallVerticesBtnCallback, std::function<void()> _funcVentBtnCallback, std::function<void()> _funcDataUploadBtnCallback, std::function<void()> _funcTimedButtonsBtnCallback, std::function<void()> _funcNumberSequenceBtnCallback, std::function<void()> _funcBackToTitleCallback, std::function<void()> _funcSaveCallback, std::function<void()> _funcRemoveLastCallback, std::function<void()> _funcClearSelectedCallback)
 {
-	m_btnPlayerStart = std::make_unique<Button>();
-	m_btnWayPoints = std::make_unique<Button>();
-	m_btnWallVertices = std::make_unique<Button>();
-	m_btnVent = std::make_unique<Button>();
-	m_btnDataUpload = std::make_unique<Button>();
-	m_btnTimedButtons = std::make_unique<Button>();
-	m_btnNumberSequence = std::make_unique<Button>();
-	m_btnBacktoTitle = std::make_unique<Button>();
-	m_btnSave = std::make_unique<Button>();
-	m_btnRemoveLast = std::make_unique<Button>();
-	m_btnClearSelected = std::make_unique<Button>();
+	m_btnPlayerStart = std::make_shared<Button>();
+	m_btnWayPoints = std::make_shared<Button>();
+	m_btnWallVertices = std::make_shared<Button>();
+	m_btnVent = std::make_shared<Button>();
+	m_btnDataUpload = std::make_shared<Button>();
+	m_btnTimedButtons = std::make_shared<Button>();
+	m_btnNumberSequence = std::make_shared<Button>();
+	m_btnBacktoTitle = std::make_shared<Button>();
+	m_btnSave = std::make_shared<Button>();
+	m_btnRemoveLast = std::make_shared<Button>();
+	m_btnClearSelected = std::make_shared<Button>();
 
 	m_btnPlayerStart->Init(TEXTURE_TYPE::BTN_PLAYER_START, Vector2(0.1, 0.2), UIElement::ANCHOR::CENTER, _funcPlayerStartBtnCallback);
 	m_btnWayPoints->Init(TEXTURE_TYPE::BTN_WAY_POINTS, Vector2(0.1, 0.3), UIElement::ANCHOR::CENTER, _funcWayPointsBtnCallBack);
@@ -48,17 +48,17 @@ void EditorUI::Init(std::function<void()> _funcPlayerStartBtnCallback, std::func
 	m_btnRemoveLast->Init(TEXTURE_TYPE::BTN_REMOVE_LAST, Vector2(0.9, 0.3), UIElement::ANCHOR::CENTER, _funcRemoveLastCallback);
 	m_btnClearSelected->Init(TEXTURE_TYPE::BTN_CLEAR_SELECTED, Vector2(0.9, 0.9), UIElement::ANCHOR::CENTER, _funcClearSelectedCallback);
 
-	m_arrUIElemetns.push_back(m_btnPlayerStart.get());
-	m_arrUIElemetns.push_back(m_btnWayPoints.get());
-	m_arrUIElemetns.push_back(m_btnWallVertices.get());
-	m_arrUIElemetns.push_back(m_btnVent.get());
-	m_arrUIElemetns.push_back(m_btnDataUpload.get());
-	m_arrUIElemetns.push_back(m_btnTimedButtons.get());
-	m_arrUIElemetns.push_back(m_btnNumberSequence.get());
-	m_arrUIElemetns.push_back(m_btnBacktoTitle.get());
-	m_arrUIElemetns.push_back(m_btnSave.get());
-	m_arrUIElemetns.push_back(m_btnRemoveLast.get());
-	m_arrUIElemetns.push_back(m_btnClearSelected.get());
+	m_arrUIElemetns.push_back(m_btnPlayerStart);
+	m_arrUIElemetns.push_back(m_btnWayPoints);
+	m_arrUIElemetns.push_back(m_btnWallVertices);
+	m_arrUIElemetns.push_back(m_btnVent);
+	m_arrUIElemetns.push_back(m_btnDataUpload);
+	m_arrUIElemetns.push_back(m_btnTimedButtons);
+	m_arrUIElemetns.push_back(m_btnNumberSequence);
+	m_arrUIElemetns.push_back(m_btnBacktoTitle);
+	m_arrUIElemetns.push_back(m_btnSave);
+	m_arrUIElemetns.push_back(m_btnRemoveLast);
+	m_arrUIElemetns.push_back(m_btnClearSelected);
 }
 
 void EditorUI::Render(HDC _memDC)

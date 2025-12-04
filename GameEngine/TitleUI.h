@@ -5,9 +5,9 @@ class Button;
 class TitleUI : public UI
 {
 private:
-	std::unique_ptr<Button> m_btnStart;
-	std::unique_ptr<Button> m_btnEdit;
-	std::unique_ptr<Button> m_btnQuit;
+	std::shared_ptr<Button> m_btnStart;
+	std::shared_ptr<Button> m_btnEdit;
+	std::shared_ptr<Button> m_btnQuit;
 
 public:
 	TitleUI();

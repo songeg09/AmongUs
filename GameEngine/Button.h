@@ -1,18 +1,13 @@
 #pragma once
 #include "UIElement.h"
 
-
-class Texture;
 class Button : public UIElement
 {
 protected:
-	
 	std::function<void()>	m_callBackFunc;
 	bool					m_bActivate;
-
 	RECT					m_btnArea;
 	
-
 public:
 	Button();
 	~Button();

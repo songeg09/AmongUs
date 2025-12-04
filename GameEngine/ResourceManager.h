@@ -65,17 +65,17 @@ class ResourceManager
 {
 	SINGLETON(ResourceManager)
 private:
-	std::map<std::wstring, Texture*> m_MapTexture;
-	std::map<std::wstring, TextureAtlas*> m_MapTextureAtlas;
+	std::map<std::wstring, std::shared_ptr<Texture>> m_MapTexture;
+	std::map<std::wstring, std::shared_ptr<TextureAtlas>> m_MapTextureAtlas;
 	std::map<std::wstring, std::vector<Data*>> m_MapData;
 	std::wstring GetTextureFileName(TEXTURE_TYPE _eTextureType);
 public:
 	void Init();
-	Texture* LoadTexture(TEXTURE_TYPE _eTextureType, bool _bFlipOption = false);
-	Texture* FindTexture(const std::wstring& _strKey);
+	std::shared_ptr<Texture> LoadTexture(TEXTURE_TYPE _eTextureType, bool _bFlipOption = false);
+	std::shared_ptr<Texture> FindTexture(const std::wstring& _strKey);
 
-	TextureAtlas* LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vector2 _vec2Position, Vector2 _vec2Size, int _margin, bool _Flip);
-	TextureAtlas* FindTextureAtlas(const std::wstring& _strKey);
+	std::shared_ptr<TextureAtlas> LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vector2 _vec2Position, Vector2 _vec2Size, int _margin, bool _Flip);
+	std::shared_ptr<TextureAtlas> FindTextureAtlas(const std::wstring& _strKey);
 
 	Data* GetData(std::wstring _strkey, int _iIndex);
 

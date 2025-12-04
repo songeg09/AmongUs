@@ -7,7 +7,6 @@
 TaskUI::TaskUI()
 {
 	m_eTaskStatus = TASK_STATUS::PLAYING;
-	m_pFrame = nullptr;
 }
 
 TaskUI::~TaskUI()
@@ -24,8 +23,8 @@ void TaskUI::Init(TEXTURE_TYPE _textureTypeFrame, std::function<void()> _funcOpe
 	m_vec2FrameStartPosInBackBuffer = SceneManager::GetInstance()->GetCurScene()->GetBackBufferSize();
 	m_vec2FrameStartPosInBackBuffer.m_fx /= 2;
 	m_vec2FrameStartPosInBackBuffer.m_fy /= 2;
-	m_vec2FrameStartPosInBackBuffer.m_fx -= m_pFrame->GetWidth() / 2;
-	m_vec2FrameStartPosInBackBuffer.m_fy -= m_pFrame->GetHeight() / 2;
+	m_vec2FrameStartPosInBackBuffer.m_fx -= m_pFrame.lock()->GetWidth() / 2;
+	m_vec2FrameStartPosInBackBuffer.m_fy -= m_pFrame.lock()->GetHeight() / 2;
 
 	Vector2 RelativePos = m_vec2FrameStartPosInBackBuffer;
 	RelativePos.m_fx -= ConstValue::fGameSceneGaurdBandPx;
@@ -34,9 +33,9 @@ void TaskUI::Init(TEXTURE_TYPE _textureTypeFrame, std::function<void()> _funcOpe
 	RelativePos.m_fy /= ConstValue::vec2BaseWindowSize.m_fy;
 	RelativePos.m_fx -= 0.06;
 
-	m_btnClose = std::make_unique<Button>();
+	m_btnClose = std::make_shared<Button>();
 	m_btnClose->Init(TEXTURE_TYPE::BTN_X, RelativePos, UIElement::ANCHOR::TOP_LEFT, _funcBtnCloseCallback, true);
-	m_arrUIElemetns.push_back(m_btnClose.get());
+	m_arrUIElemetns.push_back(m_btnClose);
 }
 
 void TaskUI::Update()
@@ -67,10 +66,10 @@ void TaskUI::Render(HDC _memDC)
 		return;
 
 	TransparentBlt(_memDC, m_vec2FrameStartPosInBackBuffer.m_fx, m_vec2FrameStartPosInBackBuffer.m_fy,
-		m_pFrame->GetWidth(), m_pFrame->GetHeight(),
-		m_pFrame->GetDC(),
+		m_pFrame.lock()->GetWidth(), m_pFrame.lock()->GetHeight(),
+		m_pFrame.lock()->GetDC(),
 		0, 0,
-		m_pFrame->GetWidth(), m_pFrame->GetHeight(),
+		m_pFrame.lock()->GetWidth(), m_pFrame.lock()->GetHeight(),
 		RGB(255, 0, 255)
 	);
 

@@ -5,18 +5,18 @@ class Button;
 class EditorUI : public UI
 {
 private:
-	std::unique_ptr<Button>		m_btnPlayerStart;
-	std::unique_ptr<Button>		m_btnWayPoints;
-	std::unique_ptr<Button>		m_btnWallVertices;
-	std::unique_ptr<Button>		m_btnVent;
-	std::unique_ptr<Button>		m_btnDataUpload;
-	std::unique_ptr<Button>		m_btnTimedButtons;
-	std::unique_ptr<Button>		m_btnNumberSequence;
-
-	std::unique_ptr<Button>		m_btnBacktoTitle;
-	std::unique_ptr<Button>		m_btnSave;
-	std::unique_ptr<Button>		m_btnRemoveLast;
-	std::unique_ptr<Button>		m_btnClearSelected;
+	std::shared_ptr<Button>		m_btnPlayerStart;
+	std::shared_ptr<Button>		m_btnWayPoints;
+	std::shared_ptr<Button>		m_btnWallVertices;
+	std::shared_ptr<Button>		m_btnVent;
+	std::shared_ptr<Button>		m_btnDataUpload;
+	std::shared_ptr<Button>		m_btnTimedButtons;
+	std::shared_ptr<Button>		m_btnNumberSequence;
+		
+	std::shared_ptr<Button>		m_btnBacktoTitle;
+	std::shared_ptr<Button>		m_btnSave;
+	std::shared_ptr<Button>		m_btnRemoveLast;
+	std::shared_ptr<Button>		m_btnClearSelected;
 
 public:
 	EditorUI();

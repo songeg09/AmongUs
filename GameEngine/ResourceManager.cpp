@@ -14,11 +14,6 @@ ResourceManager::ResourceManager()
 }
 ResourceManager::~ResourceManager()
 {
-	for (auto iter = m_MapTexture.begin(); iter != m_MapTexture.end(); iter++)
-		delete iter->second;
-
-	for (auto iter = m_MapTextureAtlas.begin(); iter != m_MapTextureAtlas.end(); iter++)
-		delete iter->second;
 }
 
 std::wstring ResourceManager::GetTextureFileName(TEXTURE_TYPE _eTextureType)
@@ -105,17 +100,17 @@ void ResourceManager::Init()
 	}
 }
 
-Texture* ResourceManager::LoadTexture(TEXTURE_TYPE _eTextureType, bool _bFlipOption)
+std::shared_ptr<Texture> ResourceManager::LoadTexture(TEXTURE_TYPE _eTextureType, bool _bFlipOption)
 {
 	std::wstring strFileName = GetTextureFileName(_eTextureType);
 	assert(strFileName.length() != 0);
 
 	std::wstring strKey = strFileName.substr(0, strFileName.length() - 4);
 
-	Texture* pTexture = FindTexture(strKey);
+	std::shared_ptr<Texture> pTexture = FindTexture(strKey);
 	if (pTexture == nullptr)
 	{
-		pTexture = new Texture;
+		pTexture = std::make_shared<Texture>();
 		std::wstring strPath = PathManager::GetInstance()->GetContentpath();
 		strPath += ConstValue::strTexturePath + strFileName;
 		pTexture->Load(strPath);
@@ -128,11 +123,11 @@ Texture* ResourceManager::LoadTexture(TEXTURE_TYPE _eTextureType, bool _bFlipOpt
 		return pTexture;
 
 	strKey = strKey + L"_flipped";
-	Texture* pTextureFlipped = FindTexture(strKey);
+	std::shared_ptr<Texture> pTextureFlipped = FindTexture(strKey);
 	if (pTextureFlipped == nullptr)
 	{
-		pTextureFlipped = new Texture;
-		pTextureFlipped->LoadFlipped(pTexture);
+		pTextureFlipped = std::make_shared<Texture>();
+		pTextureFlipped->LoadFlipped(pTexture.get());
 		pTexture->SetKey(strKey);
 		pTexture->SetRelativePath(strFileName);
 		m_MapTexture.insert(std::make_pair(strKey, pTextureFlipped));
@@ -141,16 +136,16 @@ Texture* ResourceManager::LoadTexture(TEXTURE_TYPE _eTextureType, bool _bFlipOpt
 	return pTextureFlipped;
 }
 
-Texture* ResourceManager::FindTexture(const std::wstring& _strKey)
+std::shared_ptr<Texture> ResourceManager::FindTexture(const std::wstring& _strKey)
 {
-	std::map<std::wstring, Texture*>::iterator iter = m_MapTexture.find(_strKey);
+	std::map<std::wstring, std::shared_ptr<Texture>>::iterator iter = m_MapTexture.find(_strKey);
 	if (iter == m_MapTexture.end())
 		return nullptr;
 	else
 		return iter->second;
 }
 
-TextureAtlas* ResourceManager::LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vector2 _vec2Position, Vector2 _vec2Size, int _margin, bool _Flip)
+std::shared_ptr<TextureAtlas> ResourceManager::LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vector2 _vec2Position, Vector2 _vec2Size, int _margin, bool _Flip)
 {
 	std::wstring strFileName = GetTextureFileName(_eTextureType);
 
@@ -159,10 +154,10 @@ TextureAtlas* ResourceManager::LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vect
 		+ std::to_wstring(_vec2Size.m_fx) + L"_" + std::to_wstring(_vec2Size.m_fy) + L"_"
 		+ std::to_wstring(_margin) + L"_" + std::to_wstring(_Flip);
 
-	TextureAtlas* pTextureAtlas = FindTextureAtlas(strKey);
+	std::shared_ptr<TextureAtlas> pTextureAtlas = FindTextureAtlas(strKey);
 	if (pTextureAtlas == nullptr)
 	{
-		pTextureAtlas = new TextureAtlas;
+		pTextureAtlas = std::make_shared<TextureAtlas>();
 		std::wstring strPath = PathManager::GetInstance()->GetContentpath();
 		strPath += ConstValue::strTexturePath + strFileName;
 		pTextureAtlas->Load(_eTextureType, _vec2Position, _vec2Size, _margin, _Flip);
@@ -176,9 +171,9 @@ TextureAtlas* ResourceManager::LoadTextureAtlas(TEXTURE_TYPE _eTextureType, Vect
 	return nullptr;
 }
 
-TextureAtlas* ResourceManager::FindTextureAtlas(const std::wstring& _strKey)
+std::shared_ptr<TextureAtlas> ResourceManager::FindTextureAtlas(const std::wstring& _strKey)
 {
-	std::map<std::wstring, TextureAtlas*>::iterator iter = m_MapTextureAtlas.find(_strKey);
+	std::map<std::wstring, std::shared_ptr<TextureAtlas>>::iterator iter = m_MapTextureAtlas.find(_strKey);
 	if (iter == m_MapTextureAtlas.end())
 		return nullptr;
 	else

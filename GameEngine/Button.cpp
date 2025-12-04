@@ -10,7 +10,6 @@ Button::Button()
 {
 	m_callBackFunc = nullptr;
 	m_bActivate = true;
-	m_pImage = nullptr;
 }
 
 Button::~Button()
@@ -36,20 +35,20 @@ void Button::SetBtnArea()
 	case ANCHOR::TOP_LEFT:
 		break;
 	case ANCHOR::CENTER:
-		btnAreaStartPos.m_fx -= m_pImage->GetWidth() / 2;
-		btnAreaStartPos.m_fy -= m_pImage->GetHeight() / 2;
+		btnAreaStartPos.m_fx -= m_pImage.lock()->GetWidth() / 2;
+		btnAreaStartPos.m_fy -= m_pImage.lock()->GetHeight() / 2;
 		break;
 	case ANCHOR::BOTTOM_RIGHT:
-		btnAreaStartPos.m_fx -= m_pImage->GetWidth();
-		btnAreaStartPos.m_fy -= m_pImage->GetHeight();
+		btnAreaStartPos.m_fx -= m_pImage.lock()->GetWidth();
+		btnAreaStartPos.m_fy -= m_pImage.lock()->GetHeight();
 		break;
 	}
 	
 	m_btnArea = {
 		(long)btnAreaStartPos.m_fx,
 		(long)btnAreaStartPos.m_fy,
-		(long)btnAreaStartPos.m_fx + m_pImage->GetWidth(),
-		(long)btnAreaStartPos.m_fy + m_pImage->GetHeight()
+		(long)btnAreaStartPos.m_fx + m_pImage.lock()->GetWidth(),
+		(long)btnAreaStartPos.m_fy + m_pImage.lock()->GetHeight()
 	};
 }
 
@@ -84,7 +83,7 @@ void Button::Render(HDC _memDC, BLENDFUNCTION bf)
 
 	BitBlt(
 		hAlphaDC,
-		0, 0, m_pImage->GetWidth(), m_pImage->GetHeight(),
+		0, 0, m_pImage.lock()->GetWidth(), m_pImage.lock()->GetHeight(),
 		_memDC,
 		m_vecAbsoluteStartPos.m_fx,
 		m_vecAbsoluteStartPos.m_fy,
@@ -94,10 +93,10 @@ void Button::Render(HDC _memDC, BLENDFUNCTION bf)
 	TransparentBlt(
 		hAlphaDC,
 		0, 0,
-		m_pImage->GetWidth(), m_pImage->GetHeight(),
-		m_pImage->GetDC(),
+		m_pImage.lock()->GetWidth(), m_pImage.lock()->GetHeight(),
+		m_pImage.lock()->GetDC(),
 		0, 0,
-		m_pImage->GetWidth(), m_pImage->GetHeight(),
+		m_pImage.lock()->GetWidth(), m_pImage.lock()->GetHeight(),
 		RGB(255, 0, 255)
 	);
 
@@ -107,10 +106,10 @@ void Button::Render(HDC _memDC, BLENDFUNCTION bf)
 		AlphaBlend(
 			_memDC,
 			m_vecAbsoluteStartPos.m_fx, m_vecAbsoluteStartPos.m_fy,
-			m_pImage->GetWidth(), m_pImage->GetHeight(),
+			m_pImage.lock()->GetWidth(), m_pImage.lock()->GetHeight(),
 			hAlphaDC,
 			0, 0,
-			m_pImage->GetWidth(), m_pImage->GetHeight(),
+			m_pImage.lock()->GetWidth(), m_pImage.lock()->GetHeight(),
 			bf
 		);
 	}
@@ -118,7 +117,7 @@ void Button::Render(HDC _memDC, BLENDFUNCTION bf)
 	{
 		BitBlt(_memDC,
 			m_vecAbsoluteStartPos.m_fx, m_vecAbsoluteStartPos.m_fy,
-			m_pImage->GetWidth(), m_pImage->GetHeight(),
+			m_pImage.lock()->GetWidth(), m_pImage.lock()->GetHeight(),
 			hAlphaDC,
 			0, 0,
 			SRCCOPY

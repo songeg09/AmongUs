@@ -13,15 +13,12 @@ public:
 	};
 
 protected:
-	Texture*				m_pImage;
-
-	Vector2					m_vec2RelativePosition;
-	Vector2					m_vecAbsoluteStartPos;
-	ANCHOR					m_eAnchor;
-
-	bool					m_bVisibility;
+	std::weak_ptr<Texture>			m_pImage;
+	Vector2							m_vec2RelativePosition;
+	Vector2							m_vecAbsoluteStartPos;
+	ANCHOR							m_eAnchor;
+	bool							m_bVisibility;
 	
-
 public:
 	UIElement();
 	~UIElement();

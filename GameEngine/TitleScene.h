@@ -12,7 +12,7 @@ class TitleScene : public Scene
 	};
 
 private:
-	Texture*			m_pBackGround;
+	std::weak_ptr<Texture>			m_pBackGround;
 
 public:
 	TitleScene(std::wstring _strName);

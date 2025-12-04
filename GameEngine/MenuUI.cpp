@@ -15,13 +15,13 @@ MenuUI::~MenuUI()
 
 void MenuUI::Init(std::function<void()> _funcPlayAgainCallback, std::function<void()> _funcQuitCallback)
 {
-	m_btnPlayAgain = std::make_unique<Button>();
+	m_btnPlayAgain = std::make_shared<Button>();
 	m_btnPlayAgain->Init(TEXTURE_TYPE::BTN_PLAYAGAIN, Vector2(0.4,0.5),UIElement::ANCHOR::CENTER, _funcPlayAgainCallback);
-	m_arrUIElemetns.push_back(m_btnPlayAgain.get());
+	m_arrUIElemetns.push_back(m_btnPlayAgain);
 
-	m_btnQuit = std::make_unique<Button>();
+	m_btnQuit = std::make_shared<Button>();
 	m_btnQuit->Init(TEXTURE_TYPE::BTN_QUIT, Vector2(0.6, 0.5), UIElement::ANCHOR::CENTER, _funcQuitCallback);
-	m_arrUIElemetns.push_back(m_btnQuit.get());
+	m_arrUIElemetns.push_back(m_btnQuit);
 }
 
 

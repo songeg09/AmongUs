@@ -4,13 +4,16 @@ class Object;
 class WallDetector
 {
 private:
-	Object*					m_pOwner;
+	std::weak_ptr<Object>   m_pOwner;
 	Vector2					m_vec2Offset;
 	Vector2					m_vec2Position;
 	float					m_fRadius;
 
 public:
-	void Init(Object* _pOwner, Vector2 _vec2Offset, float _fRadius);
+	WallDetector();
+	~WallDetector();
+
+	void Init(std::shared_ptr<Object> _pOwner, Vector2 _vec2Offset, float _fRadius);
 	void Update();
 	void Render(HDC _memDC);
 	

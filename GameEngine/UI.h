@@ -5,7 +5,7 @@ class UI abstract
 {
 protected:
 	bool									m_bVisibility;
-	std::vector<UIElement*>					m_arrUIElemetns;
+	std::vector<std::weak_ptr<UIElement>>	m_arrUIElemetns;
 
 	std::function<void()>					m_funcOpenCallback;
 	std::function<void()>					m_funcCloseCallback;

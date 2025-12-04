@@ -6,7 +6,7 @@ class Button;
 class NumberSequenceTask : public TaskUI
 {
 private:
-	std::unique_ptr<Button>				m_arrNumPadBtns[10];
+	std::shared_ptr<Button>				m_arrNumPadBtns[10];
 	int									m_NextBtnIndex;
 
 public:

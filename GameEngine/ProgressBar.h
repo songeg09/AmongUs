@@ -5,9 +5,9 @@ class Texture;
 class ProgressBar : public UIElement
 {
 private:
-	Texture*		m_pProgressBar;
-	Vector2			m_vec2ProgressStartPos;
-	float			m_fProgress;
+	std::weak_ptr<Texture>	m_pProgressBar;
+	Vector2					m_vec2ProgressStartPos;
+	float					m_fProgress;
 
 public:
 	ProgressBar();

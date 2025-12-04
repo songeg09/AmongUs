@@ -12,16 +12,16 @@ public:
 	};
 
 private:
-	Player*				m_Player;
-	MinimapProvider*	m_MinimapProvider;
-	int					m_iTotalTasks;
-	GAME_STATE			m_eState;
+	std::weak_ptr<Player>				m_Player;
+	std::weak_ptr<MinimapProvider>		m_MinimapProvider;
+	int									m_iTotalTasks;
+	GAME_STATE							m_eState;
 
 public:
 	GameMode();
 	~GameMode();
 
-	void Init(Player* _Player, MinimapProvider* _MinimapProvider);
+	void Init(std::shared_ptr<Player> _Player, std::shared_ptr<MinimapProvider> _MinimapProvider);
 	void Update();
 	float GetProgress();
 	GAME_STATE GetGameState() { return m_eState; }

@@ -17,6 +17,7 @@ private:
 	int m_iCollisionCount;
 	bool m_bEnabled;
 	COLLIDER_TYPE m_eColliderType;
+	COLLISION_TAG m_eTag;
 	std::function<void(Collider* _pOther)> m_OnCollisioncallBack;
 	std::function<void(Collider* _pOther)> m_BeginCollisioncallBack;
 	std::function<void(Collider* _pOther)> m_EndCollisioncallBack;
@@ -41,12 +42,13 @@ public:
 	inline void SetEnable(bool _bEnabled) { m_bEnabled = _bEnabled; }
 	int GetCollisionCount() { return m_iCollisionCount; }
 	COLLIDER_TYPE GetType() { return m_eColliderType; }
+	COLLISION_TAG GetTag() { return m_eTag; }
 
 	void FinalUpdate();
 	virtual void Render(HDC _memDC) = 0;
 
-	Collider();
-	~Collider();
+	Collider(COLLISION_TAG _eTag);
+	virtual ~Collider();
 };
 
 class RectCollider : public Collider
@@ -55,6 +57,9 @@ private:
 	Vector2 m_vecSize;
 
 public:
+	RectCollider(COLLISION_TAG _eTag);
+	~RectCollider();
+
 	void Init(bool _bEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
 	void Render(HDC _memDC) override;
 	Rect GetRect();
@@ -67,6 +72,9 @@ class CircleCollider : public Collider
 private:
 	float m_fRadius;
 public:
+	CircleCollider(COLLISION_TAG _eTag);
+	~CircleCollider();
+
 	void Init(bool _bEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
 	void Render(HDC _memDC) override;
 	void SetSize(float _fRadius) { m_fRadius = _fRadius; }

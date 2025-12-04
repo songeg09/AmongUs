@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "Vent.h"
 #include "Player.h"
+#include "Collider.h"
 
 Vent::Vent()
 {
-	m_pInteractRange = nullptr;
 }
 
 Vent::~Vent()
@@ -23,7 +23,7 @@ void Vent::Init(Vector2 _vec2Position)
 
 void Vent::Interact(Character* _Interactor)
 {
-	if (Player* player = static_cast<Player*>(_Interactor))
+	if (Player* player = dynamic_cast<Player*>(_Interactor))
 	{
 		player->SetPosition(GetPosition());
 		player->Hide();

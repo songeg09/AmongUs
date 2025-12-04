@@ -3,11 +3,12 @@
 #include "GDIManager.h"
 #include "Actor.h"
 #include "SceneManager.h"
+#include "CollisionManager.h"
 
 unsigned int Collider::s_uID = 0;
 
-Collider::Collider() 
-	: m_uID(++s_uID)
+Collider::Collider(COLLISION_TAG _eTag)
+	: m_uID(++s_uID), m_eTag(_eTag)
 {
 	m_vecOffset = {};
 	m_vecPosition = {};
@@ -17,10 +18,14 @@ Collider::Collider()
 	m_OnCollisioncallBack = nullptr;
 	m_BeginCollisioncallBack = nullptr;
 	m_EndCollisioncallBack = nullptr;
+	m_eColliderType = COLLIDER_TYPE::RECTANGLE;
+
+	CollisionManager::GetInstance()->RegistCollider(this);
 }
 
 Collider::~Collider()
 {
+	CollisionManager::GetInstance()->ReleaseCollider(this);
 }
 
 void Collider::Init(bool _bEnabled, Vector2 _vecOffset)
@@ -54,6 +59,15 @@ void Collider::FinalUpdate()
 {
 	Vector2 vecObjectPosition = m_pTarget->GetPosition();
 	m_vecPosition = vecObjectPosition + m_vecOffset;
+}
+
+RectCollider::RectCollider(COLLISION_TAG _eTag)
+	:Collider(_eTag)
+{
+}
+
+RectCollider::~RectCollider()
+{
 }
 
 void RectCollider::Init(bool _bEnabled, Vector2 _vecSize, Vector2 _vecOffset)
@@ -91,6 +105,15 @@ Rect RectCollider::GetRect()
 		GetPosition().m_fy - GetSize().m_fy / 2.0f,
 		GetPosition().m_fx + GetSize().m_fx / 2.0f,
 		GetPosition().m_fy + GetSize().m_fy / 2.0f };
+}
+
+CircleCollider::CircleCollider(COLLISION_TAG _eTag)
+	: Collider(_eTag)
+{
+}
+
+CircleCollider::~CircleCollider()
+{
 }
 
 void CircleCollider::Init(bool _bEnabled, float _fRadius, Vector2 _vecOffset)

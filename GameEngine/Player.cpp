@@ -20,6 +20,7 @@ Player::Player()
 
 Player::~Player()
 {
+
 }
 
 void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallback, std::function<void()> _funcMenuKeyCallback)
@@ -28,9 +29,10 @@ void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallba
 
 	m_funcMapKeyCallback = _funcMapKeyCallback;
 
-	m_pWallDetector = CreateWallDetector(Vector2(0, 40), 20.0f);
-	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
+	m_pWallDetector = CreateWallDetector(this, Vector2(0, 40), 20.0f);
 	
+	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
+
 	m_pInteractionCollider = CreateCircleCollider(COLLISION_TAG::PLAYER_INTERACTION, true, 110.f, Vector2(0, 15));
 	m_pInteractionCollider->SetOnCollisionCallBack(std::bind(&Player::UpdateInteractableObject, this, std::placeholders::_1));
 	m_pInteractionCollider->SetEndCollisionCallBack(std::bind(&Player::ClearCurrentInteractable, this, std::placeholders::_1));

@@ -5,8 +5,8 @@
 
 UIElement::UIElement()
 {
-	m_pImage = nullptr;
 	m_bVisibility = true;
+	m_eAnchor = ANCHOR::CENTER;
 }
 
 UIElement::~UIElement()
@@ -31,12 +31,12 @@ Vector2 UIElement::GetAbsoluteStartPos()
 	case TOP_LEFT:
 		break;
 	case CENTER:
-		vec2AbsoluteStartPos.m_fx -= m_pImage->GetWidth() / 2;
-		vec2AbsoluteStartPos.m_fy -= m_pImage->GetHeight() / 2;
+		vec2AbsoluteStartPos.m_fx -= m_pImage.lock()->GetWidth() / 2;
+		vec2AbsoluteStartPos.m_fy -= m_pImage.lock()->GetHeight() / 2;
 		break;
 	case BOTTOM_RIGHT:
-		vec2AbsoluteStartPos.m_fx -= m_pImage->GetWidth();
-		vec2AbsoluteStartPos.m_fy -= m_pImage->GetHeight();
+		vec2AbsoluteStartPos.m_fx -= m_pImage.lock()->GetWidth();
+		vec2AbsoluteStartPos.m_fy -= m_pImage.lock()->GetHeight();
 		break;
 	}
 	return vec2AbsoluteStartPos;

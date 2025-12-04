@@ -2,7 +2,6 @@
 #include "Character.h"
 
 class Collider;
-class RectZone;
 class Ghost: public Character
 {
 public:
@@ -21,18 +20,18 @@ public:
 	};
 
 private:
-	Collider*			m_pHearingCollider;
-	Collider*			m_pSightCollider;
-	Collider*			m_pChasingCollider;
-	Collider*			m_pAttackRangeCollider;
+	std::unique_ptr<Collider>			m_pHearingCollider;
+	std::unique_ptr<Collider>			m_pSightCollider;
+	std::unique_ptr<Collider>			m_pChasingCollider;
+	std::unique_ptr<Collider>			m_pAttackRangeCollider;
 
-	CHARACTER_STATE			m_eState;
+	CHARACTER_STATE						m_eState;
 
-	std::vector<Vector2>	m_arrWayPoints;
-	int						m_iCurWayPoint;
+	std::vector<Vector2>				m_arrWayPoints;
+	int									m_iCurWayPoint;
 
-	float					m_fCurSearchTime;
-	Vector2					m_vec2SearchPoint;
+	float								m_fCurSearchTime;
+	Vector2								m_vec2SearchPoint;
 
 public:
 	Ghost();

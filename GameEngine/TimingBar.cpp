@@ -6,7 +6,6 @@
 
 TimingBar::TimingBar()
 {
-	m_pTimingCursor = nullptr;
 	m_bPlaying = false;
 	m_fCycleTime = 0.0f;
 	m_fRatio = 0.0f;
@@ -25,9 +24,9 @@ void TimingBar::Init(TEXTURE_TYPE _pTimingBar, TEXTURE_TYPE _pTimingCursor, Vect
 	m_funcOnFailCallback = _funcOnFailCallback;
 
 	m_vec2InitialCursorPos = m_vecAbsoluteStartPos;
-	m_vec2InitialCursorPos.m_fy = m_vecAbsoluteStartPos.m_fy + m_pImage->GetHeight() / 2;
-	m_vec2InitialCursorPos.m_fy -= m_pTimingCursor->GetHeight()/2;
-	m_vec2InitialCursorPos.m_fx -= m_pTimingCursor->GetWidth()/2;
+	m_vec2InitialCursorPos.m_fy = m_vecAbsoluteStartPos.m_fy + m_pImage.lock()->GetHeight() / 2;
+	m_vec2InitialCursorPos.m_fy -= m_pTimingCursor.lock()->GetHeight() / 2;
+	m_vec2InitialCursorPos.m_fx -= m_pTimingCursor.lock()->GetWidth()/2;
 }
 
 void TimingBar::Update()
@@ -41,7 +40,7 @@ void TimingBar::Update()
 	m_fRatio = (m_fElapsedTime * 2) / m_fCycleTime;
 	if (m_fRatio > 1.0f)
 		m_fRatio = 2.0f - m_fRatio;
-	m_vec2CursorPos.m_fx = m_vec2InitialCursorPos.m_fx + m_pImage->GetWidth() * m_fRatio;
+	m_vec2CursorPos.m_fx = m_vec2InitialCursorPos.m_fx + m_pImage.lock()->GetWidth() * m_fRatio;
 }
 
 void TimingBar::Render(HDC _memDC)
@@ -51,19 +50,19 @@ void TimingBar::Render(HDC _memDC)
 
 	TransparentBlt(_memDC,
 		m_vecAbsoluteStartPos.m_fx, m_vecAbsoluteStartPos.m_fy,
-		m_pImage->GetWidth(), m_pImage->GetHeight(),
-		m_pImage->GetDC(),
+		m_pImage.lock()->GetWidth(), m_pImage.lock()->GetHeight(),
+		m_pImage.lock()->GetDC(),
 		0, 0,
-		m_pImage->GetWidth(), m_pImage->GetHeight(),
+		m_pImage.lock()->GetWidth(), m_pImage.lock()->GetHeight(),
 		RGB(255, 0, 255)
 	);
 
 	TransparentBlt(_memDC,
 		m_vec2CursorPos.m_fx, m_vec2CursorPos.m_fy,
-		m_pTimingCursor->GetWidth(), m_pTimingCursor->GetHeight(),
-		m_pTimingCursor->GetDC(),
+		m_pTimingCursor.lock()->GetWidth(), m_pTimingCursor.lock()->GetHeight(),
+		m_pTimingCursor.lock()->GetDC(),
 		0, 0,
-		m_pTimingCursor->GetWidth(), m_pTimingCursor->GetHeight(),
+		m_pTimingCursor.lock()->GetWidth(), m_pTimingCursor.lock()->GetHeight(),
 		RGB(255, 0, 255)
 	);
 }

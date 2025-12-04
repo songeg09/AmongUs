@@ -20,10 +20,10 @@ public:
 	virtual void Render(HDC _memDC);
 	virtual void Init(Vector2 _vec2Position);
 
-	Collider* CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
-	Collider* CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
-	WallDetector* CreateWallDetector(Vector2 _vec2Offset, float _fRadius);
-	
+	std::unique_ptr<Collider> CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	std::unique_ptr<Collider> CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	std::unique_ptr<WallDetector> CreateWallDetector(Object* _Owner, Vector2 _vec2Offset, float _fRadius);
+
 	void ColliderRender(HDC _memDC);
 	bool UseCollider() { return m_pColliderList.size() != 0; }
 
