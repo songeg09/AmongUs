@@ -9,25 +9,25 @@ class Object;
 class Collider abstract
 {
 private:
-	static unsigned int s_uID;
-	Object* m_pTarget;
-	Vector2 m_vecOffset;
-	Vector2 m_vecPosition;
-	const unsigned int m_uID;
-	int m_iCollisionCount;
-	bool m_bEnabled;
-	COLLIDER_TYPE m_eColliderType;
-	COLLISION_TAG m_eTag;
-	std::function<void(Collider* _pOther)> m_OnCollisioncallBack;
-	std::function<void(Collider* _pOther)> m_BeginCollisioncallBack;
-	std::function<void(Collider* _pOther)> m_EndCollisioncallBack;
+	static unsigned int						s_uID;
+	std::weak_ptr<Object>					m_pTarget;
+	Vector2									m_vecOffset;
+	Vector2									m_vecPosition;
+	const unsigned int						m_uID;
+	int										m_iCollisionCount;
+	bool									m_bEnabled;
+	COLLIDER_TYPE							m_eColliderType;
+	COLLISION_TAG							m_eTag;
+	std::function<void(Collider* _pOther)>	m_OnCollisioncallBack;
+	std::function<void(Collider* _pOther)>	m_BeginCollisioncallBack;
+	std::function<void(Collider* _pOther)>	m_EndCollisioncallBack;
 public:
 	void Init(bool _bEnabled, Vector2 _vecOffset);
 	inline void SetOnCollisionCallBack(std::function<void(Collider* _pOther)> _pCallBack) { m_OnCollisioncallBack = _pCallBack; }
 	inline void SetBeginCollisionCallBack(std::function<void(Collider* _pOther)> _pCallBack) { m_BeginCollisioncallBack = _pCallBack; }
 	inline void SetEndCollisionCallBack(std::function<void(Collider* _pOther)> _pCallBack) { m_EndCollisioncallBack = _pCallBack; }
 	inline void SetOffsetPosition(Vector2 _vecPosition) { m_vecOffset = _vecPosition; }
-	inline void SetTarget(Object* _pTarget) { m_pTarget = _pTarget; }
+	inline void SetTarget(std::shared_ptr<Object> _pTarget) { m_pTarget = _pTarget; }
 	inline void SetType(COLLIDER_TYPE _eColliderType) { m_eColliderType = _eColliderType; }
 
 	void OnCollision(Collider* _pOther);
@@ -37,7 +37,7 @@ public:
 	inline unsigned int GetID() { return m_uID; }
 	inline Vector2 GetOffsetPosition() { return m_vecOffset; }
 	inline Vector2 GetPosition() { return m_vecPosition; }
-	inline Object* GetTarget() { return m_pTarget; }
+	inline Object* GetTarget() { return m_pTarget.lock().get(); }
 	inline bool isEnable() { return m_bEnabled; }
 	inline void SetEnable(bool _bEnabled) { m_bEnabled = _bEnabled; }
 	int GetCollisionCount() { return m_iCollisionCount; }

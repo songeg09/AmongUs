@@ -1,7 +1,7 @@
 #pragma once 
 
 class Object;
-class WallDetector
+class WallDetector : public std::enable_shared_from_this<WallDetector>
 {
 private:
 	std::weak_ptr<Object>   m_pOwner;

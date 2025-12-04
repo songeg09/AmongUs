@@ -13,9 +13,9 @@ protected:
 									// 어색하게 그려지지 않게 도와주는 버퍼
 	float   m_fGuardBandPx;
 
-	std::list<Object*>							m_listObjects;
+	std::set<std::weak_ptr<Object>>				m_setObjects;
+	std::set<std::weak_ptr<WallDetector>>		m_setWallDetectors;
 	std::list<std::unique_ptr<Wall>>			m_listWalls;
-	std::set<WallDetector*>						m_setWallDetectors;
 
 	std::wstring								m_strName;
 
@@ -34,8 +34,8 @@ public:
 
 	void AddObject(Object* _object);
 	void CreateWall(Vector2 _vec2Start, Vector2 _vec2End);
-	void RegisterWallDetector(WallDetector* _wallDetector);
-	void ReleaseWallDetector(WallDetector* _wallDetector);
+	void RegisterWallDetector(std::shared_ptr<WallDetector> _wallDetector);
+	void UnregisterWallDetector(std::shared_ptr<WallDetector>  _wallDetector);
 	inline void SetName(const std::wstring _strName) { m_strName = _strName; }
 
 	inline Vector2 GetSceneSize() { return m_vec2SceneSize; }

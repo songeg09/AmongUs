@@ -12,7 +12,6 @@ Collider::Collider(COLLISION_TAG _eTag)
 {
 	m_vecOffset = {};
 	m_vecPosition = {};
-	m_pTarget = nullptr;
 	m_iCollisionCount = 0;
 	m_bEnabled = false;
 	m_OnCollisioncallBack = nullptr;

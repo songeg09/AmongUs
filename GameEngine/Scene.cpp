@@ -26,7 +26,6 @@ void Scene::Release()
 {
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
 
-	m_listObjects.clear();;
 	m_arrUIs.clear();
 	m_listWalls.clear();
 }
@@ -65,29 +64,30 @@ void Scene::CreateWall(Vector2 _vec2Start, Vector2 _vec2End)
 	m_listWalls.push_back(std::move(wall));
 }
 
-void Scene::RegisterWallDetector(WallDetector* _wallDetector)
+void Scene::RegisterWallDetector(std::shared_ptr<WallDetector> _wallDetector)
 {
 	m_setWallDetectors.insert(_wallDetector);
 }
 
-void Scene::ReleaseWallDetector(WallDetector* _wallDetector)
+void Scene::UnregisterWallDetector(std::shared_ptr<WallDetector> _wallDetector)
 {
 	if (m_setWallDetectors.find(_wallDetector) != m_setWallDetectors.end())
 		m_setWallDetectors.erase(_wallDetector);
 }
+
 
 void Scene::Update()
 {
 	for (Object* object: m_listObjects)
 		object->Update();
 
-	for (WallDetector* detector : m_setWallDetectors)
-		detector->Update();
+	for (std::weak_ptr<WallDetector> detector : m_setWallDetectors)
+		detector.lock()->Update();
 
 	for (std::unique_ptr<Wall>& wall : m_listWalls)
 	{
-		for (WallDetector* detector : m_setWallDetectors)
-			wall->ResolvePenetration(detector);
+		for (std::weak_ptr<WallDetector> detector : m_setWallDetectors)
+			wall->ResolvePenetration(detector.lock().get());
 	}
 
 	for (std::unique_ptr<UI>& ui : m_arrUIs)
