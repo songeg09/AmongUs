@@ -57,6 +57,10 @@ void Ghost::Update()
 	case CHARACTER_STATE::PATROL:
 		UpdatePatrol();
 		break;
+	case CHARACTER_STATE::INVESTIGATE:
+		break;
+	case CHARACTER_STATE::CHASE:
+		break;
 	case CHARACTER_STATE::SEARCH:
 		UpdateSearch();
 		break;

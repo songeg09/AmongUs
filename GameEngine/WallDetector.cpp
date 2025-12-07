@@ -6,12 +6,12 @@
 
 WallDetector::WallDetector()
 {
-	SceneManager::GetInstance()->GetCurScene()->RegisterWallDetector(shared_from_this());
+	SceneManager::GetInstance()->GetCurScene()->RegisterWallDetector(this);
 }
 
 WallDetector::~WallDetector()
 {
-	SceneManager::GetInstance()->GetCurScene()->UnregisterWallDetector(shared_from_this());
+	SceneManager::GetInstance()->GetCurScene()->UnregisterWallDetector(this);
 }
 
 void WallDetector::Init(std::shared_ptr<Object> _pOwner, Vector2 _vec2Offset, float _fRadius)

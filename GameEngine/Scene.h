@@ -13,8 +13,8 @@ protected:
 									// 어색하게 그려지지 않게 도와주는 버퍼
 	float   m_fGuardBandPx;
 
-	std::vector<std::weak_ptr<Object>>			m_arrObjects;
-	std::vector<std::weak_ptr<WallDetector>>	m_arrWallDetectors;
+	std::vector<Object*>						m_arrObjects;
+	std::vector<WallDetector*>					m_arrWallDetectors;
 
 	std::vector<std::unique_ptr<Wall>>			m_arrWalls;
 	std::vector<std::unique_ptr<UI>>			m_arrUIs;
@@ -34,10 +34,10 @@ public:
 	virtual void Release();
 
 	void CreateWall(Vector2 _vec2Start, Vector2 _vec2End);
-	void RegistObject(std::shared_ptr<Object> _object);
-	void UnregistObejct(std::shared_ptr<Object> _object);
-	void RegisterWallDetector(std::shared_ptr<WallDetector> _wallDetector);
-	void UnregisterWallDetector(std::shared_ptr<WallDetector>  _wallDetector);
+	void RegistObject(Object* _object);
+	void UnregistObejct(Object* _object);
+	void RegisterWallDetector(WallDetector* _wallDetector);
+	void UnregisterWallDetector(WallDetector* _wallDetector);
 	inline void SetName(const std::wstring _strName) { m_strName = _strName; }
 
 	inline Vector2 GetSceneSize() { return m_vec2SceneSize; }

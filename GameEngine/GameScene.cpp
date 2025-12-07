@@ -45,7 +45,6 @@ void GameScene::Release()
 	m_Ghost = nullptr;
 	m_arrGameObjects.clear();
 	m_arrVents.clear();
-
 	m_setTasksLeft.clear();
 }
 
@@ -312,7 +311,6 @@ void GameScene::OnTaskSuccess()
 
 void GameScene::OnTaskFail()
 {
-	//m_GlobalSoundZone->SetEnable(true);
-	//m_GlobalSoundZone->SetPosition(m_Player->GetInteractableObject()->GetPosition());
+	m_Player->GetInteractableObject()->OnFail();
 	OpenUI(static_cast<int>(UI_TYPE::HUD));
 }

@@ -8,6 +8,7 @@ class Ghost;
 class GameMode;
 class GameObject;
 class Interactable;
+class Vent;
 class GameScene : public Scene, public MinimapProvider, public std::enable_shared_from_this<GameScene>
 {
 	enum class UI_TYPE
@@ -58,4 +59,3 @@ public:
 	void OnTaskFail();
 
 };
-

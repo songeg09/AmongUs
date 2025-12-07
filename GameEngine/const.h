@@ -29,6 +29,7 @@ namespace ConstValue
 	static const float fWallVerticesThreshold = 5.0f;
 
 	static const float fMaxUploadTime = 10.0f;
+	static const float fAlarmDuration = 5.0f;
 	
 	static const float fGhostProximityRange = 20.0f;
 	static const float fGhostSearchTime = 5.0f;

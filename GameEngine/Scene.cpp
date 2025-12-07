@@ -58,14 +58,15 @@ void Scene::CreateWall(Vector2 _vec2Start, Vector2 _vec2End)
 	m_arrWalls.push_back(std::move(wall));
 }
 
-void Scene::RegistObject(std::shared_ptr<Object> _object)
+void Scene::RegistObject(Object* _object)
 {
 	m_arrObjects.push_back(_object);
 }
 
-void Scene::UnregistObejct(std::shared_ptr<Object> _object)
+void Scene::UnregistObejct(Object* _object)
 {
-	std::vector<std::weak_ptr<Object>>::iterator it = std::find(m_arrObjects.begin(), m_arrObjects.end(), _object);
+	std::vector<Object*>::iterator it = std::find(m_arrObjects.begin(), m_arrObjects.end(),_object);
+
 	if (it != m_arrObjects.end())
 	{
 		*it = m_arrObjects.back();
@@ -73,25 +74,15 @@ void Scene::UnregistObejct(std::shared_ptr<Object> _object)
 	}
 }
 
-void Scene::RegisterWallDetector(std::shared_ptr<WallDetector> _wallDetector)
+void Scene::RegisterWallDetector(WallDetector* _wallDetector)
 {
 	m_arrWallDetectors.push_back(_wallDetector);
 }
 
-void Scene::UnregisterWallDetector(std::shared_ptr<WallDetector> _wallDetector)
+void Scene::UnregisterWallDetector(WallDetector* _wallDetector)
 {
-	std::vector<std::weak_ptr<WallDetector>>::iterator it = std::find(m_arrWallDetectors.begin(), m_arrWallDetectors.end(),
-		[_wallDetector](const std::weak_ptr<WallDetector>& weakPtr)
-		{
-			// 1. 자물쇠 열어서(lock) 실체 확인
-			auto shared = weakPtr.lock();
+	std::vector<WallDetector* >::iterator it = std::find(m_arrWallDetectors.begin(), m_arrWallDetectors.end(),_wallDetector);
 
-			// 2. 살아있으면 주소(.get) 비교, 죽었으면(nullptr) false
-			if (shared)
-				return shared.get() == _wallDetector;
-
-			return false;
-		});
 	if (it != m_arrWallDetectors.end())
 	{
 		*it = m_arrWallDetectors.back();
@@ -102,16 +93,16 @@ void Scene::UnregisterWallDetector(std::shared_ptr<WallDetector> _wallDetector)
 
 void Scene::Update()
 {
-	for (std::weak_ptr<Object> object: m_arrObjects)
-		object.lock()->Update();
+	for (Object* object: m_arrObjects)
+		object->Update();
 
-	for (std::weak_ptr<WallDetector> detector : m_arrWallDetectors)
-		detector.lock()->Update();
+	for (WallDetector* detector : m_arrWallDetectors)
+		detector->Update();
 
 	for (std::unique_ptr<Wall>& wall : m_arrWalls)
 	{
-		for (std::weak_ptr<WallDetector> detector : m_arrWallDetectors)
-			wall->ResolvePenetration(detector.lock().get());
+		for (WallDetector* detector : m_arrWallDetectors)
+			wall->ResolvePenetration(detector);
 	}
 
 	for (std::unique_ptr<UI>& ui : m_arrUIs)
@@ -137,14 +128,14 @@ void Scene::UpdateUIVisibility()
 
 void Scene::LateUpdate()
 {
-	for (std::weak_ptr<Object> object : m_arrObjects)
-		object.lock()->LateUpdate();
+	for (Object* object : m_arrObjects)
+		object->LateUpdate();
 }
 
 void Scene::Render(HDC _memDC)
 {
-	for (std::weak_ptr<Object> object : m_arrObjects)
-		object.lock()->Render(_memDC);
+	for (Object* object : m_arrObjects)
+		object->Render(_memDC);
 
 	for (std::unique_ptr<Wall>& wall : m_arrWalls)
 		wall->Render(_memDC);

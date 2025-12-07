@@ -16,5 +16,6 @@ public:
 	virtual void Interact(Character* _Interactor) override;
 	Vector2 GetPosition() override { return Object::GetPosition(); };
 	void OnSuccess() override {};
+	void OnFail() override {};
 };
 

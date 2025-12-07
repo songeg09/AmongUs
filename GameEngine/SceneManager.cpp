@@ -14,20 +14,12 @@ SceneManager::SceneManager() : m_arrScene{}
 }
 SceneManager::~SceneManager()
 {
-	for (int i = 0; i < static_cast<int>(SCENE_TYPE::END); i++)
-	{
-		if (m_arrScene[i] != nullptr)
-		{
-			m_arrScene[i]->Release();
-			delete m_arrScene[i];
-		}
-	}
 }
 void SceneManager::Init()
 {
-	m_arrScene[static_cast<int>(SCENE_TYPE::TITLE)] = new TitleScene(L"Title");
-	m_arrScene[static_cast<int>(SCENE_TYPE::GAME)] = new GameScene(L"Game");
-	m_arrScene[static_cast<int>(SCENE_TYPE::EDITOR)] = new EditorScene(L"Editor");
+	m_arrScene[static_cast<int>(SCENE_TYPE::TITLE)] = std::make_shared<TitleScene>(L"Title");
+	m_arrScene[static_cast<int>(SCENE_TYPE::GAME)] = std::make_shared<GameScene>(L"Game");
+	m_arrScene[static_cast<int>(SCENE_TYPE::EDITOR)] = std::make_shared<EditorScene>(L"Editor");
 	SceneChange(SCENE_TYPE::TITLE);
 }
 

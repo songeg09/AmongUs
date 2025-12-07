@@ -9,4 +9,5 @@ public:
 	virtual void Interact(Character* _Interactor) = 0;
 	virtual Vector2 GetPosition() = 0;
 	virtual void OnSuccess() = 0;
+	virtual void OnFail() = 0;
 };

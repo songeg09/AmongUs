@@ -11,12 +11,12 @@ Object::Object()
 	m_vec2Position = {};
 	m_vec2Scale = {};
 
-	SceneManager::GetInstance()->GetCurScene()->RegistObject(shared_from_this());
+	SceneManager::GetInstance()->GetCurScene()->RegistObject(this);
 }
 
 Object::~Object()
 {
-	SceneManager::GetInstance()->GetCurScene()->UnregistObejct(shared_from_this());
+	SceneManager::GetInstance()->GetCurScene()->UnregistObejct(this);
 }
 
 void Object::LateUpdate()

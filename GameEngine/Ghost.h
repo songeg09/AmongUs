@@ -32,6 +32,7 @@ private:
 
 	float								m_fCurSearchTime;
 	Vector2								m_vec2SearchPoint;
+	Vector2								m_vecTargetPos;
 
 public:
 	Ghost();

@@ -19,12 +19,12 @@ Collider::Collider(COLLISION_TAG _eTag)
 	m_EndCollisioncallBack = nullptr;
 	m_eColliderType = COLLIDER_TYPE::RECTANGLE;
 
-	CollisionManager::GetInstance()->RegistCollider(shared_from_this());
+	CollisionManager::GetInstance()->RegistCollider(this);
 }
 
 Collider::~Collider()
 {
-	CollisionManager::GetInstance()->UnregistCollider(shared_from_this());
+	CollisionManager::GetInstance()->UnregistCollider(this);
 }
 
 void Collider::Init(bool _bEnabled, Vector2 _vecOffset)

@@ -46,17 +46,18 @@ void CollisionManager::RegistCollisionGroup(COLLISION_TAG _eFirst, COLLISION_TAG
 	m_CollisionGroupList[static_cast<int>(_eFirst)][static_cast<int>(_eSecond)] = true;
 }
 
-void CollisionManager::RegistCollider(std::shared_ptr<Collider> _collider)
+void CollisionManager::RegistCollider(Collider* _collider)
 {
 	m_arrColliders[static_cast<int>(_collider->GetTag())].push_back(_collider);
 }
 
-void CollisionManager::UnregistCollider(std::shared_ptr<Collider> _collider)
+void CollisionManager::UnregistCollider(Collider* _collider)
 {
-	std::vector<std::weak_ptr<Collider>>::iterator iter = std::find(m_arrColliders[static_cast<int>(_collider->GetTag())].begin(), m_arrColliders[static_cast<int>(_collider->GetTag())].end(), _collider);
-	if (iter != m_arrColliders[static_cast<int>(_collider->GetTag())].end())
+	std::vector<Collider*>::iterator it = std::find(m_arrColliders[static_cast<int>(_collider->GetTag())].begin(), m_arrColliders[static_cast<int>(_collider->GetTag())].end(), _collider);
+
+	if (it != m_arrColliders[static_cast<int>(_collider->GetTag())].end())
 	{
-		*iter = m_arrColliders[static_cast<int>(_collider->GetTag())].back();
+		*it = m_arrColliders[static_cast<int>(_collider->GetTag())].back();
 		m_arrColliders[static_cast<int>(_collider->GetTag())].pop_back();
 	}
 }
@@ -163,17 +164,17 @@ void CollisionManager::ReleaseCollisionGroup()
 
 void CollisionManager::CollisionCheckGroup(COLLISION_TAG _eFirst, COLLISION_TAG _eSecond)
 {
-	const std::vector<std::weak_ptr<Collider>>& FirstGroup = m_arrColliders[static_cast<int>(_eFirst)];
-	const std::vector<std::weak_ptr<Collider>>& SecondGroup = m_arrColliders[static_cast<int>(_eSecond)];
+	const std::vector<Collider*>& FirstGroup = m_arrColliders[static_cast<int>(_eFirst)];
+	const std::vector<Collider*>& SecondGroup = m_arrColliders[static_cast<int>(_eSecond)];
 
-	for (std::weak_ptr<Collider> first: FirstGroup)
+	for (Collider* first: FirstGroup)
 	{
-		for (std::weak_ptr<Collider> second : SecondGroup)
+		for (Collider* second : SecondGroup)
 		{
-			if (first.lock() == second.lock())
+			if (first == second)
 				continue;
 
-			CollisionCheck(first.lock().get(), second.lock().get());
+			CollisionCheck(first, second);
 		}
 	}
 }
