@@ -4,6 +4,7 @@
 #include "Actor.h"
 #include "SceneManager.h"
 #include "CollisionManager.h"
+#include "Core.h"
 
 unsigned int Collider::s_uID = 0;
 
@@ -78,6 +79,9 @@ void RectCollider::Init(bool _bEnabled, Vector2 _vecSize, Vector2 _vecOffset)
 
 void RectCollider::Render(HDC _memDC)
 {
+	if (Core::GetInstance()->IsShowCollider() == false)
+		return;
+
 	if (isEnable() == false)
 		return;
 	GDIManager::GetInstance()->SetBrush(_memDC, BRUSH_TYPE::HOLLOW);
@@ -124,6 +128,9 @@ void CircleCollider::Init(bool _bEnabled, float _fRadius, Vector2 _vecOffset)
 
 void CircleCollider::Render(HDC _memDC)
 {
+	if (Core::GetInstance()->IsShowCollider() == false)
+		return;
+
 	if (isEnable() == false)
 		return;
 	GDIManager::GetInstance()->SetBrush(_memDC, BRUSH_TYPE::HOLLOW);

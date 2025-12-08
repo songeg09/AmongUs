@@ -72,6 +72,7 @@ void TimingBar::Reset()
 	m_fElapsedTime = 0;
 	m_fRatio = 0;
 	m_vec2CursorPos = m_vec2InitialCursorPos;
+	m_bPlaying = false;
 }
 
 void TimingBar::Start()

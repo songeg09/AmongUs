@@ -25,6 +25,7 @@
 
 #include "MinimapProvider.h"
 #include "Interactable.h"
+#include "Attemptable.h"
 #include "MapInfo.h"
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
@@ -42,7 +43,7 @@ void GameScene::Release()
 
 	m_GameMode = nullptr;
 	m_Player = nullptr;
-	m_Ghost = nullptr;
+	m_arrGhosts.clear();
 	m_arrGameObjects.clear();
 	m_arrVents.clear();
 	m_setTasksLeft.clear();
@@ -173,14 +174,14 @@ void GameScene::InstantiateObjects()
 	m_Player = std::make_shared<Player>();
 	m_Player->Init(mapInfo.m_vec2PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
 
-	// Ghost
-	m_Ghost = std::make_shared<Ghost>();
-	m_Ghost->Init(mapInfo.m_arrWayPoints);
+	// Ghosts
+	for (int i = 0; i < ConstValue::iNumOfGhosts; ++i)
+	{
+		std::shared_ptr<Ghost> ghost = std::make_shared<Ghost>();
+		ghost->Init(mapInfo.m_arrWayPoints);
+		m_arrGhosts.push_back(ghost);
 
-	//m_GlobalSoundZone = new CircleZone;
-	//m_GlobalSoundZone->Init(COLLISION_TAG::SOUND, 30.0f);
-	//m_GlobalSoundZone->SetEnable(false);
-	//Scene::AddObject(m_GlobalSoundZone);
+	}
 
 	// Wall
 	for (int i = 0; i < mapInfo.m_arrAllWallVertices.size(); ++i)
@@ -304,13 +305,17 @@ Vector2 GameScene::GetPlayerPos() const
 
 void GameScene::OnTaskSuccess()
 {
-	m_Player->GetInteractableObject()->OnSuccess();
-	m_setTasksLeft.erase(m_Player->GetInteractableObject());
+	if (Attemptable* task = dynamic_cast<Attemptable*>(m_Player->GetInteractableObject()))
+	{
+		task->OnSuccess();
+		m_setTasksLeft.erase(task);
+	}
 	OpenUI(static_cast<int>(UI_TYPE::HUD));
 }
 
 void GameScene::OnTaskFail()
 {
-	m_Player->GetInteractableObject()->OnFail();
+	if (Attemptable* task = dynamic_cast<Attemptable*>(m_Player->GetInteractableObject()))
+		task->OnFail();
 	OpenUI(static_cast<int>(UI_TYPE::HUD));
 }

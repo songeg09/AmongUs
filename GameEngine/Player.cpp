@@ -141,6 +141,7 @@ void Player::CheckInteractKey()
 	if (InputManager::GetInstance()->GetKeyState('E') != KEY_STATE::DOWN || m_pInteractableObject == nullptr)
 		return;
 
+	Actor::SetAnimation(static_cast<int>(ANIMATION::IDLE));
 	UseInteractableObject();
 }
 

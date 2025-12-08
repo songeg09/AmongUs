@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "SceneManager.h"
 #include "GDIManager.h"
+#include "Core.h"
 
 WallDetector::WallDetector()
 {
@@ -30,6 +31,9 @@ void WallDetector::Update()
 
 void WallDetector::Render(HDC _memDC)
 {
+	if (Core::GetInstance()->IsShowCollider() == false)
+		return;
+
 	GDIManager::GetInstance()->SetBrush(_memDC, BRUSH_TYPE::HOLLOW);
 	GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::BLUE);
 

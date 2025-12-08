@@ -25,14 +25,14 @@ private:
 	std::shared_ptr<Collider>			m_pChasingCollider;
 	std::shared_ptr<Collider>			m_pAttackRangeCollider;
 
+	std::set<Collider*>					m_setChaseTargets;
+
 	CHARACTER_STATE						m_eState;
 
 	std::vector<Vector2>				m_arrWayPoints;
-	int									m_iCurWayPoint;
 
 	float								m_fCurSearchTime;
-	Vector2								m_vec2SearchPoint;
-	Vector2								m_vecTargetPos;
+	Vector2								m_vec2TargetPos;
 
 public:
 	Ghost();
@@ -43,16 +43,17 @@ public:
 
 	void InitAnimation() override;
 
-	void ChangeState(CHARACTER_STATE _eState);
-
 private:
-	void StartInvestigate();
+	void StartPatrol();
+	void StartInvestigate(Collider* _other);
 	void StartChase();
-	void StopChase();
 	void StartSearch();
 	Vector2 CreateSearchPoint();
+	Vector2 FindClosestTargetPos();
 
 	void UpdatePatrol();
+	void UpdateInvestigate();
+	void UpdateChase();
 	void UpdateSearch();
 
 	void MoveTo(Vector2 _Dest);

@@ -3,6 +3,7 @@
 #include "WallDetector.h"
 #include "SceneManager.h"
 #include "GDIManager.h"
+#include "Core.h"
 
 Wall::Wall()
 {
@@ -52,6 +53,9 @@ void Wall::ResolvePenetration(WallDetector* _other)
 
 void Wall::Render(HDC _memDC)
 {
+	if (Core::GetInstance()->IsShowCollider() == false)
+		return;
+
 	GDIManager::GetInstance()->SetBrush(_memDC, BRUSH_TYPE::HOLLOW);
 	GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::BLUE);
 

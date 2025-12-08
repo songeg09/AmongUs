@@ -185,6 +185,15 @@
     <Filter Include="Engine\14. Utility">
       <UniqueIdentifier>{2450be60-5675-4e99-be62-4679892eb464}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\08. Collider\Collider">
+      <UniqueIdentifier>{a3f21463-383b-4707-af2d-c5238a1a12b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\13. Interface\Interactable">
+      <UniqueIdentifier>{7da0dfdd-e7f3-4898-a33c-cfb9765a8401}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\13. Interface\Interactable\Attemptable">
+      <UniqueIdentifier>{72fa102a-6d9b-4faa-b9b7-f64af516f748}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -244,9 +253,6 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Engine\07. Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Engine\08. Collider</Filter>
     </ClInclude>
     <ClInclude Include="GDIManager.h">
       <Filter>Engine\03. Manager\GDIManager</Filter>
@@ -371,8 +377,14 @@
     <ClInclude Include="MinimapProvider.h">
       <Filter>Engine\13. Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Engine\08. Collider\Collider</Filter>
+    </ClInclude>
     <ClInclude Include="Interactable.h">
-      <Filter>Engine\13. Interface</Filter>
+      <Filter>Engine\13. Interface\Interactable</Filter>
+    </ClInclude>
+    <ClInclude Include="Attemptable.h">
+      <Filter>Engine\13. Interface\Interactable\Attemptable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -425,9 +437,6 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Engine\07. Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Engine\08. Collider</Filter>
     </ClCompile>
     <ClCompile Include="GDIManager.cpp">
       <Filter>Engine\03. Manager\GDIManager</Filter>
@@ -542,6 +551,9 @@
     </ClCompile>
     <ClCompile Include="WallDetector.cpp">
       <Filter>Engine\09. Wall\WallDetector</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Engine\08. Collider\Collider</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -61,8 +61,6 @@ public:
 
 	void Interact(Character* _Interactor) override { Die(); }
 	Vector2 GetPosition() override { return Actor::GetPosition(); }
-	void OnSuccess() override {}
-	void OnFail() override {}
 
 	void Hide();
 

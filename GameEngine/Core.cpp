@@ -16,6 +16,7 @@ Core::Core()
 	m_hBackDC = nullptr;
 	m_hDC = nullptr;
 	m_hWnd = nullptr;
+	m_bShowCollider = true;
 }
 Core::~Core()
 {
@@ -32,6 +33,7 @@ void Core::Update()
 	SceneManager::GetInstance()->ProcessSceneChange();
 	TimerManager::GetInstance()->Update();
 	InputManager::GetInstance()->Update();
+	SettingsManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
 	CollisionManager::GetInstance()->Update();
 }

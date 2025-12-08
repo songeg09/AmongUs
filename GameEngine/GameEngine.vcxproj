@@ -134,6 +134,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationData.h" />
+    <ClInclude Include="Attemptable.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CircleSkillData.h" />

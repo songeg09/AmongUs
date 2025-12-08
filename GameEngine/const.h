@@ -35,4 +35,10 @@ namespace ConstValue
 	static const float fGhostSearchTime = 5.0f;
 	static const float fGhostSearchRange = 400.0f;
 
+	static const int iNumOfGhosts = 5;
+	static const float fGhostDefaultMoveSpeed = 150.0f;
+	static const float fGhostInvestigateMoveSpeed = 200.0f;
+	static const float fGhostChaseMoveSpeed = 250.0f;
+
+
 }

@@ -20,25 +20,26 @@ Ghost::~Ghost()
 void Ghost::Init(std::vector<Vector2> _wayPoints)
 {
 	m_arrWayPoints = _wayPoints;
-	m_iCurWayPoint = rand() % m_arrWayPoints.size();
-	Character::Init(_wayPoints[m_iCurWayPoint]);
+	Character::Init(m_arrWayPoints[rand() % m_arrWayPoints.size()]);
 
-	m_pHearingCollider = CreateCircleCollider(COLLISION_TAG::GHOST_HEARING_SENSOR, true, 3000);
-	m_pHearingCollider->SetBeginCollisionCallBack(std::bind(&Ghost::ChangeState, this, CHARACTER_STATE::INVESTIGATE));
-	m_pHearingCollider->SetOnCollisionCallBack(
-		[this](Collider* _Other) { MoveTo(_Other->GetPosition()); }
-	);
-	m_pHearingCollider->SetEndCollisionCallBack(std::bind(&Ghost::ChangeState, this, CHARACTER_STATE::SEARCH));
+	m_pHearingCollider = CreateCircleCollider(COLLISION_TAG::GHOST_HEARING_SENSOR, true, 1500);
+	m_pHearingCollider->SetBeginCollisionCallBack(std::bind(&Ghost::StartInvestigate, this, std::placeholders::_1));
 
 	m_pSightCollider = CreateCircleCollider(COLLISION_TAG::GHOST_SIGHT_SENSOR, true, 400);
-	m_pSightCollider->SetBeginCollisionCallBack(std::bind(&Ghost::ChangeState, this, CHARACTER_STATE::CHASE));
+	m_pSightCollider->SetBeginCollisionCallBack(std::bind(&Ghost::StartChase, this));
 	
 	m_pChasingCollider = CreateCircleCollider(COLLISION_TAG::GHOST_CHASING_SENSOR, true, 900);
-	m_pChasingCollider->SetOnCollisionCallBack(
-		[this](Collider* _Other) {MoveTo(_Other->GetPosition()); }
+	m_pChasingCollider->SetBeginCollisionCallBack(
+		[this](Collider* _other){
+			m_setChaseTargets.insert(_other);
+		}
 	);
-	m_pChasingCollider->SetEndCollisionCallBack(std::bind(&Ghost::StartSearch, this));
-	m_pChasingCollider->SetEnable(false);
+	m_pChasingCollider->SetEndCollisionCallBack(
+		[this](Collider* _other) {
+			if(m_setChaseTargets.find(_other) != m_setChaseTargets.end())
+				m_setChaseTargets.erase(_other);
+		}
+	);
 
 	m_pAttackRangeCollider = CreateCircleCollider(COLLISION_TAG::GHOST_ATTACK_RANGE, true, 50);
 	m_pAttackRangeCollider->SetBeginCollisionCallBack(
@@ -47,7 +48,7 @@ void Ghost::Init(std::vector<Vector2> _wayPoints)
 		}
 	);
 
-	m_eState = CHARACTER_STATE::PATROL;
+	StartPatrol();
 }
 
 void Ghost::Update()
@@ -58,8 +59,10 @@ void Ghost::Update()
 		UpdatePatrol();
 		break;
 	case CHARACTER_STATE::INVESTIGATE:
+		UpdateInvestigate();
 		break;
 	case CHARACTER_STATE::CHASE:
+		UpdateChase();
 		break;
 	case CHARACTER_STATE::SEARCH:
 		UpdateSearch();
@@ -77,54 +80,38 @@ void Ghost::InitAnimation()
 	Actor::SetAnimation(ANIMATION::IDLE);
 }
 
-void Ghost::ChangeState(CHARACTER_STATE _eState)
+void Ghost::StartPatrol()
 {
-	switch (_eState)
-	{
-	case CHARACTER_STATE::PATROL:
-		m_eState = _eState;
-		break;
-	case CHARACTER_STATE::INVESTIGATE:
-		StartInvestigate();
-		break;
-	case CHARACTER_STATE::CHASE:
-		StartChase();
-		break;
-	case CHARACTER_STATE::SEARCH:
-		StartSearch();
-		break;
-	}
+	Actor::SetMoveSpeed(ConstValue::fGhostDefaultMoveSpeed);
+	m_eState = CHARACTER_STATE::PATROL;
+	m_vec2TargetPos = m_arrWayPoints[rand() % m_arrWayPoints.size()];
 }
 
-void Ghost::StartInvestigate()
+void Ghost::StartInvestigate(Collider* _other)
 {
-	Actor::SetMoveSpeed(200.0f);
+	if (m_eState == CHARACTER_STATE::CHASE || m_eState == CHARACTER_STATE::INVESTIGATE)
+		return;
+
+	m_vec2TargetPos = _other->GetTarget()->GetPosition();
+
+	Actor::SetMoveSpeed(ConstValue::fGhostInvestigateMoveSpeed);
 	m_eState = CHARACTER_STATE::INVESTIGATE;
 }
 
 void Ghost::StartChase()
 {
-	m_pHearingCollider->SetEnable(false);
-	m_pSightCollider->SetEnable(false);
-	m_pChasingCollider->SetEnable(true);
-	Actor::SetMoveSpeed(250.0f);
+	Actor::SetMoveSpeed(ConstValue::fGhostChaseMoveSpeed);
 	m_eState = CHARACTER_STATE::CHASE;
-}
-
-void Ghost::StopChase()
-{
-	m_pHearingCollider->SetEnable(true);
-	m_pSightCollider->SetEnable(true);
-	m_pChasingCollider->SetEnable(false);
-	Actor::SetMoveSpeed(100.0f);
 }
 
 void Ghost::StartSearch()
 {
-	StopChase();
-	m_fCurSearchTime = 0;
-	m_vec2SearchPoint = CreateSearchPoint();
+	if (m_eState != CHARACTER_STATE::INVESTIGATE && m_eState != CHARACTER_STATE::CHASE)
+		return;
+
+	Actor::SetMoveSpeed(ConstValue::fGhostDefaultMoveSpeed);
 	m_eState = CHARACTER_STATE::SEARCH;
+	m_fCurSearchTime = 0.0f;
 }
 
 Vector2 Ghost::CreateSearchPoint()
@@ -135,24 +122,77 @@ Vector2 Ghost::CreateSearchPoint()
 	return newSearchPoint;
 }
 
+Vector2 Ghost::FindClosestTargetPos()
+{
+	assert(!m_setChaseTargets.empty());
+	
+	std::set<Collider*>::iterator it = m_setChaseTargets.begin();
+
+	Vector2 vec2Closest = (*it)->GetTarget()->GetPosition();
+	float fDist = Vector2::Distance(GetPosition(), vec2Closest);
+	it++;
+	
+	Vector2 tmpPos;
+	float tmpDist;
+	while (it != m_setChaseTargets.end())
+	{
+		tmpPos = (*it)->GetTarget()->GetPosition();
+		tmpDist = Vector2::Distance(GetPosition(), tmpPos);
+		if (tmpDist < fDist)
+		{
+			vec2Closest = tmpPos;
+			fDist = tmpDist;
+		}
+		it++;
+	}
+
+	return vec2Closest;
+}
+
 void Ghost::UpdatePatrol()
 {
-	if (Vector2::Distance(m_arrWayPoints[m_iCurWayPoint], GetPosition()) < ConstValue::fGhostProximityRange)
-		m_iCurWayPoint = rand() % m_arrWayPoints.size();
+	if (Vector2::Distance(m_vec2TargetPos, GetPosition()) < ConstValue::fGhostProximityRange)
+		m_vec2TargetPos = m_arrWayPoints[rand() % m_arrWayPoints.size()];
 
-	MoveTo(m_arrWayPoints[m_iCurWayPoint]);
+	MoveTo(m_vec2TargetPos);
+}
+
+void Ghost::UpdateInvestigate()
+{
+	if (Vector2::Distance(m_vec2TargetPos, GetPosition()) < ConstValue::fGhostProximityRange)
+	{
+		StartSearch();
+		return;
+	}
+
+	MoveTo(m_vec2TargetPos);
+}
+
+void Ghost::UpdateChase()
+{
+	if (m_setChaseTargets.empty())
+	{
+		StartSearch();
+		return;
+	}
+
+	m_vec2TargetPos = FindClosestTargetPos();
+	MoveTo(m_vec2TargetPos);
 }
 
 void Ghost::UpdateSearch()
 {
 	m_fCurSearchTime += TimerManager::GetInstance()->GetfDeltaTime();
 	if (m_fCurSearchTime >= ConstValue::fGhostSearchTime)
-		m_eState = CHARACTER_STATE::PATROL;
+	{
+		StartPatrol();
+		return;
+	}
+		
+	if (Vector2::Distance(GetPosition(), m_vec2TargetPos) < ConstValue::fGhostProximityRange)
+		m_vec2TargetPos = CreateSearchPoint();
 
-	if (Vector2::Distance(GetPosition(), m_vec2SearchPoint) < ConstValue::fGhostProximityRange)
-		m_vec2SearchPoint = CreateSearchPoint();
-
-	MoveTo(m_vec2SearchPoint);
+	MoveTo(m_vec2TargetPos);
 }
 
 void Ghost::MoveTo(Vector2 _Dest)

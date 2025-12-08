@@ -24,6 +24,13 @@ void SettingsManager::Init()
 	InputManager::GetInstance()->RegistKey('D');
 	InputManager::GetInstance()->RegistKey(VK_TAB);
 	InputManager::GetInstance()->RegistKey('E');
+	InputManager::GetInstance()->RegistKey(VK_DELETE);
+}
+
+void SettingsManager::Update()
+{
+	if (InputManager::GetInstance()->GetKeyState(VK_DELETE) == KEY_STATE::DOWN)
+		Core::GetInstance()->SetShowCollider(!Core::GetInstance()->IsShowCollider());
 }
 
 void SettingsManager::SetResoultion()
