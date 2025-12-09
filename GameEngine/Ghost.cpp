@@ -7,9 +7,6 @@
 
 Ghost::Ghost()
 {
-	m_pHearingCollider = nullptr;
-	m_pSightCollider = nullptr;
-	m_pAttackRangeCollider = nullptr;
 }
 
 Ghost::~Ghost()
@@ -23,18 +20,18 @@ void Ghost::Init(std::vector<Vector2> _wayPoints)
 	Character::Init(m_arrWayPoints[rand() % m_arrWayPoints.size()]);
 
 	m_pHearingCollider = CreateCircleCollider(COLLISION_TAG::GHOST_HEARING_SENSOR, true, 1500);
-	m_pHearingCollider->SetBeginCollisionCallBack(std::bind(&Ghost::StartInvestigate, this, std::placeholders::_1));
+	m_pHearingCollider.lock()->SetBeginCollisionCallBack(std::bind(&Ghost::StartInvestigate, this, std::placeholders::_1));
 
 	m_pSightCollider = CreateCircleCollider(COLLISION_TAG::GHOST_SIGHT_SENSOR, true, 400);
-	m_pSightCollider->SetBeginCollisionCallBack(std::bind(&Ghost::StartChase, this));
+	m_pSightCollider.lock()->SetBeginCollisionCallBack(std::bind(&Ghost::StartChase, this));
 	
 	m_pChasingCollider = CreateCircleCollider(COLLISION_TAG::GHOST_CHASING_SENSOR, true, 900);
-	m_pChasingCollider->SetBeginCollisionCallBack(
+	m_pChasingCollider.lock()->SetBeginCollisionCallBack(
 		[this](Collider* _other){
 			m_setChaseTargets.insert(_other);
 		}
 	);
-	m_pChasingCollider->SetEndCollisionCallBack(
+	m_pChasingCollider.lock()->SetEndCollisionCallBack(
 		[this](Collider* _other) {
 			if(m_setChaseTargets.find(_other) != m_setChaseTargets.end())
 				m_setChaseTargets.erase(_other);
@@ -42,7 +39,7 @@ void Ghost::Init(std::vector<Vector2> _wayPoints)
 	);
 
 	m_pAttackRangeCollider = CreateCircleCollider(COLLISION_TAG::GHOST_ATTACK_RANGE, true, 50);
-	m_pAttackRangeCollider->SetBeginCollisionCallBack(
+	m_pAttackRangeCollider.lock()->SetBeginCollisionCallBack(
 		[this](Collider* _Other) {
 			dynamic_cast<Interactable*>(_Other->GetTarget())->Interact(this); 
 		}

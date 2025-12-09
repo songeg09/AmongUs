@@ -25,6 +25,7 @@ Scene::~Scene()
 void Scene::Release()
 {
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
+	CollisionManager::GetInstance()->ClearColliders();
 
 	m_arrObjects.clear();
 	m_arrWallDetectors.clear();

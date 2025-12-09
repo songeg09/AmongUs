@@ -19,15 +19,15 @@ class CollisionManager
 private:
 	std::map<unsigned long long, bool>				m_PrevCollision;
 	std::vector<bool>								m_CollisionGroupList[static_cast<int>(COLLISION_TAG::END)];
-	std::vector<Collider*>							m_arrColliders[static_cast<int>(COLLISION_TAG::END)];
+	std::vector<std::weak_ptr<Collider>>			m_arrColliders[static_cast<int>(COLLISION_TAG::END)];
 
 public:
 	void Init();
 	void Update();
 	void RegistCollisionGroup(COLLISION_TAG _eFirst, COLLISION_TAG _eSecond);
 
-	void RegistCollider(Collider* _collider);
-	void UnregistCollider(Collider* _collider);
+	void AddCollider(COLLISION_TAG _tag, std::shared_ptr<Collider> _collider);
+	void ClearColliders();
 
 	bool IsCollision(Collider* _pFirst, Collider* _pSecond);
 	bool IsCollision(RectCollider* _pFirst, RectCollider* _pSecond);

@@ -46,20 +46,15 @@ void CollisionManager::RegistCollisionGroup(COLLISION_TAG _eFirst, COLLISION_TAG
 	m_CollisionGroupList[static_cast<int>(_eFirst)][static_cast<int>(_eSecond)] = true;
 }
 
-void CollisionManager::RegistCollider(Collider* _collider)
+void CollisionManager::AddCollider(COLLISION_TAG _tag, std::shared_ptr<Collider> _collider)
 {
-	m_arrColliders[static_cast<int>(_collider->GetTag())].push_back(_collider);
+	m_arrColliders[static_cast<int>(_tag)].push_back(_collider);
 }
 
-void CollisionManager::UnregistCollider(Collider* _collider)
+void CollisionManager::ClearColliders()
 {
-	std::vector<Collider*>::iterator it = std::find(m_arrColliders[static_cast<int>(_collider->GetTag())].begin(), m_arrColliders[static_cast<int>(_collider->GetTag())].end(), _collider);
-
-	if (it != m_arrColliders[static_cast<int>(_collider->GetTag())].end())
-	{
-		*it = m_arrColliders[static_cast<int>(_collider->GetTag())].back();
-		m_arrColliders[static_cast<int>(_collider->GetTag())].pop_back();
-	}
+	for (int i = 0; i < static_cast<int>(COLLISION_TAG::END); ++i)
+		m_arrColliders[i].clear();
 }
 
 bool CollisionManager::IsCollision(Collider* _pFirst, Collider* _pSecond)
@@ -164,17 +159,17 @@ void CollisionManager::ReleaseCollisionGroup()
 
 void CollisionManager::CollisionCheckGroup(COLLISION_TAG _eFirst, COLLISION_TAG _eSecond)
 {
-	const std::vector<Collider*>& FirstGroup = m_arrColliders[static_cast<int>(_eFirst)];
-	const std::vector<Collider*>& SecondGroup = m_arrColliders[static_cast<int>(_eSecond)];
+	const std::vector<std::weak_ptr<Collider>>& FirstGroup = m_arrColliders[static_cast<int>(_eFirst)];
+	const std::vector<std::weak_ptr<Collider>>& SecondGroup = m_arrColliders[static_cast<int>(_eSecond)];
 
-	for (Collider* first: FirstGroup)
+	for (std::weak_ptr<Collider> first: FirstGroup)
 	{
-		for (Collider* second : SecondGroup)
+		for (std::weak_ptr<Collider> second : SecondGroup)
 		{
-			if (first == second)
+			if (first.lock().get() == second.lock().get())
 				continue;
 
-			CollisionCheck(first, second);
+			CollisionCheck(first.lock().get(), second.lock().get());
 		}
 	}
 }

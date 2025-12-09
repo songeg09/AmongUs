@@ -9,8 +9,7 @@
 
 Player::Player()
 {
-	m_pHurtBoxCollider = nullptr;
-	m_pInteractionCollider = nullptr;
+
 	m_pInteractableObject = nullptr;
 	m_eState = CHARACTER_STATE::NONE;
 
@@ -34,8 +33,8 @@ void Player::Init(Vector2 _vec2Position, std::function<void()> _funcMapKeyCallba
 	m_pHurtBoxCollider = CreateRectCollider(COLLISION_TAG::PLAYER_HURTBOX, true, Vector2(60, 95), Vector2(0, 15));
 
 	m_pInteractionCollider = CreateCircleCollider(COLLISION_TAG::PLAYER_INTERACTION, true, 110.f, Vector2(0, 15));
-	m_pInteractionCollider->SetOnCollisionCallBack(std::bind(&Player::UpdateInteractableObject, this, std::placeholders::_1));
-	m_pInteractionCollider->SetEndCollisionCallBack(std::bind(&Player::ClearCurrentInteractable, this, std::placeholders::_1));
+	m_pInteractionCollider.lock()->SetOnCollisionCallBack(std::bind(&Player::UpdateInteractableObject, this, std::placeholders::_1));
+	m_pInteractionCollider.lock()->SetEndCollisionCallBack(std::bind(&Player::ClearCurrentInteractable, this, std::placeholders::_1));
 
 	Actor::SetMoveSpeed(300.0f);
 }
@@ -49,7 +48,7 @@ void Player::Update()
 void Player::Render(HDC _memDC)
 {
 	Character::Render(_memDC);
-	m_pWallDetector->Render(_memDC);
+	m_pWallDetector.lock()->Render(_memDC);
 }
 
 
@@ -115,12 +114,12 @@ void Player::InitAnimation()
 
 	SetAnimationEvent(static_cast<int>(ANIMATION::HIDE), 3, 
 		[this]() {
-			m_pHurtBoxCollider->SetEnable(false); 
+			m_pHurtBoxCollider.lock()->SetEnable(false);
 			m_eState = CHARACTER_STATE::HIDDEN;
 		});
 	SetAnimationEvent(static_cast<int>(ANIMATION::REVEAL), 3, 
 		[this]() {
-			m_pHurtBoxCollider->SetEnable(true); 
+			m_pHurtBoxCollider.lock()->SetEnable(true);
 			m_eState = CHARACTER_STATE::NONE;
 		});
 
@@ -192,7 +191,7 @@ void Player::Die()
 {
 	Actor::SetAnimation(static_cast<int>(ANIMATION::DEAD));
 	m_eState = CHARACTER_STATE::DEAD;
-	m_pHurtBoxCollider->SetEnable(false);
+	m_pHurtBoxCollider.lock()->SetEnable(false);
 }
 
 void Player::UseInteractableObject()

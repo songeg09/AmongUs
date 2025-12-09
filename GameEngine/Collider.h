@@ -22,7 +22,8 @@ private:
 	std::function<void(Collider* _pOther)>	m_BeginCollisioncallBack;
 	std::function<void(Collider* _pOther)>	m_EndCollisioncallBack;
 public:
-	void Init(bool _bEnabled, Vector2 _vecOffset);
+	void Init(COLLISION_TAG _eTag, bool _bEnabled, Vector2 _vecOffset);
+	void Regist();
 	inline void SetOnCollisionCallBack(std::function<void(Collider* _pOther)> _pCallBack) { m_OnCollisioncallBack = _pCallBack; }
 	inline void SetBeginCollisionCallBack(std::function<void(Collider* _pOther)> _pCallBack) { m_BeginCollisioncallBack = _pCallBack; }
 	inline void SetEndCollisionCallBack(std::function<void(Collider* _pOther)> _pCallBack) { m_EndCollisioncallBack = _pCallBack; }
@@ -47,7 +48,7 @@ public:
 	void FinalUpdate();
 	virtual void Render(HDC _memDC) = 0;
 
-	Collider(COLLISION_TAG _eTag);
+	Collider();
 	virtual ~Collider();
 };
 
@@ -57,10 +58,10 @@ private:
 	Vector2 m_vecSize;
 
 public:
-	RectCollider(COLLISION_TAG _eTag);
+	RectCollider();
 	~RectCollider();
 
-	void Init(bool _bEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	void Init(COLLISION_TAG _eTag, bool _bEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
 	void Render(HDC _memDC) override;
 	Rect GetRect();
 	void SetSize(Vector2 _vecSize) { m_vecSize = _vecSize; }
@@ -72,10 +73,10 @@ class CircleCollider : public Collider
 private:
 	float m_fRadius;
 public:
-	CircleCollider(COLLISION_TAG _eTag);
+	CircleCollider();
 	~CircleCollider();
 
-	void Init(bool _bEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
+	void Init(COLLISION_TAG _eTag, bool _bEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
 	void Render(HDC _memDC) override;
 	void SetSize(float _fRadius) { m_fRadius = _fRadius; }
 	float GetSize() { return m_fRadius; }

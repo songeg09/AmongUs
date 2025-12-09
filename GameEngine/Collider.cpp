@@ -8,8 +8,8 @@
 
 unsigned int Collider::s_uID = 0;
 
-Collider::Collider(COLLISION_TAG _eTag)
-	: m_uID(++s_uID), m_eTag(_eTag)
+Collider::Collider()
+	: m_uID(++s_uID)
 {
 	m_vecOffset = {};
 	m_vecPosition = {};
@@ -19,19 +19,23 @@ Collider::Collider(COLLISION_TAG _eTag)
 	m_BeginCollisioncallBack = nullptr;
 	m_EndCollisioncallBack = nullptr;
 	m_eColliderType = COLLIDER_TYPE::RECTANGLE;
-
-	CollisionManager::GetInstance()->RegistCollider(this);
 }
 
 Collider::~Collider()
 {
-	CollisionManager::GetInstance()->UnregistCollider(this);
 }
 
-void Collider::Init(bool _bEnabled, Vector2 _vecOffset)
+void Collider::Init(COLLISION_TAG _eTag, bool _bEnabled, Vector2 _vecOffset)
 {
+	m_eTag = _eTag;
 	m_vecOffset = _vecOffset;
 	m_bEnabled = _bEnabled;
+	Regist();
+}
+
+void Collider::Regist()
+{
+	CollisionManager::GetInstance()->AddCollider(m_eTag, shared_from_this());
 }
 
 void Collider::OnCollision(Collider* _pOther)
@@ -61,8 +65,7 @@ void Collider::FinalUpdate()
 	m_vecPosition = vecObjectPosition + m_vecOffset;
 }
 
-RectCollider::RectCollider(COLLISION_TAG _eTag)
-	:Collider(_eTag)
+RectCollider::RectCollider()
 {
 }
 
@@ -70,9 +73,9 @@ RectCollider::~RectCollider()
 {
 }
 
-void RectCollider::Init(bool _bEnabled, Vector2 _vecSize, Vector2 _vecOffset)
+void RectCollider::Init(COLLISION_TAG _eTag, bool _bEnabled, Vector2 _vecSize, Vector2 _vecOffset)
 {
-	Collider::Init(_bEnabled, _vecOffset);
+	Collider::Init(_eTag, _bEnabled, _vecOffset);
 	Collider::SetType(COLLIDER_TYPE::RECTANGLE);
 	SetSize(_vecSize);
 }
@@ -110,8 +113,7 @@ Rect RectCollider::GetRect()
 		GetPosition().m_fy + GetSize().m_fy / 2.0f };
 }
 
-CircleCollider::CircleCollider(COLLISION_TAG _eTag)
-	: Collider(_eTag)
+CircleCollider::CircleCollider()
 {
 }
 
@@ -119,9 +121,9 @@ CircleCollider::~CircleCollider()
 {
 }
 
-void CircleCollider::Init(bool _bEnabled, float _fRadius, Vector2 _vecOffset)
+void CircleCollider::Init(COLLISION_TAG _eTag, bool _bEnabled, float _fRadius, Vector2 _vecOffset)
 {
-	Collider::Init(_bEnabled, _vecOffset);
+	Collider::Init(_eTag, _bEnabled, _vecOffset);
 	Collider::SetType(COLLIDER_TYPE::CIRCLE);
 	SetSize(_fRadius);
 }

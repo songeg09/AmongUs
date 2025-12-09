@@ -6,10 +6,10 @@ class WallDetector;
 class Object : public std::enable_shared_from_this<Object>
 {
 private:
-	Vector2								m_vec2Position;
-	Vector2								m_vec2MoveVec;
-	Vector2								m_vec2Scale;
-	std::list<std::weak_ptr<Collider>>	m_pColliderList;
+	Vector2									m_vec2Position;
+	Vector2									m_vec2MoveVec;
+	Vector2									m_vec2Scale;
+	std::list<std::shared_ptr<Collider>>	m_pColliderList;
 
 public:
 	Object();

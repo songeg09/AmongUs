@@ -18,8 +18,8 @@ Object::~Object()
 
 void Object::LateUpdate()
 {
-	for (std::weak_ptr<Collider> collider : m_pColliderList)
-		collider.lock()->FinalUpdate();
+	for (std::shared_ptr<Collider> collider : m_pColliderList)
+		collider->FinalUpdate();
 }
 
 void Object::Render(HDC _memDC)
@@ -41,9 +41,9 @@ void Object::Regist()
 
 std::shared_ptr<Collider>Object::CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset)
 {
-	std::shared_ptr<RectCollider> collider = std::make_shared<RectCollider>(_eTag);
+	std::shared_ptr<RectCollider> collider = std::make_shared<RectCollider>();
 	collider->SetTarget(shared_from_this());
-	collider->Init(_eEnabled, _vecSize, _vecOffset);
+	collider->Init(_eTag, _eEnabled, _vecSize, _vecOffset);
 	m_pColliderList.push_back(collider);
 
 	return collider;
@@ -51,9 +51,9 @@ std::shared_ptr<Collider>Object::CreateRectCollider(COLLISION_TAG _eTag, bool _e
 
 std::shared_ptr<Collider> Object::CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset)
 {
-	std::shared_ptr<CircleCollider> collider = std::make_shared<CircleCollider>(_eTag);
+	std::shared_ptr<CircleCollider> collider = std::make_shared<CircleCollider>();
 	collider->SetTarget(shared_from_this());
-	collider->Init(_eEnabled, _fRadius, _vecOffset);
+	collider->Init(_eTag, _eEnabled, _fRadius, _vecOffset);
 	m_pColliderList.push_back(collider);
 
 	return collider;
@@ -70,7 +70,7 @@ std::shared_ptr<WallDetector> Object::CreateWallDetector(Vector2 _vec2Offset, fl
 
 void Object::ColliderRender(HDC _memDC)
 {
-	for (std::weak_ptr<Collider> collider : m_pColliderList)
-		collider.lock()->Render(_memDC);
+	for (std::shared_ptr<Collider> collider : m_pColliderList)
+		collider->Render(_memDC);
 }
 

@@ -20,10 +20,10 @@ public:
 	};
 
 private:
-	std::shared_ptr<Collider>			m_pHearingCollider;
-	std::shared_ptr<Collider>			m_pSightCollider;
-	std::shared_ptr<Collider>			m_pChasingCollider;
-	std::shared_ptr<Collider>			m_pAttackRangeCollider;
+	std::weak_ptr<Collider>				m_pHearingCollider;
+	std::weak_ptr<Collider>				m_pSightCollider;
+	std::weak_ptr<Collider>				m_pChasingCollider;
+	std::weak_ptr<Collider>				m_pAttackRangeCollider;
 
 	std::set<Collider*>					m_setChaseTargets;
 
