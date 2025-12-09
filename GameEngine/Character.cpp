@@ -17,7 +17,7 @@ Character::~Character()
 
 void Character::Init(Vector2 _vec2Position)
 {	
-	Actor::SetPosition(_vec2Position);
+	Actor::Init(_vec2Position);
 	InitAnimation();	
 }
 

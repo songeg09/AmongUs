@@ -19,6 +19,7 @@ public:
 	virtual void LateUpdate() final; // 자식 Class에서 Override하지 못하게 막는 용도
 	virtual void Render(HDC _memDC);
 	virtual void Init(Vector2 _vec2Position);
+	virtual void Regist() final;
 
 	std::shared_ptr<Collider> CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });
 	std::shared_ptr<Collider> CreateCircleCollider(COLLISION_TAG _eTag, bool _eEnabled, float _fRadius, Vector2 _vecOffset = Vector2{ 0.0f,0.0f });

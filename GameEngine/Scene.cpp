@@ -26,6 +26,8 @@ void Scene::Release()
 {
 	CollisionManager::GetInstance()->ReleaseCollisionGroup();
 
+	m_arrObjects.clear();
+	m_arrWallDetectors.clear();
 	m_arrUIs.clear();
 	m_arrWalls.clear();
 }
@@ -58,51 +60,29 @@ void Scene::CreateWall(Vector2 _vec2Start, Vector2 _vec2End)
 	m_arrWalls.push_back(std::move(wall));
 }
 
-void Scene::RegistObject(Object* _object)
+void Scene::AddObject(std::shared_ptr<Object> _object)
 {
 	m_arrObjects.push_back(_object);
 }
 
-void Scene::UnregistObejct(Object* _object)
-{
-	std::vector<Object*>::iterator it = std::find(m_arrObjects.begin(), m_arrObjects.end(),_object);
-
-	if (it != m_arrObjects.end())
-	{
-		*it = m_arrObjects.back();
-		m_arrObjects.pop_back();
-	}
-}
-
-void Scene::RegisterWallDetector(WallDetector* _wallDetector)
+void Scene::AddWallDetector(std::shared_ptr<WallDetector> _wallDetector)
 {
 	m_arrWallDetectors.push_back(_wallDetector);
-}
-
-void Scene::UnregisterWallDetector(WallDetector* _wallDetector)
-{
-	std::vector<WallDetector* >::iterator it = std::find(m_arrWallDetectors.begin(), m_arrWallDetectors.end(),_wallDetector);
-
-	if (it != m_arrWallDetectors.end())
-	{
-		*it = m_arrWallDetectors.back();
-		m_arrWallDetectors.pop_back();
-	}
 }
 
 
 void Scene::Update()
 {
-	for (Object* object: m_arrObjects)
+	for (std::shared_ptr<Object> object: m_arrObjects)
 		object->Update();
 
-	for (WallDetector* detector : m_arrWallDetectors)
+	for (std::shared_ptr<WallDetector> detector : m_arrWallDetectors)
 		detector->Update();
 
 	for (std::unique_ptr<Wall>& wall : m_arrWalls)
 	{
-		for (WallDetector* detector : m_arrWallDetectors)
-			wall->ResolvePenetration(detector);
+		for (std::shared_ptr<WallDetector> detector : m_arrWallDetectors)
+			wall->ResolvePenetration(detector.get());
 	}
 
 	for (std::unique_ptr<UI>& ui : m_arrUIs)
@@ -128,13 +108,13 @@ void Scene::UpdateUIVisibility()
 
 void Scene::LateUpdate()
 {
-	for (Object* object : m_arrObjects)
+	for (std::shared_ptr<Object> object : m_arrObjects)
 		object->LateUpdate();
 }
 
 void Scene::Render(HDC _memDC)
 {
-	for (Object* object : m_arrObjects)
+	for (std::shared_ptr<Object> object : m_arrObjects)
 		object->Render(_memDC);
 
 	for (std::unique_ptr<Wall>& wall : m_arrWalls)

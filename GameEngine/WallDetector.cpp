@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "WallDetector.h"
+#include "WallDetector.h"+		std::enable_shared_from_this<Object>	{_Wptr={...} }	std::enable_shared_from_this<Object>
+
 #include "Object.h"
 #include "SceneManager.h"
 #include "GDIManager.h"
@@ -7,12 +8,10 @@
 
 WallDetector::WallDetector()
 {
-	SceneManager::GetInstance()->GetCurScene()->RegisterWallDetector(this);
 }
 
 WallDetector::~WallDetector()
 {
-	SceneManager::GetInstance()->GetCurScene()->UnregisterWallDetector(this);
 }
 
 void WallDetector::Init(std::shared_ptr<Object> _pOwner, Vector2 _vec2Offset, float _fRadius)

@@ -50,8 +50,9 @@ public:
 private:
 	void PrintSelected(HDC _memDC);
 	void DrawObjects(HDC _memDC);
-	void DrawObject(HDC _memDC, Vector2 _BackBufferTopLeftInScene, Vector2 Pos, Vector2 _Size);
+	void DrawRect(HDC _memDC, Vector2 _BackBufferTopLeftInScene, Vector2 Pos, Vector2 _Size);
 	void DrawLine(HDC _memDC, Vector2 _BackBufferTopLeftInScene, Vector2 StartPos, Vector2 EndPos);
+	void DrawCircle(HDC _memDC, Vector2 _BackBufferTopLeftInScene, Vector2 _Pos, float _Size);
 
 	std::wstring GetSelectedString();
 

@@ -10,13 +10,10 @@ Object::Object()
 {
 	m_vec2Position = {};
 	m_vec2Scale = {};
-
-	SceneManager::GetInstance()->GetCurScene()->RegistObject(this);
 }
 
 Object::~Object()
 {
-	SceneManager::GetInstance()->GetCurScene()->UnregistObejct(this);
 }
 
 void Object::LateUpdate()
@@ -34,6 +31,12 @@ void Object::Init(Vector2 _vec2Position)
 {
 	m_vec2MoveVec = { 0,0 };
 	SetPosition(_vec2Position);
+	Regist();
+}
+
+void Object::Regist()
+{
+	SceneManager::GetInstance()->GetCurScene()->AddObject(shared_from_this());
 }
 
 std::shared_ptr<Collider>Object::CreateRectCollider(COLLISION_TAG _eTag, bool _eEnabled, Vector2 _vecSize, Vector2 _vecOffset)
@@ -60,6 +63,7 @@ std::shared_ptr<WallDetector> Object::CreateWallDetector(Vector2 _vec2Offset, fl
 {
 	std::shared_ptr<WallDetector> wallDetector = std::make_shared<WallDetector>();
 	wallDetector->Init(shared_from_this(), Vector2(0, 40), 20.0f);
+	SceneManager::GetInstance()->GetCurScene()->AddWallDetector(wallDetector);
 	return wallDetector;
 }
 

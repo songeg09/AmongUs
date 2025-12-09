@@ -28,10 +28,7 @@ class GameScene : public Scene, public MinimapProvider, public std::enable_share
 private:
 	std::shared_ptr<GameMode>					m_GameMode;
 	std::weak_ptr<Texture>						m_pBackGround;
-	std::shared_ptr<Player>						m_Player;
-	std::vector<std::shared_ptr<Ghost>>			m_arrGhosts;
-	std::vector<std::shared_ptr<GameObject>>	m_arrGameObjects;
-	std::vector<std::shared_ptr<Vent>>			m_arrVents;;
+	std::weak_ptr<Player>						m_Player;
 
 	std::set<Attemptable*>						m_setTasksLeft;
 

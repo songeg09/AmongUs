@@ -153,15 +153,28 @@ void EditorScene::DrawObjects(HDC _memDC)
 	
 	// Player Start
 	GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::GREEN);
-	DrawObject(_memDC, BackBufferTopLeftInScene, m_MapInfo.m_vec2PlayerStart, ConstValue::vec2PlayerStartSize);
+	DrawRect(_memDC, BackBufferTopLeftInScene, m_MapInfo.m_vec2PlayerStart, ConstValue::vec2PlayerStartSize);
 
 	// Way Points
 	GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::RED);
 	for (const Vector2& waypoint : m_MapInfo.m_arrWayPoints)
-		DrawObject(_memDC, BackBufferTopLeftInScene, waypoint, ConstValue::vec2WayPointSize);
+		DrawRect(_memDC, BackBufferTopLeftInScene, waypoint, ConstValue::vec2WayPointSize);
 
-	// Objects (Vent & Tasks) + Wall
+	// Objects (Vent & Tasks) 
 	GDIManager::GetInstance()->SetPen(_memDC, PEN_TYPE::BLUE);
+	for (const Vector2& vent : m_MapInfo.m_arrVent)
+		DrawRect(_memDC, BackBufferTopLeftInScene, vent, ConstValue::vec2VentSize);
+
+	for (const Vector2& timedButton : m_MapInfo. m_arrTimedButtonsPos)
+		DrawRect(_memDC, BackBufferTopLeftInScene, timedButton, ConstValue::vec2TaskSize);
+
+	for (const Vector2& dataUpload : m_MapInfo.m_arrDataUploadPos)
+		DrawRect(_memDC, BackBufferTopLeftInScene, dataUpload, ConstValue::vec2TaskSize);
+
+	for (const Vector2& numberSequence : m_MapInfo.m_arrNumberSequencePos)
+		DrawRect(_memDC, BackBufferTopLeftInScene, numberSequence, ConstValue::vec2TaskSize);
+
+	// Wall
 	for (int i = 0; i < m_MapInfo.m_arrAllWallVertices.size(); ++i)
 		for (int j = 0; j < m_MapInfo.m_arrAllWallVertices[i].size() - 1; ++j)
 			DrawLine(_memDC, BackBufferTopLeftInScene, m_MapInfo.m_arrAllWallVertices[i][j], m_MapInfo.m_arrAllWallVertices[i][j + 1]);
@@ -169,24 +182,20 @@ void EditorScene::DrawObjects(HDC _memDC)
 	for (int i = 1; i < m_arrCurWallVertices.size(); ++i)
 		DrawLine(_memDC, BackBufferTopLeftInScene, m_arrCurWallVertices[i - 1], m_arrCurWallVertices[i]);
 
-	for (const Vector2& vent : m_MapInfo.m_arrVent)
-		DrawObject(_memDC, BackBufferTopLeftInScene, vent, ConstValue::vec2VentSize);
+	GDIManager::GetInstance()->SetBrush(_memDC, BRUSH_TYPE::BLUE);
+	for (int i = 0; i < m_MapInfo.m_arrAllWallVertices.size(); ++i)
+		for (int j = 0; j < m_MapInfo.m_arrAllWallVertices[i].size() - 1; ++j)
+			DrawCircle(_memDC, BackBufferTopLeftInScene, m_MapInfo.m_arrAllWallVertices[i][j], 5.f);
 
-	for (const Vector2& timedButton : m_MapInfo. m_arrTimedButtonsPos)
-		DrawObject(_memDC, BackBufferTopLeftInScene, timedButton, ConstValue::vec2TaskSize);
-
-	for (const Vector2& dataUpload : m_MapInfo.m_arrDataUploadPos)
-		DrawObject(_memDC, BackBufferTopLeftInScene, dataUpload, ConstValue::vec2TaskSize);
-
-	for (const Vector2& numberSequence : m_MapInfo.m_arrNumberSequencePos)
-		DrawObject(_memDC, BackBufferTopLeftInScene, numberSequence, ConstValue::vec2TaskSize);
+	for (int i = 0; i < m_arrCurWallVertices.size(); ++i)
+		DrawCircle(_memDC, BackBufferTopLeftInScene, m_arrCurWallVertices[i], 5.f);
 
 
 	GDIManager::GetInstance()->ResetBrush(_memDC);
 	GDIManager::GetInstance()->ResetPen(_memDC);
 }
 
-void EditorScene::DrawObject(HDC _memDC, Vector2 _BackBufferTopLeftInScene, Vector2 Pos, Vector2 _Size)
+void EditorScene::DrawRect(HDC _memDC, Vector2 _BackBufferTopLeftInScene, Vector2 Pos, Vector2 _Size)
 {
 	Rectangle(_memDC,
 		Pos.m_fx - _BackBufferTopLeftInScene.m_fx - _Size.m_fx / 2.0f,
@@ -202,6 +211,15 @@ void EditorScene::DrawLine(HDC _memDC, Vector2 _BackBufferTopLeftInScene, Vector
 	LineTo(_memDC, EndPos.m_fx - _BackBufferTopLeftInScene.m_fx, EndPos.m_fy - _BackBufferTopLeftInScene.m_fy);
 }
 
+void EditorScene::DrawCircle(HDC _memDC, Vector2 _BackBufferTopLeftInScene, Vector2 _Pos, float _Size)
+{
+	Ellipse(_memDC,
+		_Pos.m_fx - _BackBufferTopLeftInScene.m_fx - _Size / 2.0f,
+		_Pos.m_fy - _BackBufferTopLeftInScene.m_fy - _Size / 2.0f,
+		_Pos.m_fx - _BackBufferTopLeftInScene.m_fx + _Size / 2.0f,
+		_Pos.m_fy - _BackBufferTopLeftInScene.m_fy + _Size / 2.0f
+	);
+}
 
 std::wstring EditorScene::GetSelectedString()
 {

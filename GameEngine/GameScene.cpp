@@ -42,10 +42,6 @@ void GameScene::Release()
 	Scene::Release();
 
 	m_GameMode = nullptr;
-	m_Player = nullptr;
-	m_arrGhosts.clear();
-	m_arrGameObjects.clear();
-	m_arrVents.clear();
 	m_setTasksLeft.clear();
 }
 
@@ -66,7 +62,7 @@ void GameScene::Init()
 
 	// 霸烙 葛靛 积己
 	m_GameMode = std::make_shared<GameMode>();
-	m_GameMode->Init(m_Player, shared_from_this());
+	m_GameMode->Init(m_Player.lock(), shared_from_this());
 
 	// UI 积己
 	m_UIFlags = Flag(static_cast<int>(UI_TYPE::HUD));
@@ -109,7 +105,7 @@ void GameScene::InitUI()
 	std::unique_ptr<PlayerStatusUI> playerUI = std::make_unique<PlayerStatusUI>();
 	playerUI->Init(
 		m_GameMode, 
-		m_Player, 
+		m_Player.lock(),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MENU))
 	);
@@ -137,8 +133,8 @@ void GameScene::InitUI()
 	// Task UI 积己
 	std::unique_ptr<NumberSequenceTask> Task1 = std::make_unique<NumberSequenceTask>();
 	Task1->Init(
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
+		[this]() {m_Player.lock()->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
+		[this]() {m_Player.lock()->SetCharacterState(Player::CHARACTER_STATE::NONE); },
 		std::bind(&GameScene::OnTaskSuccess, this), 
 		std::bind(&GameScene::OnTaskFail, this),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
@@ -147,8 +143,8 @@ void GameScene::InitUI()
 
 	std::unique_ptr<DataUploadTask> Task2 = std::make_unique<DataUploadTask>();
 	Task2->Init(
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
+		[this]() {m_Player.lock()->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
+		[this]() {m_Player.lock()->SetCharacterState(Player::CHARACTER_STATE::NONE); },
 		std::bind(&GameScene::OnTaskSuccess, this),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
 	);
@@ -156,8 +152,8 @@ void GameScene::InitUI()
 
 	std::unique_ptr<TimedButtonsTask> Task3 = std::make_unique<TimedButtonsTask>();
 	Task3->Init(
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
-		[this]() {m_Player->SetCharacterState(Player::CHARACTER_STATE::NONE); },
+		[this]() {m_Player.lock()->SetCharacterState(Player::CHARACTER_STATE::WORKING); },
+		[this]() {m_Player.lock()->SetCharacterState(Player::CHARACTER_STATE::NONE); },
 		std::bind(&GameScene::OnTaskSuccess, this),
 		std::bind(&GameScene::OnTaskFail, this),
 		std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::HUD))
@@ -171,16 +167,15 @@ void GameScene::InstantiateObjects()
 	mapInfo.Load();
 
 	// Player
-	m_Player = std::make_shared<Player>();
-	m_Player->Init(mapInfo.m_vec2PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
+	std::shared_ptr<Player> player = std::make_shared<Player>();
+	player->Init(mapInfo.m_vec2PlayerStart, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::MAP)));
+	m_Player = player;
 
 	// Ghosts
 	for (int i = 0; i < ConstValue::iNumOfGhosts; ++i)
 	{
 		std::shared_ptr<Ghost> ghost = std::make_shared<Ghost>();
 		ghost->Init(mapInfo.m_arrWayPoints);
-		m_arrGhosts.push_back(ghost);
-
 	}
 
 	// Wall
@@ -193,22 +188,18 @@ void GameScene::InstantiateObjects()
 	}
 
 	// Vent
-	m_arrVents.reserve(mapInfo.m_arrVent.size());
 	for (const Vector2& pos : mapInfo.m_arrVent)
 	{
 		std::shared_ptr<Vent> vent = std::make_shared<Vent>();
 		vent->Init(pos);
-		m_arrVents.push_back(vent);
 	}
 
 	// Number Sequnece
-	m_arrGameObjects.reserve(mapInfo.m_arrNumberSequencePos.size() + mapInfo.m_arrDataUploadPos.size() + mapInfo.m_arrTimedButtonsPos.size());
 	for (const Vector2& pos : mapInfo.m_arrNumberSequencePos)
 	{
 		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_NUMBER_SEQUNECE)));
 		m_setTasksLeft.insert(gameObject.get());
-		m_arrGameObjects.push_back(gameObject);
 	}
 
 	// Data Upload
@@ -217,7 +208,6 @@ void GameScene::InstantiateObjects()
 		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_DATA_UPLOAD)));
 		m_setTasksLeft.insert(gameObject.get());
-		m_arrGameObjects.push_back(gameObject);
 	}
 
 	// Timed Buttons
@@ -226,14 +216,13 @@ void GameScene::InstantiateObjects()
 		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 		gameObject->Init(pos, ConstValue::vec2TaskSize, std::bind(&GameScene::OpenUI, this, static_cast<int>(UI_TYPE::TASK_TIMED_BUTTONS)));
 		m_setTasksLeft.insert(gameObject.get());
-		m_arrGameObjects.push_back(gameObject);
 	}
 }
 
 Vector2 GameScene::GetViewPortTopLeftInScene()
 {
-	assert(m_Player != nullptr);
-	Vector2 PlayerPosition = m_Player->GetPosition();
+	assert(m_Player.lock() != nullptr);
+	Vector2 PlayerPosition = m_Player.lock()->GetPosition();
 	PlayerPosition.m_fx = std::clamp(PlayerPosition.m_fx - ConstValue::vec2BaseWindowSize.m_fx * 0.5f, 0.0f, m_vec2SceneSize.m_fx - ConstValue::vec2BaseWindowSize.m_fx);
 	PlayerPosition.m_fy = std::clamp(PlayerPosition.m_fy - ConstValue::vec2BaseWindowSize.m_fy * 0.5f, 0.0f, m_vec2SceneSize.m_fy - ConstValue::vec2BaseWindowSize.m_fy);
 	return PlayerPosition;
@@ -300,12 +289,12 @@ void GameScene::OpenTask(int _flagIndex)
 
 Vector2 GameScene::GetPlayerPos() const
 {
-	return m_Player->GetPosition();
+	return m_Player.lock()->GetPosition();
 }
 
 void GameScene::OnTaskSuccess()
 {
-	if (Attemptable* task = dynamic_cast<Attemptable*>(m_Player->GetInteractableObject()))
+	if (Attemptable* task = dynamic_cast<Attemptable*>(m_Player.lock()->GetInteractableObject()))
 	{
 		task->OnSuccess();
 		m_setTasksLeft.erase(task);
@@ -315,7 +304,7 @@ void GameScene::OnTaskSuccess()
 
 void GameScene::OnTaskFail()
 {
-	if (Attemptable* task = dynamic_cast<Attemptable*>(m_Player->GetInteractableObject()))
+	if (Attemptable* task = dynamic_cast<Attemptable*>(m_Player.lock()->GetInteractableObject()))
 		task->OnFail();
 	OpenUI(static_cast<int>(UI_TYPE::HUD));
 }
