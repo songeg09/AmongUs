@@ -1,8 +1,8 @@
 #pragma once
 #include "Object.h"
-#include "Interactable.h"
+#include "IInteractable.h"
 
-class Vent : public Object, public Interactable
+class Vent : public Object, public IInteractable
 {
 private:
 	std::shared_ptr<Collider> m_pInteractRange;

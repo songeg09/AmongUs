@@ -5,7 +5,7 @@ class Collider;
 class UI;
 class Wall;
 class WallDetector;
-class Scene
+class Scene abstract
 {
 protected:
 	Vector2 m_vec2SceneSize;		// 씬의 최종적으로 전체 크기를 설정 (맵의 크기라고 생각하면 편함)

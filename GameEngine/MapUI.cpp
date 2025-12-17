@@ -7,7 +7,7 @@
 #include "GameScene.h"
 #include "Player.h"
 #include "Button.h"
-#include "Attemptable.h"
+#include "IAttemptable.h"
 
 MapUI::MapUI()
 {
@@ -17,7 +17,7 @@ MapUI::~MapUI()
 {
 }
 
-void MapUI::Init(std::shared_ptr<MinimapProvider> _minimapProvider, std::function<void()> _CloseBtnCallback)
+void MapUI::Init(std::shared_ptr<IMinimapProvider> _minimapProvider, std::function<void()> _CloseBtnCallback)
 {
 	UI::Init();
 
@@ -74,7 +74,7 @@ void MapUI::Render(HDC _memDC)
 
 	
 
-	for (Attemptable* obejct : m_minimapProvider.lock()->GetGameObjects())
+	for (IAttemptable* obejct : m_minimapProvider.lock()->GetGameObjects())
 	{
 		ObjectPos = obejct->GetPosition();
 		ObjectPos.m_fx = ObjectPos.m_fx * m_vec2Ratio.m_fx;

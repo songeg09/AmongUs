@@ -1,11 +1,11 @@
 #pragma once
 #include "Character.h"
-#include "Interactable.h"
+#include "IInteractable.h"
 
 class WallDetector;
 class RectCollider;
 class CircleCollider;
-class Player : public Character, public Interactable
+class Player : public Character, public IInteractable
 {
 public:
 	enum class CHARACTER_STATE
@@ -33,7 +33,7 @@ private:
 	std::weak_ptr<Collider>			m_pInteractionCollider;
 	CHARACTER_STATE					m_eState;
 
-	Interactable*					m_pInteractableObject;
+	IInteractable*					m_pInteractableObject;
 
 	std::function<void()>			m_funcMapKeyCallback;
 	std::function<void()>			m_funcMenuKeyCallback;
@@ -55,7 +55,7 @@ public:
 	void SetCharacterState(CHARACTER_STATE _eState) { m_eState = _eState; }
 	CHARACTER_STATE GetCharacterState() { return m_eState; }
 
-	Interactable* GetInteractableObject() {return m_pInteractableObject;}
+	IInteractable* GetInteractableObject() {return m_pInteractableObject;}
 
 	void UseInteractableObject();
 

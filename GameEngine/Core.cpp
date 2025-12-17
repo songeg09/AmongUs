@@ -42,6 +42,7 @@ void Core::Render()
 {
 	if (SceneManager::GetInstance()->GetCurScene() == nullptr)
 		return;
+	
 	SceneManager::GetInstance()->Render(m_hBackDC);
 
 	Vector2 ViewPortTopLeft = SceneManager::GetInstance()->GetCurScene()->GetViewportTopLeftInBackBuffer();
@@ -49,7 +50,6 @@ void Core::Render()
 	std::wstring FPSMessage = std::format(L"FPS : {}", TimerManager::GetInstance()->intGetFPS());
 	TextOutW(m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, FPSMessage.c_str(), FPSMessage.length());
 	
-	//Vector2 vec2Resoultion = SettingsManager::GetInstance()->GetInstance()->GetResolution();
 	BitBlt(m_hDC, 0, 0, ConstValue::vec2BaseWindowSize.m_fx, ConstValue::vec2BaseWindowSize.m_fy,
 		m_hBackDC, ViewPortTopLeft.m_fx, ViewPortTopLeft.m_fy, SRCCOPY);
 }

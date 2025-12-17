@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "GameMode.h"
-#include "MinimapProvider.h"
+#include "IMinimapProvider.h"
 #include "Player.h"
 
 
@@ -12,7 +12,7 @@ GameMode::~GameMode()
 {
 }
 
-void GameMode::Init(std::shared_ptr<Player> _Player, std::shared_ptr<MinimapProvider> _MinimapProvider)
+void GameMode::Init(std::shared_ptr<Player> _Player, std::shared_ptr<IMinimapProvider> _MinimapProvider)
 {
 	m_MinimapProvider = _MinimapProvider;
 	m_Player = _Player;

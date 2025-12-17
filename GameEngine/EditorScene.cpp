@@ -176,8 +176,21 @@ void EditorScene::DrawObjects(HDC _memDC)
 
 	// Wall
 	for (int i = 0; i < m_MapInfo.m_arrAllWallVertices.size(); ++i)
+	{ 
 		for (int j = 0; j < m_MapInfo.m_arrAllWallVertices[i].size() - 1; ++j)
-			DrawLine(_memDC, BackBufferTopLeftInScene, m_MapInfo.m_arrAllWallVertices[i][j], m_MapInfo.m_arrAllWallVertices[i][j + 1]);
+		{
+			Vector2& p1 = m_MapInfo.m_arrAllWallVertices[i][j];
+			Vector2& p2 = m_MapInfo.m_arrAllWallVertices[i][j + 1];
+			DrawLine(_memDC, BackBufferTopLeftInScene, p1, p2);
+
+			Vector2 edge = p2 - p1;
+			Vector2 midPoint = p1 + (edge * 0.5f);
+			Vector2 normal = Vector2(-edge.m_fy, edge.m_fx);
+			normal.Normalize(); 
+			normal = normal * 20.0f;
+			DrawLine(_memDC, BackBufferTopLeftInScene, midPoint, midPoint + normal);
+		}
+	}
 
 	for (int i = 1; i < m_arrCurWallVertices.size(); ++i)
 		DrawLine(_memDC, BackBufferTopLeftInScene, m_arrCurWallVertices[i - 1], m_arrCurWallVertices[i]);

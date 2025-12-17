@@ -23,9 +23,9 @@
 #include "DataUploadTask.h"
 #include "TimedButtonsTask.h"
 
-#include "MinimapProvider.h"
-#include "Interactable.h"
-#include "Attemptable.h"
+#include "IMinimapProvider.h"
+#include "IInteractable.h"
+#include "IAttemptable.h"
 #include "MapInfo.h"
 
 GameScene::GameScene(std::wstring _strName) : Scene(_strName)
@@ -294,7 +294,7 @@ Vector2 GameScene::GetPlayerPos() const
 
 void GameScene::OnTaskSuccess()
 {
-	if (Attemptable* task = dynamic_cast<Attemptable*>(m_Player.lock()->GetInteractableObject()))
+	if (IAttemptable* task = dynamic_cast<IAttemptable*>(m_Player.lock()->GetInteractableObject()))
 	{
 		task->OnSuccess();
 		m_setTasksLeft.erase(task);
@@ -304,7 +304,7 @@ void GameScene::OnTaskSuccess()
 
 void GameScene::OnTaskFail()
 {
-	if (Attemptable* task = dynamic_cast<Attemptable*>(m_Player.lock()->GetInteractableObject()))
+	if (IAttemptable* task = dynamic_cast<IAttemptable*>(m_Player.lock()->GetInteractableObject()))
 		task->OnFail();
 	OpenUI(static_cast<int>(UI_TYPE::HUD));
 }

@@ -374,16 +374,16 @@
     <ClInclude Include="WallDetector.h">
       <Filter>Engine\09. Wall\WallDetector</Filter>
     </ClInclude>
-    <ClInclude Include="MinimapProvider.h">
+    <ClInclude Include="IMinimapProvider.h">
       <Filter>Engine\13. Interface</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Engine\08. Collider\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Interactable.h">
+    <ClInclude Include="IInteractable.h">
       <Filter>Engine\13. Interface\Interactable</Filter>
     </ClInclude>
-    <ClInclude Include="Attemptable.h">
+    <ClInclude Include="IAttemptable.h">
       <Filter>Engine\13. Interface\Interactable\Attemptable</Filter>
     </ClInclude>
   </ItemGroup>

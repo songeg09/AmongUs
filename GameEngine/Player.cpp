@@ -83,16 +83,16 @@ void Player::UpdateInteractableObject(Collider* _pOther)
 
 		if (Vector2::Distance(PlayerPos, CurrentObjectPos) > Vector2::Distance(PlayerPos, NewObjectPos))
 		{
-			m_pInteractableObject = dynamic_cast<Interactable*>(_pOther->GetTarget());
+			m_pInteractableObject = dynamic_cast<IInteractable*>(_pOther->GetTarget());
 		}
 	}
 	else
-		m_pInteractableObject = dynamic_cast<Interactable*>(_pOther->GetTarget());
+		m_pInteractableObject = dynamic_cast<IInteractable*>(_pOther->GetTarget());
 }
 
 void Player::ClearCurrentInteractable(Collider* _pOther)
 {
-	if (m_pInteractableObject == dynamic_cast<Interactable*>(_pOther->GetTarget()))
+	if (m_pInteractableObject == dynamic_cast<IInteractable*>(_pOther->GetTarget()))
 		m_pInteractableObject = nullptr;
 }
 

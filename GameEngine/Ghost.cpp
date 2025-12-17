@@ -3,7 +3,7 @@
 #include "Collider.h"
 #include "SceneManager.h"
 #include "TimerManager.h"
-#include "Interactable.h"
+#include "IInteractable.h"
 
 Ghost::Ghost()
 {
@@ -41,7 +41,7 @@ void Ghost::Init(std::vector<Vector2> _wayPoints)
 	m_pAttackRangeCollider = CreateCircleCollider(COLLISION_TAG::GHOST_ATTACK_RANGE, true, 50);
 	m_pAttackRangeCollider.lock()->SetBeginCollisionCallBack(
 		[this](Collider* _Other) {
-			dynamic_cast<Interactable*>(_Other->GetTarget())->Interact(this); 
+			dynamic_cast<IInteractable*>(_Other->GetTarget())->Interact(this);
 		}
 	);
 

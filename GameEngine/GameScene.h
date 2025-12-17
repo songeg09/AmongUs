@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "MinimapProvider.h"
+#include "IMinimapProvider.h"
 #include "ResourceManager.h"
 
 class Player;
@@ -8,9 +8,9 @@ class Ghost;
 class GameMode;
 class GameObject;
 class Interactable;
-class Attemptable;
+class IAttemptable;
 class Vent;
-class GameScene : public Scene, public MinimapProvider, public std::enable_shared_from_this<GameScene>
+class GameScene : public Scene, public IMinimapProvider, public std::enable_shared_from_this<GameScene>
 {
 	enum class UI_TYPE
 	{
@@ -30,7 +30,7 @@ private:
 	std::weak_ptr<Texture>						m_pBackGround;
 	std::weak_ptr<Player>						m_Player;
 
-	std::set<Attemptable*>						m_setTasksLeft;
+	std::set<IAttemptable*>						m_setTasksLeft;
 
 public:
 	GameScene(std::wstring _strName);
@@ -51,7 +51,7 @@ public:
 	void OpenTask(int _flagIndex);
 
 	Vector2 GetPlayerPos() const override;
-	const std::set<Attemptable*>& GetGameObjects() const override { return m_setTasksLeft; }
+	const std::set<IAttemptable*>& GetGameObjects() const override { return m_setTasksLeft; }
 
 	void OnTaskSuccess();
 	void OnTaskFail();

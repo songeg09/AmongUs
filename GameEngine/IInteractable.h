@@ -1,10 +1,11 @@
 #pragma once
+#include "pch.h"
 
 class Character;
-class Interactable abstract
+class IInteractable abstract
 {
 public:
-	virtual ~Interactable() = default;
+	virtual ~IInteractable() = default;
 
 	virtual void Interact(Character* _Interactor) = 0;
 	virtual Vector2 GetPosition() = 0;

@@ -1,8 +1,8 @@
 #pragma once
 #include "Object.h"
-#include "Attemptable.h"
+#include "IAttemptable.h"
 
-class GameObject : public Object, public Attemptable
+class GameObject : public Object, public IAttemptable
 {
 protected:
 	std::shared_ptr<Collider>		m_pInteractRange;
