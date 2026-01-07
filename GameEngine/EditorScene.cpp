@@ -104,13 +104,13 @@ void EditorScene::Move()
 {
 	Vector2 vec2MoveForce;
 	if (InputManager::GetInstance()->GetKeyState('A') == KEY_STATE::PRESS)
-		vec2MoveForce.m_fx += -1.0f;
+		vec2MoveForce.m_fx += -2.0f;
 	if (InputManager::GetInstance()->GetKeyState('D') == KEY_STATE::PRESS)
-		vec2MoveForce.m_fx += 1.0f;
+		vec2MoveForce.m_fx += 2.0f;
 	if (InputManager::GetInstance()->GetKeyState('W') == KEY_STATE::PRESS)
-		vec2MoveForce.m_fy += -1.0f;
+		vec2MoveForce.m_fy += -2.0f;
 	if (InputManager::GetInstance()->GetKeyState('S') == KEY_STATE::PRESS)
-		vec2MoveForce.m_fy += 1.0f;
+		vec2MoveForce.m_fy += 2.0f;
 
 	if (vec2MoveForce.isValid() == true)
 	{
